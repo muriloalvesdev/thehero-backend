@@ -3,12 +3,14 @@ package br.com.thehero.service.organization;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 import br.com.thehero.dto.OrganizationDTO;
 import br.com.thehero.model.Organization;
 import br.com.thehero.repository.OrganizationRepository;
 import br.com.thehero.service.convert.OrganizationConvert;
 import javassist.NotFoundException;
 
+@Service
 public class OrganizationServiceImpl implements OrganizationService {
 
   private OrganizationRepository repository;

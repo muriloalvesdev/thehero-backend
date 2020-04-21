@@ -1,7 +1,6 @@
 package br.com.thehero.dto;
 
 import javax.validation.constraints.Email;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CNPJ;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,9 +13,8 @@ public class OrganizationDTO {
   @JsonProperty("email")
   private String email;
 
-  @Length(max = 11, min = 10, message = "whatsapp is not valid!")
   @JsonProperty("whatsapp")
-  private Integer whatsapp;
+  private String whatsapp;
 
   @JsonProperty("city")
   private String city;
@@ -29,8 +27,7 @@ public class OrganizationDTO {
   private String cnpj;
 
   public OrganizationDTO(String name, @Email(message = "email is not valid!") String email,
-      @Length(max = 11, min = 10, message = "whatsapp is not valid!") Integer whatsapp, String city,
-      String uf, @CNPJ(message = "cnpj is not valid!") String cnpj) {
+      String whatsapp, String city, String uf, @CNPJ(message = "cnpj is not valid!") String cnpj) {
     this.name = name;
     this.email = email;
     this.whatsapp = whatsapp;
@@ -55,11 +52,11 @@ public class OrganizationDTO {
     this.email = email;
   }
 
-  public Integer getWhatsapp() {
+  public String getWhatsapp() {
     return whatsapp;
   }
 
-  public void setWhatsapp(Integer whatsapp) {
+  public void setWhatsapp(String whatsapp) {
     this.whatsapp = whatsapp;
   }
 

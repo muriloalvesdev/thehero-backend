@@ -1,6 +1,7 @@
 package br.com.thehero.controller;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +21,7 @@ import javassist.NotFoundException;
 @RestController
 public class OrganizationController {
 
-
+  @Autowired
   private OrganizationService service;
 
   @GetMapping("/ongs")
@@ -32,6 +33,7 @@ public class OrganizationController {
   public ResponseEntity<OrganizationDTO> create(
       @Validated @RequestBody OrganizationDTO organizationDTO) {
     Organization organization = service.create(organizationDTO);
+
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath()
         .path("/ongs/{cnpj}").buildAndExpand(organization.getCnpj()).toUri()).build();
   }
