@@ -1,4 +1,4 @@
-package br.com.thehero.service;
+package br.com.thehero.service.organization;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,11 @@ import br.com.thehero.repository.OrganizationRepository;
 import br.com.thehero.service.convert.OrganizationConvert;
 import javassist.NotFoundException;
 
-public class OrganizationService {
+public class OrganizationServiceImpl implements OrganizationService {
 
   private OrganizationRepository repository;
 
-  public OrganizationService(OrganizationRepository repository) {
+  public OrganizationServiceImpl(OrganizationRepository repository) {
     this.repository = repository;
   }
 
@@ -44,8 +44,15 @@ public class OrganizationService {
     return organizationDTOs;
   }
 
+  public void delete(String cnpj) {
+    Optional<Organization> organizationOptional = getOrganizationOptionalByCnpj(cnpj);
+    if (organizationOptional.isPresent()) {
+      repository.delete(organizationOptional.get());
+    }
+  }
+
   public OrganizationDTO findByCnpj(String cnpj) throws NotFoundException {
-    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
+    Optional<Organization> organizationOptional = getOrganizationOptionalByCnpj(cnpj);
     if (organizationOptional.isPresent()) {
       OrganizationDTO organizationDTO =
           OrganizationConvert.convertEntityToDataTransferObject(organizationOptional.get());
@@ -53,5 +60,10 @@ public class OrganizationService {
     } else {
       throw new NotFoundException("Não existe uma organização com o CNPJ informado.");
     }
+  }
+
+  private Optional<Organization> getOrganizationOptionalByCnpj(String cnpj) {
+    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
+    return organizationOptional;
   }
 }
