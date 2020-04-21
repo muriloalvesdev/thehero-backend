@@ -11,15 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "incidents")
-@Getter
-@Setter
-@AllArgsConstructor
 public class Incidents {
 
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,5 +34,50 @@ public class Incidents {
       foreignKey = @ForeignKey(name = "uuid"))
   private Organization organization;
 
+  @SuppressWarnings("unused")
+  private Incidents() {}
+
+  public Incidents(String title, String description, String value, Organization organization) {
+    this.title = title;
+    this.description = description;
+    this.value = value;
+    this.organization = organization;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getValue() {
+    return value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
+
+  public Organization getOrganization() {
+    return organization;
+  }
+
+  public void setOrganization(Organization organization) {
+    this.organization = organization;
+  }
+
+  public UUID getUuid() {
+    return uuid;
+  }
 
 }
