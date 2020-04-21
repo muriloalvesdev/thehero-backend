@@ -40,8 +40,11 @@ public class Organization {
 
   @Column
   private String uf;
+  
+  @Column
+  private String cnpj;
 
-  @OneToMany(mappedBy = "organization", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "organization", fetch = FetchType.EAGER, orphanRemoval = true)
   private List<Incidents> incidents;
 
 }
