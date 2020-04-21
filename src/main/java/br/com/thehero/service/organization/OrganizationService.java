@@ -7,8 +7,12 @@ import javassist.NotFoundException;
 
 public interface OrganizationService {
   Organization create(OrganizationDTO dto);
+
   void update(OrganizationDTO dto);
+
   List<OrganizationDTO> findAll();
+
   OrganizationDTO findByCnpj(String cnpj) throws NotFoundException;
+
   void delete(String cnpj);
 }

@@ -1,4 +1,4 @@
-package br.com.thehero.controller;
+package br.com.thehero.controller.organization;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
