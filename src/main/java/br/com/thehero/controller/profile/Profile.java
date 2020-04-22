@@ -19,7 +19,7 @@ public class Profile {
   
   @GetMapping("/profile")
   public ResponseEntity<List<IncidentsDTO>> findIncidentsByOrganization(
-      @RequestHeader(value = "authorization", required = true) String organizationId) {
-    return ResponseEntity.ok(service.findIncidentsByOrganization(organizationId));
+      @RequestHeader(value = "authorization", required = true) String cnpj) {
+    return ResponseEntity.ok(service.findIncidentsByOrganization(cnpj));
   }
 }

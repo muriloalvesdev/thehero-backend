@@ -3,7 +3,6 @@ package br.com.thehero.service.profile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.IncidentsRepository;
@@ -23,9 +22,8 @@ public class ProfileService {
     this.incidentsRepository = incidentsRepository;
   }
 
-  public List<IncidentsDTO> findIncidentsByOrganization(String organizationId) {
-    Optional<Organization> organizationOptional =
-        organizationRepository.findById(UUID.fromString(organizationId));
+  public List<IncidentsDTO> findIncidentsByOrganization(String cnpj) {
+    Optional<Organization> organizationOptional = organizationRepository.findByCnpj(cnpj);
     List<IncidentsDTO> incidents = new ArrayList<>();
 
     if (organizationOptional.isPresent()) {
