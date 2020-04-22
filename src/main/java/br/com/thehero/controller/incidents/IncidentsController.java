@@ -49,7 +49,7 @@ public class IncidentsController {
         .path("/incidents/{id}").buildAndExpand(incidents.getUuid()).toUri()).build();
   }
 
-  @GetMapping("incidents/")
+  @GetMapping("incidents")
   public ResponseEntity<Page<IncidentsDTO>> findAll(Pageable pageable) {
     return ResponseEntity.ok(service.findAll(pageable));
   }
