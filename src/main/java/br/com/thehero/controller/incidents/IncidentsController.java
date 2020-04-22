@@ -41,10 +41,11 @@ public class IncidentsController {
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping("incidents/")
-  public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO dto)
+  @PostMapping("incidents")
+  public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO dto,
+      @RequestHeader(value = "authorization", required = true) String cnpjOrganization)
       throws NotFoundException {
-    Incidents incidents = service.create(dto);
+    Incidents incidents = service.create(dto, cnpjOrganization);
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath()
         .path("/incidents/{id}").buildAndExpand(incidents.getUuid()).toUri()).build();
   }

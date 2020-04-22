@@ -15,6 +15,6 @@ public final class IncidentsConvert {
 
   public static final IncidentsDTO convertEntityToDataTransferObject(Incidents incidents) {
     return new IncidentsDTO(incidents.getTitle(), incidents.getDescription(), incidents.getValue(),
-        incidents.getOrganization().getCnpj());
+        incidents.getUuid().toString());
   }
 }

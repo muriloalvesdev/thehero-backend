@@ -25,9 +25,9 @@ public class IncidentsServiceImpl implements IncidentsService {
     this.organizationRepository = organizationRepository;
   }
 
-  public Incidents create(IncidentsDTO dto) throws NotFoundException {
+  public Incidents create(IncidentsDTO dto, String cnpjOrganization) throws NotFoundException {
     Optional<Organization> optionaOrganization =
-        organizationRepository.findByCnpj(dto.getCnpjOrgnaization());
+        organizationRepository.findByCnpj(cnpjOrganization);
 
     if (optionaOrganization.isPresent()) {
       Organization organization = optionaOrganization.get();

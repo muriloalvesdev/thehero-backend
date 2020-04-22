@@ -7,7 +7,7 @@ import br.com.thehero.dto.IncidentsDTO;
 import javassist.NotFoundException;
 
 public interface IncidentsService {
-  Incidents create(IncidentsDTO dto) throws NotFoundException;
+  Incidents create(IncidentsDTO dto, String cnpjOrganization) throws NotFoundException;
 
   Page<IncidentsDTO> findAll(Pageable pageable);
 

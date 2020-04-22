@@ -1,5 +1,6 @@
 package br.com.thehero.dto;
 
+import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class IncidentsDTO {
@@ -8,22 +9,23 @@ public class IncidentsDTO {
   private String id;
 
   @JsonProperty("title")
+  @NotNull
   private String title;
 
   @JsonProperty("description")
+  @NotNull
   private String description;
 
   @JsonProperty("value")
+  @NotNull
   private String value;
 
-  @JsonProperty("cnpj_organization")
-  private String cnpjOrgnaization;
-
-  public IncidentsDTO(String title, String description, String value, String cnpjOrgnaization) {
+  public IncidentsDTO(@NotNull String title, @NotNull String description, @NotNull String value,
+      String id) {
     this.title = title;
     this.description = description;
     this.value = value;
-    this.cnpjOrgnaization = cnpjOrgnaization;
+    this.id = id;
   }
 
   public String getId() {
@@ -57,13 +59,4 @@ public class IncidentsDTO {
   public void setValue(String value) {
     this.value = value;
   }
-
-  public String getCnpjOrgnaization() {
-    return cnpjOrgnaization;
-  }
-
-  public void setCnpjOrgnaization(String cnpjOrgnaization) {
-    this.cnpjOrgnaization = cnpjOrgnaization;
-  }
-
 }
