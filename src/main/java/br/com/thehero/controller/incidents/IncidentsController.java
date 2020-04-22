@@ -35,10 +35,9 @@ public class IncidentsController {
   }
 
   @GetMapping("incidents/{id}")
-  public ResponseEntity<Object> findById(
+  public ResponseEntity<IncidentsDTO> findById(
       @PathVariable(name = "id", required = true) String incidentsId) throws NotFoundException {
-    service.findById(incidentsId);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(service.findById(incidentsId));
   }
 
   @PostMapping("incidents")
