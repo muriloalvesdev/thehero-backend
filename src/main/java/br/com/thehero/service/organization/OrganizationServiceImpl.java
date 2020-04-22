@@ -54,7 +54,8 @@ public class OrganizationServiceImpl implements OrganizationService {
   }
 
   public OrganizationDTO findByCnpj(String cnpj) throws NotFoundException {
-    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
+    Optional<Organization> organizationOptional =
+        repository.findAll().stream().filter(org -> org.getCnpj().equals(cnpj)).findFirst();
     if (organizationOptional.isPresent()) {
       OrganizationDTO organizationDTO =
           OrganizationConvert.convertEntityToDataTransferObject(organizationOptional.get());
