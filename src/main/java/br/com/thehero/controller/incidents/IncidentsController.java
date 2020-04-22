@@ -29,8 +29,8 @@ public class IncidentsController {
   @DeleteMapping("incidents/{id}")
   public ResponseEntity<Object> delete(
       @PathVariable(name = "id", required = true) String incidentsId,
-      @RequestHeader(value = "authorization", required = true) String organizationId) {
-    service.delete(incidentsId, organizationId);
+      @RequestHeader(value = "authorization", required = true) String cnpjOrganization) {
+    service.delete(incidentsId, cnpjOrganization);
     return ResponseEntity.noContent().build();
   }
 

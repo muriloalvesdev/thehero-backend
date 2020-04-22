@@ -46,9 +46,10 @@ public class IncidentsServiceImpl implements IncidentsService {
 
   }
 
-  public void delete(String incidentId, String organizationId) {
+  public void delete(String incidentId, String cnpjOrganization) {
+    
     incidentsRepository.findById(UUID.fromString(incidentId)).ifPresent(incident -> {
-      if (incident.getOrganization().getUuid().equals(UUID.fromString(organizationId))) {
+      if (incident.getOrganization().getCnpj().equals(cnpjOrganization)) {
         incidentsRepository.delete(incident);
       } else {
         throw new IllegalAccessError("Não autorizado!");
