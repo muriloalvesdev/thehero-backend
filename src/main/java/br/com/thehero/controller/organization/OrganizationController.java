@@ -38,12 +38,6 @@ public class OrganizationController {
         .path("/ongs/{cnpj}").buildAndExpand(organization.getCnpj()).toUri()).build();
   }
 
-  @PostMapping("/ongs")
-  public ResponseEntity<OrganizationDTO> create(@PathVariable(required = true) String cnpj)
-      throws NotFoundException {
-    return ResponseEntity.ok(service.findByCnpj(cnpj));
-  }
-
   @GetMapping("/ongs/{cnpj}")
   public ResponseEntity<OrganizationDTO> findByCnpj(@PathVariable String cnpj)
       throws NotFoundException {
