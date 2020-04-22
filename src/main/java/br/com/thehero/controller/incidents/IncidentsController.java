@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.dto.IncidentsDTO;
-import br.com.thehero.model.Incidents;
 import br.com.thehero.service.incidents.IncidentsService;
 import javassist.NotFoundException;
 

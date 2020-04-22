@@ -1,7 +1,7 @@
 package br.com.thehero.service.convert;
 
+import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.OrganizationDTO;
-import br.com.thehero.model.Organization;
 
 public final class OrganizationConvert {
   private OrganizationConvert() {}

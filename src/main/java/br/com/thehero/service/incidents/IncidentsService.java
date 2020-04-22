@@ -2,8 +2,8 @@ package br.com.thehero.service.incidents;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.dto.IncidentsDTO;
-import br.com.thehero.model.Incidents;
 import javassist.NotFoundException;
 
 public interface IncidentsService {

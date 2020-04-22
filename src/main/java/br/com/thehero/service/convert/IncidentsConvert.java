@@ -1,8 +1,8 @@
 package br.com.thehero.service.convert;
 
+import br.com.thehero.domain.model.Incidents;
+import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.IncidentsDTO;
-import br.com.thehero.model.Incidents;
-import br.com.thehero.model.Organization;
 
 public final class IncidentsConvert {
 

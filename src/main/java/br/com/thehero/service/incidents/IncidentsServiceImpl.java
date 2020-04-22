@@ -5,11 +5,11 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import br.com.thehero.domain.model.Incidents;
+import br.com.thehero.domain.model.Organization;
+import br.com.thehero.domain.repository.IncidentsRepository;
+import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.IncidentsDTO;
-import br.com.thehero.model.Incidents;
-import br.com.thehero.model.Organization;
-import br.com.thehero.repository.IncidentsRepository;
-import br.com.thehero.repository.OrganizationRepository;
 import br.com.thehero.service.convert.IncidentsConvert;
 import javassist.NotFoundException;
 

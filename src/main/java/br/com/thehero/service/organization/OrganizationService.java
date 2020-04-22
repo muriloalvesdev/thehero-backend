@@ -1,8 +1,8 @@
 package br.com.thehero.service.organization;
 
 import java.util.List;
+import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.OrganizationDTO;
-import br.com.thehero.model.Organization;
 import javassist.NotFoundException;
 
 public interface OrganizationService {

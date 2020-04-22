@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.OrganizationDTO;
-import br.com.thehero.model.Organization;
 import br.com.thehero.service.organization.OrganizationService;
 import javassist.NotFoundException;
 
@@ -39,7 +39,7 @@ public class OrganizationController {
   }
 
   @GetMapping("/ongs/{cnpj}")
-  public ResponseEntity<OrganizationDTO> findByCnpj(@PathVariable String cnpj)
+  public ResponseEntity<OrganizationDTO> findByCnpj(@RequestBody(required = true) String cnpj)
       throws NotFoundException {
     return ResponseEntity.ok(service.findByCnpj(cnpj));
   }

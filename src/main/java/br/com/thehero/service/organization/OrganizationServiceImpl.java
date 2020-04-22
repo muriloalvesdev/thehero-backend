@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import br.com.thehero.domain.model.Organization;
+import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.OrganizationDTO;
-import br.com.thehero.model.Organization;
-import br.com.thehero.repository.OrganizationRepository;
 import br.com.thehero.service.convert.OrganizationConvert;
 import javassist.NotFoundException;
 
@@ -47,14 +47,14 @@ public class OrganizationServiceImpl implements OrganizationService {
   }
 
   public void delete(String cnpj) {
-    Optional<Organization> organizationOptional = getOrganizationOptionalByCnpj(cnpj);
+    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
     if (organizationOptional.isPresent()) {
       repository.delete(organizationOptional.get());
     }
   }
 
   public OrganizationDTO findByCnpj(String cnpj) throws NotFoundException {
-    Optional<Organization> organizationOptional = getOrganizationOptionalByCnpj(cnpj);
+    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
     if (organizationOptional.isPresent()) {
       OrganizationDTO organizationDTO =
           OrganizationConvert.convertEntityToDataTransferObject(organizationOptional.get());
@@ -64,8 +64,4 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
   }
 
-  private Optional<Organization> getOrganizationOptionalByCnpj(String cnpj) {
-    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
-    return organizationOptional;
-  }
 }

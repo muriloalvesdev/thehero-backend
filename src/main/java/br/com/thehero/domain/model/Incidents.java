@@ -1,4 +1,4 @@
-package br.com.thehero.model;
+package br.com.thehero.domain.model;
 
 import java.util.UUID;
 import javax.persistence.Column;

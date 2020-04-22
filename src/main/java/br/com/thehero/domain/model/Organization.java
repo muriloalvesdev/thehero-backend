@@ -1,4 +1,4 @@
-package br.com.thehero.model;
+package br.com.thehero.domain.model;
 
 import java.util.List;
 import java.util.UUID;

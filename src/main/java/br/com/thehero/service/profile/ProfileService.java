@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+import br.com.thehero.domain.model.Organization;
+import br.com.thehero.domain.repository.IncidentsRepository;
+import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.IncidentsDTO;
-import br.com.thehero.model.Organization;
-import br.com.thehero.repository.IncidentsRepository;
-import br.com.thehero.repository.OrganizationRepository;
 import br.com.thehero.service.convert.IncidentsConvert;
 
 @Service
