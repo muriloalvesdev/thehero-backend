@@ -61,7 +61,7 @@ public class OrganizationServiceImpl implements OrganizationService {
           OrganizationConvert.convertEntityToDataTransferObject(organizationOptional.get());
       return organizationDTO;
     } else {
-      throw new NotFoundException("Não existe uma organização com o CNPJ informado.");
+      throw new NotFoundException("Não existe uma organização com o CNPJ[" + cnpj + "] informado.");
     }
   }
 

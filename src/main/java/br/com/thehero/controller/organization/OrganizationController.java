@@ -39,13 +39,13 @@ public class OrganizationController {
   }
 
   @GetMapping("/ongs/{cnpj}")
-  public ResponseEntity<OrganizationDTO> findByCnpj(@RequestBody(required = true) String cnpj)
-      throws NotFoundException {
+  public ResponseEntity<OrganizationDTO> findByCnpj(
+      @PathVariable(required = true, name = "cnpj") String cnpj) throws NotFoundException {
     return ResponseEntity.ok(service.findByCnpj(cnpj));
   }
 
   @DeleteMapping("/ongs/{cnpj}")
-  public ResponseEntity<Void> delete(@PathVariable String cnpj) {
+  public ResponseEntity<Void> delete(@PathVariable(name = "cnpj") String cnpj) {
     service.delete(cnpj);
     return ResponseEntity.noContent().build();
   }
