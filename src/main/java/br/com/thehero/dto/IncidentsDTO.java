@@ -20,12 +20,24 @@ public class IncidentsDTO {
   @NotNull
   private String value;
 
+  @JsonProperty("name")
+  private String nameOrganization;
+
   public IncidentsDTO(@NotNull String title, @NotNull String description, @NotNull String value,
-      String id) {
+      String id, String nameOrganization) {
     this.title = title;
     this.description = description;
     this.value = value;
     this.id = id;
+    this.nameOrganization = nameOrganization;
+  }
+
+  public String getNameOrganization() {
+    return nameOrganization;
+  }
+
+  public void setNameOrganization(String nameOrganization) {
+    this.nameOrganization = nameOrganization;
   }
 
   public String getId() {
