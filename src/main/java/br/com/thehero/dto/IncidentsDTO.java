@@ -36,31 +36,25 @@ public class IncidentsDTO {
     this.value = value;
     this.id = id;
     this.nameOrganization = nameOrganization;
+    this.city = city;
+    this.uf = uf;
   }
 
   public String getCity() {
     return city;
   }
 
-
-
   public void setCity(String city) {
     this.city = city;
   }
-
-
 
   public String getUf() {
     return uf;
   }
 
-
-
   public void setUf(String uf) {
     this.uf = uf;
   }
-
-
 
   public String getNameOrganization() {
     return nameOrganization;
