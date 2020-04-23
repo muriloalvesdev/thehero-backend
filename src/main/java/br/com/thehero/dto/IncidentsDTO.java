@@ -23,14 +23,44 @@ public class IncidentsDTO {
   @JsonProperty("name")
   private String nameOrganization;
 
+  @JsonProperty("city")
+  private String city;
+
+  @JsonProperty("uf")
+  private String uf;
+
   public IncidentsDTO(@NotNull String title, @NotNull String description, @NotNull String value,
-      String id, String nameOrganization) {
+      String id, String nameOrganization, String city, String uf) {
     this.title = title;
     this.description = description;
     this.value = value;
     this.id = id;
     this.nameOrganization = nameOrganization;
   }
+
+  public String getCity() {
+    return city;
+  }
+
+
+
+  public void setCity(String city) {
+    this.city = city;
+  }
+
+
+
+  public String getUf() {
+    return uf;
+  }
+
+
+
+  public void setUf(String uf) {
+    this.uf = uf;
+  }
+
+
 
   public String getNameOrganization() {
     return nameOrganization;
