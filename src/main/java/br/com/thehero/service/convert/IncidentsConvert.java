@@ -17,6 +17,6 @@ public final class IncidentsConvert {
     Organization organization = incidents.getOrganization();
     return new IncidentsDTO(incidents.getTitle(), incidents.getDescription(), incidents.getValue(),
         incidents.getUuid().toString(), organization.getName(), organization.getCity(),
-        organization.getUf());
+        organization.getUf(), organization.getWhatsapp(), organization.getEmail());
   }
 }

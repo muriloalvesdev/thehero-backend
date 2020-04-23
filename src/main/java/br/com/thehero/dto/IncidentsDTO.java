@@ -29,8 +29,14 @@ public class IncidentsDTO {
   @JsonProperty("uf")
   private String uf;
 
+  @JsonProperty("whatsapp")
+  private String whatsapp;
+
+  @JsonProperty("email")
+  private String email;
+
   public IncidentsDTO(@NotNull String title, @NotNull String description, @NotNull String value,
-      String id, String nameOrganization, String city, String uf) {
+      String id, String nameOrganization, String city, String uf, String whatsapp, String email) {
     this.title = title;
     this.description = description;
     this.value = value;
@@ -38,7 +44,26 @@ public class IncidentsDTO {
     this.nameOrganization = nameOrganization;
     this.city = city;
     this.uf = uf;
+    this.whatsapp = whatsapp;
+    this.email = email;
   }
+
+  public String getWhatsapp() {
+    return whatsapp;
+  }
+
+  public void setWhatsapp(String whatsapp) {
+    this.whatsapp = whatsapp;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
 
   public String getCity() {
     return city;
