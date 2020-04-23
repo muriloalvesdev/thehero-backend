@@ -1,8 +1,8 @@
 package br.com.thehero.service.incidents;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Incidents;
@@ -40,14 +40,14 @@ public class IncidentsServiceImpl implements IncidentsService {
     }
   }
 
-  public Page<IncidentsDTO> findAll(Pageable pageable) {
+  public List<IncidentsDTO> findAll(Pageable pageable) {
     return incidentsRepository.findAll(pageable)
-        .map(incident -> IncidentsConvert.convertEntityToDataTransferObject(incident));
+        .map(incident -> IncidentsConvert.convertEntityToDataTransferObject(incident)).getContent();
 
   }
 
   public void delete(String incidentId, String cnpjOrganization) {
-    
+
     incidentsRepository.findById(UUID.fromString(incidentId)).ifPresent(incident -> {
       if (incident.getOrganization().getCnpj().equals(cnpjOrganization)) {
         incidentsRepository.delete(incident);

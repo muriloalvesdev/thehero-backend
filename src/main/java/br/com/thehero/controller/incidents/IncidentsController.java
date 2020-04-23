@@ -1,7 +1,7 @@
 package br.com.thehero.controller.incidents;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -50,7 +50,7 @@ public class IncidentsController {
   }
 
   @GetMapping("incidents")
-  public ResponseEntity<Page<IncidentsDTO>> findAll(Pageable pageable) {
+  public ResponseEntity<List<IncidentsDTO>> findAll(Pageable pageable) {
     return ResponseEntity.ok(service.findAll(pageable));
   }
 
