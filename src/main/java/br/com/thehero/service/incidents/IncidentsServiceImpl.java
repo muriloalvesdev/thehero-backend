@@ -1,8 +1,8 @@
 package br.com.thehero.service.incidents;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Incidents;
@@ -40,9 +40,9 @@ public class IncidentsServiceImpl implements IncidentsService {
     }
   }
 
-  public List<IncidentsDTO> findAll(Pageable pageable) {
+  public Page<IncidentsDTO> findAll(Pageable pageable) {
     return incidentsRepository.findAll(pageable)
-        .map(incident -> IncidentsConvert.convertEntityToDataTransferObject(incident)).getContent();
+        .map(incident -> IncidentsConvert.convertEntityToDataTransferObject(incident));
 
   }
 
