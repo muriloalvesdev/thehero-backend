@@ -14,5 +14,5 @@ public interface OrganizationService {
 
   OrganizationDTO findByCnpj(String cnpj) throws NotFoundException;
 
-  void delete(String cnpj);
+  void delete(String cnpj) throws NotFoundException;
 }

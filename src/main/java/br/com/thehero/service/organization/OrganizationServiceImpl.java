@@ -46,10 +46,13 @@ public class OrganizationServiceImpl implements OrganizationService {
     return organizationDTOs;
   }
 
-  public void delete(String cnpj) {
+  public void delete(String cnpj) throws NotFoundException {
     Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
     if (organizationOptional.isPresent()) {
       repository.delete(organizationOptional.get());
+    } else {
+      throw new NotFoundException(
+          "Não existe uma organização com o CNPJ [" + cnpj + "] informado.");
     }
   }
 
@@ -61,7 +64,8 @@ public class OrganizationServiceImpl implements OrganizationService {
           OrganizationConvert.convertEntityToDataTransferObject(organizationOptional.get());
       return organizationDTO;
     } else {
-      throw new NotFoundException("Não existe uma organização com o CNPJ [" + cnpj + "] informado.");
+      throw new NotFoundException(
+          "Não existe uma organização com o CNPJ [" + cnpj + "] informado.");
     }
   }
 

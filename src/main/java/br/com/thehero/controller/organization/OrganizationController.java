@@ -52,7 +52,8 @@ public class OrganizationController {
   }
 
   @DeleteMapping("/ongs/{cnpj}")
-  public ResponseEntity<Void> delete(@PathVariable(name = "cnpj") String cnpj) {
+  public ResponseEntity<Void> delete(@PathVariable(name = "cnpj") String cnpj)
+      throws NotFoundException {
     service.delete(cnpj);
     return ResponseEntity.noContent().build();
   }
