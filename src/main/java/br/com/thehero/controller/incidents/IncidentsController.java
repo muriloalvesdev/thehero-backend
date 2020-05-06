@@ -26,8 +26,8 @@ public class IncidentsController {
   @Autowired
   private IncidentsService service;
 
-  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("incidents/{id}/{cnpj}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Object> delete(
       @PathVariable(name = "id", required = true) String incidentsId,
       @PathVariable(value = "cnpj", required = true) String cnpjOrganization) {
@@ -35,15 +35,15 @@ public class IncidentsController {
     return ResponseEntity.noContent().build();
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("incidents/{id}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<IncidentsDTO> findById(
       @PathVariable(name = "id", required = true) String incidentsId) throws NotFoundException {
     return ResponseEntity.ok(service.findById(incidentsId));
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping("incidents/{cnpj}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO dto,
       @PathVariable(name = "cnpj", required = true) String cnpjOrganization)
       throws NotFoundException {
@@ -52,8 +52,8 @@ public class IncidentsController {
         .path("/incidents/{id}").buildAndExpand(incidents.getUuid()).toUri()).build();
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("incidents")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Page<IncidentsDTO>> findAll(Pageable pageable) {
     return ResponseEntity.ok(service.findAll(pageable));
   }
