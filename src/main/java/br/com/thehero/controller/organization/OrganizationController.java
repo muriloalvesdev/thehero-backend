@@ -3,6 +3,7 @@ package br.com.thehero.controller.organization;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,11 +27,13 @@ public class OrganizationController {
   private OrganizationService service;
 
   @GetMapping("/ongs")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<OrganizationDTO>> findAll() {
     return ResponseEntity.ok(service.findAll());
   }
 
   @PostMapping("/ongs")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<OrganizationDTO> create(
       @Validated @RequestBody OrganizationDTO organizationDTO) {
     Organization organization = service.create(organizationDTO);
@@ -40,17 +43,20 @@ public class OrganizationController {
   }
 
   @GetMapping("/ongs/{cnpj}")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<OrganizationDTO> findByCnpj(
       @PathVariable(required = true, name = "cnpj") String cnpj) throws NotFoundException {
     return ResponseEntity.ok(service.findByCnpj(cnpj));
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/ongs")
   public ResponseEntity<Object> update(@Validated @RequestBody OrganizationDTO organizationDTO) {
     service.update(organizationDTO);
     return ResponseEntity.ok().build();
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/ongs/{cnpj}")
   public ResponseEntity<Void> delete(@PathVariable(name = "cnpj") String cnpj)
       throws NotFoundException {

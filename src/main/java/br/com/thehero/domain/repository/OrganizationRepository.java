@@ -9,4 +9,6 @@ public interface OrganizationRepository extends JpaRepository<Organization, UUID
 
   Optional<Organization> findByCnpj(String cnpj);
 
+  Optional<Organization> findByEmail(String email);
+
 }

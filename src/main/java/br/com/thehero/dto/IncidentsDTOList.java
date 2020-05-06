@@ -6,6 +6,12 @@ public class IncidentsDTOList {
 
   private List<IncidentsDTO> incidents;
 
+  public IncidentsDTOList(List<IncidentsDTO> incidents) {
+    this.incidents = incidents;
+  }
+  public IncidentsDTOList() {
+  }
+  
   public List<IncidentsDTO> getIncidents() {
     return incidents;
   }

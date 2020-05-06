@@ -42,6 +42,9 @@ public class OrganizationDTO {
     this.uf = uf;
     this.cnpj = cnpj;
   }
+  
+  public OrganizationDTO() {
+  }
 
   public String getName() {
     return name;
