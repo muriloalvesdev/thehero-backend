@@ -49,6 +49,8 @@ public class Organization extends BaseEntity {
   @OneToMany(mappedBy = "organization", fetch = FetchType.EAGER, orphanRemoval = true)
   private List<Files> files;
 
+  private Organization() {}
+
   private Organization(String name, String email, String whatsapp, String city, String uf,
       String cnpj) {
     this.name = name;
