@@ -11,11 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "organization",
     uniqueConstraints = {@UniqueConstraint(columnNames = {"email", "cnpj"})})
-public class Organization {
+public class Organization extends BaseEntity {
+
+  private static final long serialVersionUID = 6997726546986427669L;
 
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
@@ -39,13 +43,13 @@ public class Organization {
   @Column
   private String cnpj;
 
-  @OneToMany(mappedBy = "organization", fetch = FetchType.EAGER, orphanRemoval = true)
+  @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY, orphanRemoval = true)
   private List<Incidents> incidents;
 
-  @SuppressWarnings("unused")
-  private Organization() {}
+  @OneToMany(mappedBy = "organization", fetch = FetchType.EAGER, orphanRemoval = true)
+  private List<Files> files;
 
-  public Organization(String name, String email, String whatsapp, String city, String uf,
+  private Organization(String name, String email, String whatsapp, String city, String uf,
       String cnpj) {
     this.name = name;
     this.email = email;
@@ -53,6 +57,14 @@ public class Organization {
     this.city = city;
     this.uf = uf;
     this.cnpj = cnpj;
+  }
+
+  public List<Files> getFiles() {
+    return files;
+  }
+
+  public void setFiles(List<Files> files) {
+    this.files = files;
   }
 
   public String getName() {
@@ -113,6 +125,52 @@ public class Organization {
 
   public UUID getUuid() {
     return uuid;
+  }
+
+  public static class OrganizationBuilder {
+    private String name;
+    private String email;
+    private String whatsapp;
+    private String city;
+    private String uf;
+    private String cnpj;
+
+    public static OrganizationBuilder newBuilder(@NotNull String name) {
+      return new OrganizationBuilder(name);
+    }
+
+    private OrganizationBuilder(@NotNull String name) {
+      this.name = name;
+    }
+
+    public OrganizationBuilder withEmail(@Email String email) {
+      this.email = email;
+      return this;
+    }
+
+    public OrganizationBuilder withWhatsapp(@NotNull String whatsapp) {
+      this.whatsapp = whatsapp;
+      return this;
+    }
+
+    public OrganizationBuilder withCity(@NotNull String city) {
+      this.city = city;
+      return this;
+    }
+
+    public OrganizationBuilder withUf(@NotNull String uf) {
+      this.uf = uf;
+      return this;
+    }
+
+    public OrganizationBuilder withCnpj(@NotNull String cnpj) {
+      this.cnpj = cnpj;
+      return this;
+    }
+
+    public Organization build() {
+      return new Organization(name, email, whatsapp, city, uf, cnpj);
+    }
   }
 
 }

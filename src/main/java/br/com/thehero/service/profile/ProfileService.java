@@ -14,30 +14,28 @@ import br.com.thehero.service.convert.IncidentsConvert;
 @Service
 public class ProfileService {
 
-  private OrganizationRepository organizationRepository;
-  private IncidentsRepository incidentsRepository;
+	OrganizationRepository organizationRepository;
+	IncidentsRepository incidentsRepository;
 
-  public ProfileService(OrganizationRepository organizationRepository,
-      IncidentsRepository incidentsRepository) {
-    this.organizationRepository = organizationRepository;
-    this.incidentsRepository = incidentsRepository;
-  }
+	public ProfileService(OrganizationRepository organizationRepository, IncidentsRepository incidentsRepository) {
+		this.organizationRepository = organizationRepository;
+		this.incidentsRepository = incidentsRepository;
+	}
 
-  public IncidentsDTOList findIncidentsByOrganization(String cnpj) {
-    Optional<Organization> organizationOptional = organizationRepository.findByCnpj(cnpj);
-    List<IncidentsDTO> incidents = new ArrayList<>();
-    IncidentsDTOList incidentsDTOList = new IncidentsDTOList();
+	public IncidentsDTOList findIncidentsByOrganization(String cnpj) {
+		Optional<Organization> organizationOptional = organizationRepository.findByCnpj(cnpj);
+		List<IncidentsDTO> incidents = new ArrayList<>();
+		IncidentsDTOList incidentsDTOList = new IncidentsDTOList();
 
-    if (organizationOptional.isPresent()) {
-      Organization organization = organizationOptional.get();
-      incidentsRepository.findByOrganization(organization).stream().forEach(incident -> {
-        IncidentsDTO incidentsDTO = IncidentsConvert.convertEntityToDataTransferObject(incident);
-        incidents.add(incidentsDTO);
-      });
-    }
-    incidentsDTOList.setIncidents(incidents);
-    return incidentsDTOList;
-  }
-
+		if (organizationOptional.isPresent()) {
+			Organization organization = organizationOptional.get();
+			incidentsRepository.findByOrganization(organization).stream().forEach(incident -> {
+				IncidentsDTO incidentsDTO = IncidentsConvert.convertEntityToDataTransferObject(incident);
+				incidents.add(incidentsDTO);
+			});
+		}
+		incidentsDTOList.setIncidents(incidents);
+		return incidentsDTOList;
+	}
 
 }

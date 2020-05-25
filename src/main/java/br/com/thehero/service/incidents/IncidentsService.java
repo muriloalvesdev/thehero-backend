@@ -2,16 +2,17 @@ package br.com.thehero.service.incidents;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.dto.IncidentsDTO;
 import javassist.NotFoundException;
 
 public interface IncidentsService {
-  Incidents create(IncidentsDTO dto, String cnpjOrganization) throws NotFoundException;
+	Incidents create(IncidentsDTO dto, String cnpjOrganization);
 
-  Page<IncidentsDTO> findAll(Pageable pageable);
+	Page<IncidentsDTO> findAll(Pageable pageable);
 
-  void delete(String incidentId, String organizationId);
+	void delete(String incidentId, String organizationId);
 
-  IncidentsDTO findById(String incidentsId) throws NotFoundException;
+	IncidentsDTO findById(String incidentsId) throws NotFoundException;
 }

@@ -1,4 +1,4 @@
-package br.com.thehero.service.organization;
+package br.com.thehero.service.organization.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.OrganizationDTO;
 import br.com.thehero.service.convert.OrganizationConvert;
+import br.com.thehero.service.organization.OrganizationService;
 import javassist.NotFoundException;
 
 @Service

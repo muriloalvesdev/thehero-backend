@@ -14,10 +14,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "incidents")
-public class Incidents {
+public class Incidents extends BaseEntity {
 
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  private static final long serialVersionUID = -7504356832234307582L;
+
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID uuid;
 
   @Column
