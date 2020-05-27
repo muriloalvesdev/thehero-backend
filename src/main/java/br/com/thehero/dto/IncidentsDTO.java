@@ -47,9 +47,8 @@ public class IncidentsDTO {
     this.whatsapp = whatsapp;
     this.email = email;
   }
-  
-  public IncidentsDTO() {
-  }
+
+  public IncidentsDTO() {}
 
   public String getWhatsapp() {
     return whatsapp;
