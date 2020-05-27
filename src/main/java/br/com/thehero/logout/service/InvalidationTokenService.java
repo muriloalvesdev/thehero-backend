@@ -9,17 +9,17 @@ import io.jsonwebtoken.Claims;
 @Service
 public class InvalidationTokenService {
 
-    @Autowired
-    private JwtBlacklist blacklist;
+  @Autowired
+  private JwtBlacklist blacklist;
 
-    @Autowired
-    private JwtProvider jwtProvider;
+  @Autowired
+  private JwtProvider jwtProvider;
 
-    public Claims getInformations(String token) {
-        return jwtProvider.getUserInformation(token);
-    }
+  public Claims getInformations(String token) {
+    return jwtProvider.getUserInformation(token);
+  }
 
-    public void invalidate(String token) {
+  public void invalidate(String token) {
     blacklist.add(token);
   }
 }

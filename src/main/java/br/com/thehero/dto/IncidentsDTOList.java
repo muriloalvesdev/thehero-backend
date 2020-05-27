@@ -9,9 +9,9 @@ public class IncidentsDTOList {
   public IncidentsDTOList(List<IncidentsDTO> incidents) {
     this.incidents = incidents;
   }
-  public IncidentsDTOList() {
-  }
-  
+
+  public IncidentsDTOList() {}
+
   public List<IncidentsDTO> getIncidents() {
     return incidents;
   }

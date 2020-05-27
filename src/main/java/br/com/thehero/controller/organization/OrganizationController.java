@@ -24,45 +24,47 @@ import javassist.NotFoundException;
 @RestController
 public class OrganizationController {
 
-	private OrganizationService service;
+  private OrganizationService service;
 
-	public OrganizationController(OrganizationService service) {
-		this.service = service;
-	}
+  public OrganizationController(OrganizationService service) {
+    this.service = service;
+  }
 
-	@GetMapping("/ongs")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<List<OrganizationDTO>> findAll() {
-		return ResponseEntity.ok(service.findAll());
-	}
+  @GetMapping("/ongs")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<List<OrganizationDTO>> findAll() {
+    return ResponseEntity.ok(service.findAll());
+  }
 
-	@PostMapping("/ongs")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<OrganizationDTO> create(@Validated @RequestBody OrganizationDTO organizationDTO) {
-		Organization organization = service.create(organizationDTO);
+  @PostMapping("/ongs")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<OrganizationDTO> create(
+      @Validated @RequestBody OrganizationDTO organizationDTO) {
+    Organization organization = service.create(organizationDTO);
 
-		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath().path("/ongs/{cnpj}")
-				.buildAndExpand(organization.getCnpj()).toUri()).build();
-	}
+    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath()
+        .path("/ongs/{cnpj}").buildAndExpand(organization.getCnpj()).toUri()).build();
+  }
 
-	@GetMapping("/ongs/{cnpj}")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<OrganizationDTO> findByCnpj(@PathVariable(required = true, name = "cnpj") String cnpj)
-			throws NotFoundException {
-		return ResponseEntity.ok(service.findByCnpj(cnpj));
-	}
+  @GetMapping("/ongs/{cnpj}")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<OrganizationDTO> findByCnpj(
+      @PathVariable(required = true, name = "cnpj") String cnpj) throws NotFoundException {
+    return ResponseEntity.ok(service.findByCnpj(cnpj));
+  }
 
-	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping("/ongs")
-	public ResponseEntity<Object> update(@Validated @RequestBody OrganizationDTO organizationDTO) {
-		service.update(organizationDTO);
-		return ResponseEntity.ok().build();
-	}
+  @PreAuthorize("hasRole('ADMIN')")
+  @PutMapping("/ongs")
+  public ResponseEntity<Object> update(@Validated @RequestBody OrganizationDTO organizationDTO) {
+    service.update(organizationDTO);
+    return ResponseEntity.ok().build();
+  }
 
-	@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("/ongs/{cnpj}")
-	public ResponseEntity<Void> delete(@PathVariable(name = "cnpj") String cnpj) throws NotFoundException {
-		service.delete(cnpj);
-		return ResponseEntity.noContent().build();
-	}
+  @PreAuthorize("hasRole('ADMIN')")
+  @DeleteMapping("/ongs/{cnpj}")
+  public ResponseEntity<Void> delete(@PathVariable(name = "cnpj") String cnpj)
+      throws NotFoundException {
+    service.delete(cnpj);
+    return ResponseEntity.noContent().build();
+  }
 }
