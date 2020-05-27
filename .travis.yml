@@ -1,0 +1,20 @@
+dist: trusty
+
+language: java
+
+jdk:
+  - oraclejdk13
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.5"
+
+install: true
+
+before_install:
+  - psql -c 'create database "bethehero";' -U postgres
+
+script:
+  - mvn clean install
