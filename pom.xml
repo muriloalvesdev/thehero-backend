@@ -58,7 +58,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -90,7 +89,29 @@
 			<version>0.9.1</version>
 		</dependency>
 	</dependencies>
-
+	<profiles>
+		<profile>
+			<id>test</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<bethehero.profile>test</bethehero.profile>
+			</properties>
+		</profile>
+		<profile>
+			<id>staging</id>
+			<properties>
+				<bethehero.profile>staging</bethehero.profile>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<bethehero.profile>prod</bethehero.profile>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
