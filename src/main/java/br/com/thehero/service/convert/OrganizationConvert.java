@@ -14,7 +14,7 @@ public final class OrganizationConvert {
   }
 
   public static final OrganizationDTO convertEntityToDataTransferObject(Organization org) {
-    return new OrganizationDTO(org.getName(), org.getEmail(), org.getWhatsapp(), org.getCity(),
+    return new OrganizationDTO(org.getFullName(), org.getEmail(), org.getWhatsapp(), org.getCity(),
         org.getUf(), org.getCnpj());
   }
 }
