@@ -89,6 +89,6 @@ public class UserService {
     }
     Organization organization = optionalOrganization.get();
     return new AccessToken(jwtProvider.generateJwtToken(authentication), organization.getCnpj(),
-        organization.getName());
+        organization.getFullName());
   }
 }

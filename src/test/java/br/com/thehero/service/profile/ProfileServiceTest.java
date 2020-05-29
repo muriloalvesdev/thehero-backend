@@ -1,43 +1,75 @@
 package br.com.thehero.service.profile;
 
-import br.com.thehero.domain.model.Organization.OrganizationBuilder;
-import br.com.thehero.domain.repository.IncidentsRepository;
-import br.com.thehero.domain.repository.OrganizationRepository;
+import static org.junit.Assert.assertEquals;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+import br.com.thehero.domain.model.Incidents;
+import br.com.thehero.domain.model.Incidents.IncidentsBuilder;
+import br.com.thehero.domain.model.Organization;
+import br.com.thehero.domain.model.Organization.OrganizationBuilder;
+import br.com.thehero.domain.repository.IncidentsRepository;
+import br.com.thehero.domain.repository.OrganizationRepository;
+import br.com.thehero.dto.IncidentsDTO;
+import br.com.thehero.dto.IncidentsDTOList;
+import br.com.thehero.service.IncidentsConstans;
+import br.com.thehero.service.OrganizationConstans;
 
-@RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
 @ActiveProfiles(profiles = {"test"})
-public class ProfileServiceTest {
+@RunWith(SpringRunner.class)
+public class ProfileServiceTest implements OrganizationConstans, IncidentsConstans {
 
-    private ProfileService service;
+  @Autowired
+  private ProfileService service;
 
-    @Mock
-    private OrganizationRepository organizationRepository;
+  @Autowired
+  private OrganizationRepository organizationRepository;
 
-    @Mock
-    private IncidentsRepository incidentsRepository;
+  @Autowired
+  private IncidentsRepository incidentsRepository;
 
-    private RestTemplate template;
+  @Before
+  public void setUp() {
+    assertEquals(0, organizationRepository.findAll().size());
 
-    @Before
-    public void before() {
-        service = new ProfileService(organizationRepository, incidentsRepository);
-    }
+    Organization organization = OrganizationBuilder.newBuilder(NAME).withCity(CITY).withCnpj(CNPJ)
+        .withEmail(EMAIL).withUf(UF).withWhatsapp(WHATSAPP).build();
 
-    @Test
-    public void findIncidentsByOrganization() {
-        OrganizationBuilder.newBuilder("Anjos de Patas LTDA").withCity("Ribeirão Preto").withCnpj("59533195000188")
-                .withEmail("contato@anjosdepatas.com.br").withUf("SP").withWhatsapp("11999999999").build();
+    organizationRepository.save(organization);
 
+    Incidents incidents = IncidentsBuilder.newBuilder(organization).withDescription(DESCRIPTION)
+        .withTitle(TITLE).withValue(VALUE).build();
 
-    }
+    incidentsRepository.save(incidents);
+  }
+
+  @After
+  public void after() {
+    organizationRepository.deleteAll();
+  }
+
+  @Test
+  public void findIncidentsByOrganization() {
+
+    IncidentsDTOList incidents = service.findIncidentsByOrganization(CNPJ);
+
+    IncidentsDTO dto = incidents.getIncidents().get(0);
+    assertEquals(NAME, dto.getNameOrganization());
+    assertEquals(CITY, dto.getCity());
+    assertEquals(UF, dto.getUf());
+    assertEquals(EMAIL, dto.getEmail());
+    assertEquals(WHATSAPP, dto.getWhatsapp());
+    assertEquals(TITLE, dto.getTitle());
+    assertEquals(DESCRIPTION, dto.getDescription());
+    assertEquals(VALUE, dto.getValue());
+  }
 
 }
