@@ -25,7 +25,7 @@ import br.com.thehero.login.request.LoginDTO;
 import br.com.thehero.login.request.RegisterDTO;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceConstants {
 
   private UserRepository userRepository;
   private RoleRepository roleRepository;
@@ -48,7 +48,7 @@ public class UserService {
   public User registerUser(RegisterDTO registerData) {
 
     if (userRepository.existsByEmail(registerData.getEmail())) {
-      throw new ExistingEmailException("Fail -> Email is already in use!");
+      throw new ExistingEmailException(EMAIL_IS_ALREADY_IN_USE);
     }
 
     User user = new User(UUID.randomUUID(), registerData.getName(), registerData.getLastName(),
@@ -61,11 +61,11 @@ public class UserService {
       switch (role) {
         case "admin":
           Role admin = roleRepository.findByName(RoleName.ROLE_ADMIN)
-              .orElseThrow(() -> new IllegalRoleException("Fail! -> Cause: Admin Role not find."));
+              .orElseThrow(() -> new IllegalRoleException(ADMIN_ROLE_NOT_FOUND));
           roles.add(admin);
           break;
         default:
-          throw new IllegalRoleException("Fail! -> Cause: Role invalid.");
+          throw new IllegalRoleException(ROLE_INVALID);
       }
     });
 
@@ -87,8 +87,8 @@ public class UserService {
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
-    Organization organization = organizationRepository.findByEmail(loginDto.getEmail()).orElseThrow(
-        () -> new EmailNotFoundException("Informed email does not exist in the database!"));
+    Organization organization = organizationRepository.findByEmail(loginDto.getEmail())
+        .orElseThrow(() -> new EmailNotFoundException(EMAIL_DOES_NOT_EXIST));
 
 
     return new AccessToken(jwtProvider.generateJwtToken(authentication), organization.getCnpj(),
@@ -96,8 +96,8 @@ public class UserService {
   }
 
   public void resetPassword(LoginDTO loginData) {
-    User user = userRepository.findByEmail(loginData.getEmail()).orElseThrow(
-        () -> new EmailNotFoundException("Informed email does not exist in the database!"));
+    User user = userRepository.findByEmail(loginData.getEmail())
+        .orElseThrow(() -> new EmailNotFoundException(EMAIL_DOES_NOT_EXIST));
     user.setPassword(loginData.getPassword());
     userRepository.save(user);
   }
