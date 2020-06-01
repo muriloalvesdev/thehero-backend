@@ -1,7 +1,6 @@
 package br.com.thehero.login.service;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.login.config.jwt.JwtProvider;
+import br.com.thehero.login.exception.EmailNotFoundException;
 import br.com.thehero.login.exception.ExistingEmailException;
 import br.com.thehero.login.exception.IllegalRoleException;
 import br.com.thehero.login.model.AccessToken;
@@ -52,7 +52,7 @@ public class UserService {
     }
 
     User user = new User(UUID.randomUUID(), registerData.getName(), registerData.getLastName(),
-        registerData.getEmail(), encoder.encode(registerData.getPassword()));
+        registerData.getEmail(), encodePassword(registerData.getPassword()));
 
     Set<String> strRoles = registerData.getRole();
     Set<Role> roles = new HashSet<>();
@@ -74,27 +74,30 @@ public class UserService {
 
   }
 
+  private String encodePassword(String password) {
+    return encoder.encode(password);
+  }
+
   public AccessToken authenticateUser(LoginDTO loginDto) {
 
-    Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+    Authentication authentication =
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+            loginDto.getEmail(), encodePassword(loginDto.getPassword())));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    Optional<Organization> optionalOrganization =
-        organizationRepository.findByEmail(loginDto.getEmail());
 
-    if (!optionalOrganization.isPresent()) {
-      throw new RuntimeException("Informed email does not exist in the database!");
-    }
-    Organization organization = optionalOrganization.get();
+    Organization organization = organizationRepository.findByEmail(loginDto.getEmail()).orElseThrow(
+        () -> new EmailNotFoundException("Informed email does not exist in the database!"));
+
+
     return new AccessToken(jwtProvider.generateJwtToken(authentication), organization.getCnpj(),
         organization.getFullName());
   }
 
   public void resetPassword(LoginDTO loginData) {
-    User user = userRepository.findByEmail(loginData.getEmail())
-        .orElseThrow(() -> new RuntimeException("Informed email does not exist in the database!"));
+    User user = userRepository.findByEmail(loginData.getEmail()).orElseThrow(
+        () -> new EmailNotFoundException("Informed email does not exist in the database!"));
     user.setPassword(loginData.getPassword());
     userRepository.save(user);
   }
