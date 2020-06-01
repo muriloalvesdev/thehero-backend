@@ -91,4 +91,11 @@ public class UserService {
     return new AccessToken(jwtProvider.generateJwtToken(authentication), organization.getCnpj(),
         organization.getFullName());
   }
+
+  public void resetPassword(LoginDTO loginData) {
+    User user = userRepository.findByEmail(loginData.getEmail())
+        .orElseThrow(() -> new RuntimeException("Informed email does not exist in the database!"));
+    user.setPassword(loginData.getPassword());
+    userRepository.save(user);
+  }
 }

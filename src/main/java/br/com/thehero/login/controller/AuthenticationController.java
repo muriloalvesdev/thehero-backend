@@ -41,4 +41,10 @@ public class AuthenticationController {
 
   }
 
+  @PostMapping("/password/")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<Object> resetPassword(@Validated @RequestBody LoginDTO loginData) {
+    userService.resetPassword(loginData);
+    return ResponseEntity.ok().build();
+  }
 }
