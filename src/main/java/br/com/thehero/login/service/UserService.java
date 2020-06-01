@@ -1,14 +1,21 @@
 package br.com.thehero.login.service;
 
+import static br.com.thehero.login.service.UserServiceConstants.ADMIN_ROLE_NOT_FOUND;
+import static br.com.thehero.login.service.UserServiceConstants.EMAIL_DOES_NOT_EXIST;
+import static br.com.thehero.login.service.UserServiceConstants.EMAIL_IS_ALREADY_IN_USE;
+import static br.com.thehero.login.service.UserServiceConstants.ROLE_INVALID;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.login.config.jwt.JwtProvider;
@@ -25,7 +32,7 @@ import br.com.thehero.login.request.LoginDTO;
 import br.com.thehero.login.request.RegisterDTO;
 
 @Service
-public class UserService implements UserServiceConstants {
+public class UserService {
 
   private UserRepository userRepository;
   private RoleRepository roleRepository;
