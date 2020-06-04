@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "incidents")
@@ -40,7 +39,7 @@ public class Incidents extends BaseEntity {
   @SuppressWarnings("unused")
   private Incidents() {}
 
-  private Incidents(String title, String description, String value, Organization organization) {
+  public Incidents(String title, String description, String value, Organization organization) {
     this.title = title;
     this.description = description;
     this.value = value;
@@ -83,37 +82,4 @@ public class Incidents extends BaseEntity {
     return uuid;
   }
 
-  public static class IncidentsBuilder {
-    private String title;
-    private String description;
-    private String value;
-    private Organization organization;
-
-    private IncidentsBuilder(Organization organization) {
-      this.organization = organization;
-    }
-
-    public static IncidentsBuilder newBuilder(Organization organization) {
-      return new IncidentsBuilder(organization);
-    }
-
-    public IncidentsBuilder withTitle(@NotNull String title) {
-      this.title = title;
-      return this;
-    }
-
-    public IncidentsBuilder withDescription(@NotNull String description) {
-      this.description = description;
-      return this;
-    }
-
-    public IncidentsBuilder withValue(@NotNull String value) {
-      this.value = value;
-      return this;
-    }
-
-    public Incidents build() {
-      return new Incidents(title, description, value, organization);
-    }
-  }
 }

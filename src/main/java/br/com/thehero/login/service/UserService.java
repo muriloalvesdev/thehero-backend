@@ -1,6 +1,7 @@
 package br.com.thehero.login.service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.login.config.jwt.JwtProvider;
-import br.com.thehero.login.exception.EmailNotFoundException;
 import br.com.thehero.login.exception.ExistingEmailException;
 import br.com.thehero.login.exception.IllegalRoleException;
 import br.com.thehero.login.model.AccessToken;
@@ -25,7 +25,7 @@ import br.com.thehero.login.request.LoginDTO;
 import br.com.thehero.login.request.RegisterDTO;
 
 @Service
-public class UserService implements UserServiceConstants {
+public class UserService {
 
   private UserRepository userRepository;
   private RoleRepository roleRepository;
@@ -48,11 +48,11 @@ public class UserService implements UserServiceConstants {
   public User registerUser(RegisterDTO registerData) {
 
     if (userRepository.existsByEmail(registerData.getEmail())) {
-      throw new ExistingEmailException(EMAIL_IS_ALREADY_IN_USE);
+      throw new ExistingEmailException("Fail -> Email is already in use!");
     }
 
     User user = new User(UUID.randomUUID(), registerData.getName(), registerData.getLastName(),
-        registerData.getEmail(), encodePassword(registerData.getPassword()));
+        registerData.getEmail(), encoder.encode(registerData.getPassword()));
 
     Set<String> strRoles = registerData.getRole();
     Set<Role> roles = new HashSet<>();
@@ -61,11 +61,11 @@ public class UserService implements UserServiceConstants {
       switch (role) {
         case "admin":
           Role admin = roleRepository.findByName(RoleName.ROLE_ADMIN)
-              .orElseThrow(() -> new IllegalRoleException(ADMIN_ROLE_NOT_FOUND));
+              .orElseThrow(() -> new IllegalRoleException("Fail! -> Cause: Admin Role not find."));
           roles.add(admin);
           break;
         default:
-          throw new IllegalRoleException(ROLE_INVALID);
+          throw new IllegalRoleException("Fail! -> Cause: Role invalid.");
       }
     });
 
@@ -74,31 +74,21 @@ public class UserService implements UserServiceConstants {
 
   }
 
-  private String encodePassword(String password) {
-    return encoder.encode(password);
-  }
-
   public AccessToken authenticateUser(LoginDTO loginDto) {
 
-    Authentication authentication =
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-            loginDto.getEmail(), encodePassword(loginDto.getPassword())));
+    Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
+    Optional<Organization> optionalOrganization =
+        organizationRepository.findByEmail(loginDto.getEmail());
 
-    Organization organization = organizationRepository.findByEmail(loginDto.getEmail())
-        .orElseThrow(() -> new EmailNotFoundException(EMAIL_DOES_NOT_EXIST));
-
-
+    if (!optionalOrganization.isPresent()) {
+      throw new RuntimeException("Informed email does not exist in the database!");
+    }
+    Organization organization = optionalOrganization.get();
     return new AccessToken(jwtProvider.generateJwtToken(authentication), organization.getCnpj(),
-        organization.getFullName());
-  }
-
-  public void resetPassword(LoginDTO loginData) {
-    User user = userRepository.findByEmail(loginData.getEmail())
-        .orElseThrow(() -> new EmailNotFoundException(EMAIL_DOES_NOT_EXIST));
-    user.setPassword(loginData.getPassword());
-    userRepository.save(user);
+        organization.getName());
   }
 }

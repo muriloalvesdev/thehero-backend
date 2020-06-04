@@ -29,7 +29,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     repository.findByCnpj(dto.getCnpj()).ifPresent(organization -> {
       organization.setCity(dto.getCity());
       organization.setEmail(dto.getEmail());
-      organization.setFullName(dto.getName());
+      organization.setName(dto.getName());
       organization.setUf(dto.getUf());
       organization.setWhatsapp(String.valueOf(dto.getWhatsapp()));
 

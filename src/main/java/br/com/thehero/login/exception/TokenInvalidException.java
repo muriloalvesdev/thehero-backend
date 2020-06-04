@@ -1,9 +1,9 @@
 package br.com.thehero.login.exception;
 
-public class Sha512Exception extends RuntimeException {
+public class TokenInvalidException extends RuntimeException {
   private static final long serialVersionUID = 1L;
 
-  public Sha512Exception(String msg) {
+  public TokenInvalidException(String msg) {
     super(msg);
   }
 
