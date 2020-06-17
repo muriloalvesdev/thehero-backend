@@ -2,6 +2,8 @@ package br.com.thehero.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,137 +12,135 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "files")
-public class Files extends BaseEntity {
+public class Files {
 
-  private static final long serialVersionUID = -2488282648212980416L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID uuid;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private UUID uuid;
+	@Column(name = "created_at")
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	protected LocalDateTime createdAt;
 
-  @Column(name = "created_at")
-  @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-  protected LocalDateTime createdAt;
+	@Column(name = "updated_at")
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	protected LocalDateTime updatedAt;
 
-  @Column(name = "updated_at")
-  @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-  protected LocalDateTime updatedAt;
+	private String filename;
 
-  private String filename;
+	private byte[] data;
 
-  private byte[] data;
+	private String type;
 
-  private String type;
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "incidents_uuid", referencedColumnName = "uuid", foreignKey = @ForeignKey(name = "uuid"))
+	private Incidents Incidents;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "organization_uuid", referencedColumnName = "uuid",
-      foreignKey = @ForeignKey(name = "uuid"))
-  private Organization organization;
+	@SuppressWarnings("unused")
+	private Files() {
+	}
 
-  @SuppressWarnings("unused")
-  private Files() {}
+	public Files(String filename, byte[] data, String type, Incidents Incidents) {
+		this.filename = filename;
+		this.data = data;
+		this.type = type;
+		this.Incidents = Incidents;
+	}
 
-  public Files(String filename, byte[] data, String type, Organization organization) {
-    this.filename = filename;
-    this.data = data;
-    this.type = type;
-    this.organization = organization;
-  }
+	public String getFilename() {
+		return filename;
+	}
 
-  public String getFilename() {
-    return filename;
-  }
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
-  public void setFilename(String filename) {
-    this.filename = filename;
-  }
+	public byte[] getData() {
+		return data;
+	}
 
-  public byte[] getData() {
-    return data;
-  }
+	public void setData(byte[] data) {
+		this.data = data;
+	}
 
-  public void setData(byte[] data) {
-    this.data = data;
-  }
+	public String getType() {
+		return type;
+	}
 
-  public String getType() {
-    return type;
-  }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-  public void setType(String type) {
-    this.type = type;
-  }
+	public Incidents getIncidents() {
+		return Incidents;
+	}
 
-  public Organization getOrganization() {
-    return organization;
-  }
+	public void setIncidents(Incidents incidents) {
+		Incidents = incidents;
+	}
 
-  public void setOrganization(Organization organization) {
-    this.organization = organization;
-  }
+	public UUID getUuid() {
+		return uuid;
+	}
 
-  public UUID getUuid() {
-    return uuid;
-  }
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = LocalDateTime.now();
+	}
 
-  @PrePersist
-  protected void onCreate() {
-    this.createdAt = LocalDateTime.now();
-  }
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = LocalDateTime.now();
+	}
 
-  @PreUpdate
-  protected void onUpdate() {
-    this.updatedAt = LocalDateTime.now();
-  }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
+	public LocalDateTime getUpdatedAt() {
+		return this.updatedAt == null ? getCreatedAt() : this.updatedAt;
+	}
 
-  public LocalDateTime getUpdatedAt() {
-    return this.updatedAt == null ? getCreatedAt() : this.updatedAt;
-  }
+	public static class FilesBuilder {
+		private String filename;
+		private byte[] data;
+		private String type;
+		private Incidents Incidents;
 
+		private FilesBuilder(byte[] data) {
+			this.data = data;
+		}
 
-  public static class FilesBuilder {
-    private String filename;
-    private byte[] data;
-    private String type;
-    private Organization organization;
+		public static FilesBuilder newBuilder(byte[] data) {
+			return new FilesBuilder(data);
+		}
 
-    private FilesBuilder(byte[] data) {
-      this.data = data;
-    }
+		public FilesBuilder withFilename(String filename) {
+			this.filename = filename;
+			return this;
+		}
 
-    public static FilesBuilder newBuilder(byte[] data) {
-      return new FilesBuilder(data);
-    }
+		public FilesBuilder withType(String type) {
+			this.type = type;
+			return this;
+		}
 
-    public FilesBuilder withFilename(String filename) {
-      this.filename = filename;
-      return this;
-    }
+		public FilesBuilder withIncidents(Incidents Incidents) {
+			this.Incidents = Incidents;
+			return this;
+		}
 
-    public FilesBuilder withType(String type) {
-      this.type = type;
-      return this;
-    }
-
-    public FilesBuilder withOrganization(Organization organization) {
-      this.organization = organization;
-      return this;
-    }
-
-    public Files build() {
-      return new Files(filename, data, type, organization);
-    }
-  }
+		public Files build() {
+			return new Files(filename, data, type, Incidents);
+		}
+	}
 }
