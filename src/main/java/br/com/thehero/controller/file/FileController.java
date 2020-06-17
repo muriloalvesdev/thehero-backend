@@ -37,7 +37,5 @@ public class FileController {
 				.path(files.getUuid().toString()).toUriString());
 
 	}
-	
-	//TODO precisamos implementar a API de download da imagem.
 
 }
