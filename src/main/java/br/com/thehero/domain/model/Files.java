@@ -43,17 +43,17 @@ public class Files {
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "incidents_uuid", referencedColumnName = "uuid", foreignKey = @ForeignKey(name = "uuid"))
-	private Incidents Incidents;
+	private Incidents incidents;
 
 	@SuppressWarnings("unused")
 	private Files() {
 	}
 
-	public Files(String filename, byte[] data, String type, Incidents Incidents) {
+	public Files(String filename, byte[] data, String type, Incidents incidents) {
 		this.filename = filename;
 		this.data = data;
 		this.type = type;
-		this.Incidents = Incidents;
+		this.incidents = incidents;
 	}
 
 	public String getFilename() {
@@ -81,11 +81,11 @@ public class Files {
 	}
 
 	public Incidents getIncidents() {
-		return Incidents;
+		return incidents;
 	}
 
 	public void setIncidents(Incidents incidents) {
-		Incidents = incidents;
+		this.incidents = incidents;
 	}
 
 	public UUID getUuid() {
@@ -114,7 +114,7 @@ public class Files {
 		private String filename;
 		private byte[] data;
 		private String type;
-		private Incidents Incidents;
+		private Incidents incidents;
 
 		private FilesBuilder(byte[] data) {
 			this.data = data;
@@ -134,13 +134,13 @@ public class Files {
 			return this;
 		}
 
-		public FilesBuilder withIncidents(Incidents Incidents) {
-			this.Incidents = Incidents;
+		public FilesBuilder withIncidents(Incidents incidents) {
+			this.incidents = incidents;
 			return this;
 		}
 
 		public Files build() {
-			return new Files(filename, data, type, Incidents);
+			return new Files(filename, data, type, incidents);
 		}
 	}
 }
