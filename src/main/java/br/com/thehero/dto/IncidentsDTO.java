@@ -1,39 +1,33 @@
 package br.com.thehero.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class IncidentsDTO {
 
-	@JsonProperty("id")
 	private String id;
 
-	@JsonProperty("title")
 	@NotNull
 	private String title;
 
-	@JsonProperty("description")
 	@NotNull
 	private String description;
 
-	@JsonProperty("value")
 	@NotNull
 	private String value;
 
 	@JsonProperty("name")
 	private String nameOrganization;
 
-	@JsonProperty("city")
 	private String city;
 
-	@JsonProperty("uf")
 	private String uf;
 
-	@JsonProperty("whatsapp")
 	private String whatsapp;
 
-	@JsonProperty("email")
+	@Email(message = "email is not valid!")
 	private String email;
 
 	@JsonProperty("file_data")
