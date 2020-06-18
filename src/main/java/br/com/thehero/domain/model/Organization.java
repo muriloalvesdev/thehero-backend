@@ -47,6 +47,7 @@ public class Organization extends BaseEntity {
 	@OneToMany(mappedBy = "organization", fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Incidents> incidents;
 
+	@SuppressWarnings("unused")
 	private Organization() {
 	}
 
