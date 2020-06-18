@@ -1,5 +1,6 @@
 package br.com.thehero.login.model;
 
+import br.com.thehero.domain.model.BaseEntity;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -23,7 +24,7 @@ import br.com.thehero.login.util.Utils;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class User {
+public class User extends BaseEntity {
 
   public static final String ERROR_INVALID_PASS = "Password can not be null or empty";
   public static final String ERROR_INVALID_NAME = "Name can not be null or empty";
@@ -35,32 +36,18 @@ public class User {
   @Id
   private UUID id;
 
-  @Column(name = "name")
   private String name;
 
-  @Column(name = "last_name")
   private String lastName;
 
   @Email(message = "Please provide a valid e-mail")
-  @Column(name = "email")
   private String email;
 
-  @Column(name = "password")
   private String password;
 
   @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles")
   private Set<Role> roles;
-
-  @Column(name = "created_at")
-  @CreationTimestamp
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-
-  @Column(name = "update_at")
-  @UpdateTimestamp
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date updatedAt;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "token_password_id", unique = true)
@@ -74,17 +61,8 @@ public class User {
     setPassword(password);
   }
 
-  public User(UUID id, String name, String lastName, String email, String password,
-      Set<Role> roles) {
-    setId(id);
-    setName(name);
-    setLastName(lastName);
-    setEmail(email);
-    setPassword(password);
-    setRoles(roles);
-  }
-
-  public User() {}
+  @SuppressWarnings("unused")
+  private User() {}
 
   public String getName() {
     return name;
@@ -138,14 +116,6 @@ public class User {
   public void setId(UUID id) {
     Utils.argumentNotNull(id, ERROR_INVALID_UUID);
     this.id = id;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public Date getUpdatedAt() {
-    return updatedAt;
   }
 
   public TokenEntity getToken() {
