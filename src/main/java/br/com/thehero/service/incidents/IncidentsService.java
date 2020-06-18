@@ -12,7 +12,5 @@ public interface IncidentsService {
 
   Page<IncidentsDTO> findAll(Pageable pageable);
 
-  void delete(String incidentId, String organizationId);
-
   IncidentsDTO findById(String incidentsId) throws NotFoundException;
 }
