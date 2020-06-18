@@ -21,19 +21,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "files")
-public class Files {
+public class Files extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID uuid;
-
-	@Column(name = "created_at")
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-	protected LocalDateTime createdAt;
-
-	@Column(name = "updated_at")
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-	protected LocalDateTime updatedAt;
 
 	private String filename;
 
@@ -100,14 +92,6 @@ public class Files {
 	@PreUpdate
 	protected void onUpdate() {
 		this.updatedAt = LocalDateTime.now();
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return this.updatedAt == null ? getCreatedAt() : this.updatedAt;
 	}
 
 	public static class FilesBuilder {
