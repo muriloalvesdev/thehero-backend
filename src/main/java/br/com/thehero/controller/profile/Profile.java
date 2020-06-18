@@ -22,7 +22,7 @@ public class Profile {
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("profile/{cnpj}")
   public ResponseEntity<IncidentsDTOList> findIncidentsByOrganization(
-      @PathVariable(name = "cnpj", required = true) String cnpj) {
+      @PathVariable(name = "cnpj") String cnpj) {
     return ResponseEntity.ok(service.findIncidentsByOrganization(cnpj));
   }
 }
