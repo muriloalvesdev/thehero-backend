@@ -48,18 +48,6 @@ public class IncidentsServiceImpl implements IncidentsService {
 
 	}
 
-	public void delete(String incidentId, String cnpjOrganization) {
-
-		incidentsRepository.findById(UUID.fromString(incidentId)).ifPresent(incident -> {
-			if (incident.getOrganization().getCnpj().equals(cnpjOrganization)) {
-				filesRepository.delete(incident.getFiles());
-				incidentsRepository.delete(incident);
-			} else {
-				throw new IllegalAccessError("Não autorizado!");
-			}
-		});
-	}
-
 	public IncidentsDTO findById(String incidentsId) throws NotFoundException {
 		Optional<Incidents> incidentOptional = incidentsRepository.findById(UUID.fromString(incidentsId));
 
