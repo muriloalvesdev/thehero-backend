@@ -47,16 +47,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     return organizationDTOs;
   }
 
-  public void delete(String cnpj) throws NotFoundException {
-    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
-    if (organizationOptional.isPresent()) {
-      repository.delete(organizationOptional.get());
-    } else {
-      throw new NotFoundException(
-          "Não existe uma organização com o CNPJ [" + cnpj + "] informado.");
-    }
-  }
-
   public OrganizationDTO findByCnpj(String cnpj) throws NotFoundException {
     Optional<Organization> organizationOptional =
         repository.findAll().stream().filter(org -> org.getCnpj().equals(cnpj)).findFirst();
