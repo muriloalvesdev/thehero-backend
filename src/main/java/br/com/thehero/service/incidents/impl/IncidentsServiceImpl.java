@@ -31,10 +31,10 @@ public class IncidentsServiceImpl implements IncidentsService {
   }
 
   public Incidents create(IncidentsDTO dto, String cnpjOrganization) {
-    Optional<Organization> optionaOrganization =
+    Optional<Organization> optionalOrganization =
         organizationRepository.findByCnpj(cnpjOrganization);
-    if (optionaOrganization.isPresent()) {
-      Organization organization = optionaOrganization.get();
+    if (optionalOrganization.isPresent()) {
+      Organization organization = optionalOrganization.get();
       Incidents incidents = IncidentsConvert.convertDataTransferObjetToEntity(dto, organization);
 
       return incidentsRepository.saveAndFlush(incidents);
@@ -46,7 +46,7 @@ public class IncidentsServiceImpl implements IncidentsService {
 
   public Page<IncidentsDTO> findAll(Pageable pageable) {
     return incidentsRepository.findByStatus(Status.AVAILABLE, pageable)
-        .map(incident -> IncidentsConvert.convertEntityToDataTransferObject(incident));
+        .map(IncidentsConvert::convertEntityToDataTransferObject);
   }
 
   public void delete(String incidentId, String cnpjOrganization) {
@@ -60,9 +60,9 @@ public class IncidentsServiceImpl implements IncidentsService {
     });
   }
 
-  public IncidentsDTO findById(String incidentsId) throws NotFoundException {
+  public IncidentsDTO findById(String incidentId) throws NotFoundException {
     Optional<Incidents> incidentOptional =
-        incidentsRepository.findById(UUID.fromString(incidentsId));
+        incidentsRepository.findById(UUID.fromString(incidentId));
 
     if (incidentOptional.isPresent() && incidentOptional.get().isAvailable()) {
       Incidents incidents = incidentOptional.get();
