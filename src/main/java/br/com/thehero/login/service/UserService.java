@@ -26,7 +26,12 @@ import br.com.thehero.login.request.LoginDTO;
 import br.com.thehero.login.request.RegisterDTO;
 
 @Service
-public class UserService implements UserServiceConstants {
+public class UserService {
+
+  private static final String EMAIL_IS_ALREADY = "Fail -> Email is already in use!";
+  private static final String ROLE_NOT_FIND = "Fail! -> Cause: Admin Role not find.";
+  private static final String ROLE_INVALID = "Fail! -> Cause: Role invalid.";
+  private static final String EMAIL_NOT_FOUND = "Informed email does not exist in the database!";
 
   private UserRepository userRepository;
   private RoleRepository roleRepository;
