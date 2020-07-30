@@ -1,4 +1,4 @@
-package br.com.thehero.login.controller;
+package br.com.thehero.controller.authentication;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

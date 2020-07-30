@@ -21,6 +21,10 @@ public class JwtBlacklist {
   @Value("${security.app.jwtSecret}")
   private String jwtSecret;
 
+  public JwtBlacklist(String jwtSecret) {
+    this.jwtSecret = jwtSecret;
+  }
+
   public synchronized void add(String token) {
     if (!blacklist.containsKey(token)) {
       blacklist.putIfAbsent(token, String.valueOf(System.currentTimeMillis()));
@@ -52,9 +56,4 @@ public class JwtBlacklist {
     return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getExpiration()
         .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
   }
-
-  public static Map<String, String> getBlacklist() {
-    return blacklist;
-  }
-
 }

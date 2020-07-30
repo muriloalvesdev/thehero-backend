@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import br.com.thehero.login.exception.TokenNotFoundException;
 import br.com.thehero.login.service.UserDetailsServiceImpl;
 
 
@@ -59,8 +60,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
     if (authHeader != null && authHeader.startsWith("Bearer ")) {
       return authHeader.replace("Bearer ", "");
     }
-
-    return null;
+    throw new TokenNotFoundException("Token not found exception");
   }
 
 }

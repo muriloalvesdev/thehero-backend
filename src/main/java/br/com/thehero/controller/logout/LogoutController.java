@@ -1,4 +1,4 @@
-package br.com.thehero.logout.controller;
+package br.com.thehero.controller.logout;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
