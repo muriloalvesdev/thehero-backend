@@ -6,18 +6,18 @@ import br.com.thehero.dto.IncidentsDTO;
 
 public final class IncidentsConvert {
 
-	private IncidentsConvert() {
-	}
+  private IncidentsConvert() {}
 
-	public static final Incidents convertDataTransferObjetToEntity(IncidentsDTO dto, Organization organization) {
-		return new Incidents(dto.getTitle(), dto.getDescription(), dto.getValue(), organization);
-	}
+  public static final Incidents convertDataTransferObjetToEntity(IncidentsDTO dto,
+      Organization organization) {
+    return new Incidents(dto.getTitle(), dto.getDescription(), dto.getValue(), organization);
+  }
 
-	public static final IncidentsDTO convertEntityToDataTransferObject(Incidents incidents) {
-		Organization organization = incidents.getOrganization();
-		return new IncidentsDTO(incidents.getTitle(), incidents.getDescription(), incidents.getValue(),
-				incidents.getUuid().toString(), organization.getName(), organization.getCity(), organization.getUf(),
-				organization.getWhatsapp(), organization.getEmail(), incidents.getFiles().getData(),
-				incidents.getFiles().getType());
-	}
+  public static final IncidentsDTO convertEntityToDataTransferObject(Incidents incidents) {
+    Organization organization = incidents.getOrganization();
+    return new IncidentsDTO(incidents.getTitle(), incidents.getDescription(), incidents.getValue(),
+        incidents.getUuid().toString(), organization.getName(), organization.getCity(),
+        organization.getUf(), organization.getWhatsapp(), organization.getEmail(),
+        incidents.getFiles().getData(), incidents.getFiles().getType());
+  }
 }
