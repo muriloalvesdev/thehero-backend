@@ -3,11 +3,14 @@ Conheci a [Rocketseat](https://github.com/Rocketseat) em sua 10.ª Semana Omnist
 
 Como eu disse no tópico **Porque crio diversos repositórios**, gosto muito da prática e me surgiu a idéia de transformar o backend da aplicação que a princípio era todo em [NodeJS](https://nodejs.org/en/) pra [Java](https://docs.oracle.com/en/java/) utilizando [Spring Boot](https://spring.io/projects/spring-boot). É óbvio que de início não foi nada fácil, mas concluí e aprendi muito com isso. 
 
-Os repositórios do projeto todo são:
+### Os repositórios do projeto todo são:
 
 [Backend em Java com Spring Boot](https://github.com/muriloalvesdev/thehero-backend).
+
 [Backend em NodeJS](https://github.com/muriloalvesdev/semanaomnistack11-backend).
+
 [Front-End em ReactJS](https://github.com/muriloalvesdev/thehero-portal).
+
 [Mobile em React-Native](https://github.com/muriloalvesdev/thehero-mobile).
 
 O projeto é open-source e você pode contribuir sem problema algum, é só abrir um PR. :sunglasses: 
