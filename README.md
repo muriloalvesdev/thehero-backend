@@ -15,8 +15,8 @@ Como eu disse no tópico **Porque crio diversos repositórios**, gosto muito da 
 
 O projeto é open-source e você pode contribuir sem problema algum, é só abrir um PR. :sunglasses: 
 
-O projeto sendo open-source contribui com duas coisas incríveis:
+O projeto sendo open-source duas coisas incríveis ocorrerão:
 
-O programador que abrir um PR vai estar contribuindo para um projeto gratuito que com certeza ajudará e muito as ONGs. :grinning:
+O programador que abrir um PR vai estar contribuindo com um projeto open-source e consequentemente vai aprender e adquirir muito conhecimento sobre o assunto abordado no PR. :grinning:
 
 As ONGs por sua vez terão sempre um projeto gratuito e com atualizações sem precisar pagar nada. :stuck_out_tongue_winking_eye:
