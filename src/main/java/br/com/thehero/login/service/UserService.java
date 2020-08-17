@@ -29,7 +29,7 @@ import br.com.thehero.login.request.RegisterDTO;
 public class UserService {
 
   private static final String EMAIL_IS_ALREADY = "Fail -> Email is already in use!";
-  private static final String ROLE_NOT_FIND = "Fail! -> Cause: Admin Role not find.";
+  private static final String ROLE_NOT_FOUND = "Fail! -> Cause: %s Role not find.";
   private static final String ROLE_INVALID = "Fail! -> Cause: Role invalid.";
   private static final String EMAIL_NOT_FOUND = "Informed email does not exist in the database!";
 
@@ -67,7 +67,7 @@ public class UserService {
       switch (role.toLowerCase()) {
         case "admin":
           Role admin = roleRepository.findByName(RoleName.ROLE_ADMIN)
-              .orElseThrow(() -> new IllegalRoleException(ROLE_NOT_FIND));
+              .orElseThrow(() -> new IllegalRoleException(String.format(ROLE_NOT_FOUND, "Admin")));
           roles.add(admin);
           break;
         default:
