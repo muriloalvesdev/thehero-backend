@@ -1,16 +1,16 @@
 package br.com.thehero.service.convert;
 
 import br.com.thehero.domain.model.Organization;
-import br.com.thehero.domain.model.Organization.OrganizationBuilder;
 import br.com.thehero.dto.OrganizationDTO;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OrganizationConvert {
-  private OrganizationConvert() {}
 
   public static final Organization convertDataTransferObjectToEntity(OrganizationDTO dto) {
-    return OrganizationBuilder.newBuilder(dto.getName()).withCity(dto.getCity())
-        .withCnpj(dto.getCnpj()).withEmail(dto.getEmail()).withUf(dto.getUf())
-        .withWhatsapp(dto.getWhatsapp()).build();
+    return Organization.newBuilder().name(dto.getName()).city(dto.getCity()).cnpj(dto.getCnpj())
+        .email(dto.getEmail()).uf(dto.getUf()).whatsapp(dto.getWhatsapp()).build();
   }
 
   public static final OrganizationDTO convertEntityToDataTransferObject(Organization org) {
