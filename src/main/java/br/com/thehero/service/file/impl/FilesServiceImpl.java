@@ -10,19 +10,16 @@ import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.repository.FilesRepository;
 import br.com.thehero.domain.repository.IncidentsRepository;
 import br.com.thehero.service.file.FilesService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
 public class FilesServiceImpl implements FilesService {
 
   static final Logger LOG = Logger.getLogger(FilesServiceImpl.class);
   FilesRepository filesRepository;
   IncidentsRepository incidentsRepository;
-
-  public FilesServiceImpl(FilesRepository filesRepository,
-      IncidentsRepository incidentsRepository) {
-    this.filesRepository = filesRepository;
-    this.incidentsRepository = incidentsRepository;
-  }
 
   public Files save(MultipartFile file, String uuidIncidents) {
     try {
