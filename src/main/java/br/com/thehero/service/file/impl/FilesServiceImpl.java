@@ -2,13 +2,10 @@ package br.com.thehero.service.file.impl;
 
 import java.io.IOException;
 import java.util.UUID;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import br.com.thehero.domain.model.Files;
-import br.com.thehero.domain.model.Files.FilesBuilder;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.repository.FilesRepository;
 import br.com.thehero.domain.repository.IncidentsRepository;
@@ -49,8 +46,8 @@ public class FilesServiceImpl implements FilesService {
         .orElseThrow(() -> new RuntimeException(
             "Incident not found with UUID informed [" + uuidIncidents + "]"));
 
-    Files files = filesRepository.saveAndFlush(FilesBuilder.newBuilder(data).withFilename(filename)
-        .withType(type).withIncidents(incidents).build());
+    Files files = filesRepository.saveAndFlush(
+        Files.newBuilder().filename(filename).type(type).incidents(incidents).data(data).build());
     incidents.setFiles(files);
     incidentsRepository.saveAndFlush(incidents);
     return files;
