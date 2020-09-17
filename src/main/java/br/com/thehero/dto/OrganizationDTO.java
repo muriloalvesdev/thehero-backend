@@ -4,9 +4,18 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CNPJ;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(builderMethodName = "newBuilder")
 public class OrganizationDTO {
 
   @JsonProperty("name")
