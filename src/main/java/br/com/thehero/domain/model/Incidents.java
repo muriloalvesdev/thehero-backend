@@ -15,7 +15,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(builderMethodName = "newBuilder")
 @Entity
 @Table(name = "incidents")
 public class Incidents extends BaseEntity {
@@ -48,19 +59,8 @@ public class Incidents extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-  @SuppressWarnings("unused")
-  private Incidents() {}
-
   public enum Status {
     AVAILABLE, NOT_AVAILABLE;
-  }
-
-  public Incidents(String title, String description, String value, Organization organization) {
-    this.title = title;
-    this.description = description;
-    this.value = value;
-    this.organization = organization;
-    this.status = Status.AVAILABLE;
   }
 
   public boolean isAvailable() {
@@ -70,53 +70,4 @@ public class Incidents extends BaseEntity {
   public boolean isNotAvailable() {
     return this.status.equals(Status.NOT_AVAILABLE);
   }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public Files getFiles() {
-    return files;
-  }
-
-  public void setFiles(Files files) {
-    this.files = files;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getValue() {
-    return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-  public Organization getOrganization() {
-    return organization;
-  }
-
-  public void setOrganization(Organization organization) {
-    this.organization = organization;
-  }
-
-  public UUID getUuid() {
-    return uuid;
-  }
-
 }

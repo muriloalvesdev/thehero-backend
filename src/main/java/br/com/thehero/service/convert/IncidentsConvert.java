@@ -3,14 +3,16 @@ package br.com.thehero.service.convert;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.IncidentsDTO;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class IncidentsConvert {
-
-  private IncidentsConvert() {}
 
   public static final Incidents convertDataTransferObjetToEntity(IncidentsDTO dto,
       Organization organization) {
-    return new Incidents(dto.getTitle(), dto.getDescription(), dto.getValue(), organization);
+    return Incidents.newBuilder().title(dto.getTitle()).description(dto.getDescription())
+        .value(dto.getValue()).organization(organization).build();
   }
 
   public static final IncidentsDTO convertEntityToDataTransferObject(Incidents incidents) {
