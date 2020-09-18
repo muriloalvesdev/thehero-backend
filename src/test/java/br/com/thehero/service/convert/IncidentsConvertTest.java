@@ -1,4 +1,4 @@
-package br.com.thehero.service;
+package br.com.thehero.service.convert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,6 @@ import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.IncidentsDTO;
 import br.com.thehero.providers.OrganizationEntityProviderTest;
-import br.com.thehero.service.convert.IncidentsConvert;
 
 class IncidentsConvertTest {
 
