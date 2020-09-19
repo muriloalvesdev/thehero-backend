@@ -15,20 +15,16 @@ import br.com.thehero.dto.IncidentsDTO;
 import br.com.thehero.service.convert.IncidentsConvert;
 import br.com.thehero.service.incidents.IncidentsService;
 import javassist.NotFoundException;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
 public class IncidentsServiceImpl implements IncidentsService {
 
   IncidentsRepository incidentsRepository;
   OrganizationRepository organizationRepository;
   FilesRepository filesRepository;
-
-  public IncidentsServiceImpl(IncidentsRepository incidentsRepository,
-      OrganizationRepository organizationRepository, FilesRepository filesRepository) {
-    this.incidentsRepository = incidentsRepository;
-    this.organizationRepository = organizationRepository;
-    this.filesRepository = filesRepository;
-  }
 
   public Incidents create(IncidentsDTO dto, String cnpjOrganization) {
     Optional<Organization> optionalOrganization =

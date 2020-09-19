@@ -10,15 +10,14 @@ import br.com.thehero.dto.OrganizationDTO;
 import br.com.thehero.service.convert.OrganizationConvert;
 import br.com.thehero.service.organization.OrganizationService;
 import javassist.NotFoundException;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 
   private OrganizationRepository repository;
-
-  public OrganizationServiceImpl(OrganizationRepository repository) {
-    this.repository = repository;
-  }
 
   public Organization create(OrganizationDTO dto) {
     Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);

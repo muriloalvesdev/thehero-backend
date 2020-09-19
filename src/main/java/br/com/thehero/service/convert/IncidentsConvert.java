@@ -11,7 +11,8 @@ public final class IncidentsConvert {
 
   public static final Incidents convertDataTransferObjetToEntity(IncidentsDTO dto,
       Organization organization) {
-    return new Incidents(dto.getTitle(), dto.getDescription(), dto.getValue(), organization);
+    return Incidents.newBuilder().title(dto.getTitle()).description(dto.getDescription())
+        .value(dto.getValue()).organization(organization).build();
   }
 
   public static final IncidentsDTO convertEntityToDataTransferObject(Incidents incidents) {
