@@ -17,4 +17,5 @@ before_install:
   - psql -c 'create database "bethehero";' -U postgres
 
 script:
-  - mvn clean install
+  - chmod +x ./.ci/script.sh 
+  - ./.ci/script.sh
