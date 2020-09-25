@@ -9,17 +9,18 @@ import br.com.thehero.domain.model.Files;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.repository.FilesRepository;
 import br.com.thehero.domain.repository.IncidentsRepository;
+import br.com.thehero.service.IncidentNotFoundException;
 import br.com.thehero.service.file.FilesService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-public class FilesServiceImpl implements FilesService {
+class FilesServiceImpl implements FilesService {
 
-  static final Logger LOG = Logger.getLogger(FilesServiceImpl.class);
-  FilesRepository filesRepository;
-  IncidentsRepository incidentsRepository;
+  private static final Logger LOG = Logger.getLogger(FilesServiceImpl.class);
+  private FilesRepository filesRepository;
+  private IncidentsRepository incidentsRepository;
 
   public Files save(MultipartFile file, String uuidIncidents) {
     try {
@@ -39,14 +40,14 @@ public class FilesServiceImpl implements FilesService {
     String filename = file.getOriginalFilename();
     validateFilename(filename);
 
-    Incidents incidents = incidentsRepository.findById(UUID.fromString(uuidIncidents))
-        .orElseThrow(() -> new RuntimeException(
+    Incidents incidents = this.incidentsRepository.findById(UUID.fromString(uuidIncidents))
+        .orElseThrow(() -> new IncidentNotFoundException(
             "Incident not found with UUID informed [" + uuidIncidents + "]"));
 
-    Files files = filesRepository.saveAndFlush(
+    Files files = this.filesRepository.saveAndFlush(
         Files.newBuilder().filename(filename).type(type).incidents(incidents).data(data).build());
     incidents.setFiles(files);
-    incidentsRepository.saveAndFlush(incidents);
+    this.incidentsRepository.saveAndFlush(incidents);
     return files;
   }
 

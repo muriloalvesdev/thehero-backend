@@ -10,6 +10,7 @@ import br.com.thehero.login.exception.EmailNotFoundException;
 import br.com.thehero.login.exception.ExistingEmailException;
 import br.com.thehero.login.exception.IllegalRoleException;
 import br.com.thehero.login.exception.TokenNotFoundException;
+import br.com.thehero.service.IncidentNotFoundException;
 import javassist.NotFoundException;
 
 @ControllerAdvice
@@ -21,6 +22,12 @@ public class HandlerException extends ResponseEntityExceptionHandler {
         .body(createResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value()));
   }
 
+  @ExceptionHandler(IncidentNotFoundException.class)
+  public ResponseEntity<ApiException> handleIncidentNotFoundException(
+      IncidentNotFoundException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .body(createResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+  }
 
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<ApiException> handleInternalServerError(IllegalArgumentException ex) {
