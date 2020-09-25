@@ -113,15 +113,15 @@
 
 	<profiles>
 		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<id>dev</id>
 			<properties>
 				<activatedProperties>dev</activatedProperties>
 			</properties>
 		</profile>
 		<profile>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<id>test</id>
 			<properties>
 				<activatedProperties>test</activatedProperties>
