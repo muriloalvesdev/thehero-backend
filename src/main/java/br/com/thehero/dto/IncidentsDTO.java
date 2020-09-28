@@ -1,7 +1,7 @@
 package br.com.thehero.dto;
 
-import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,5 +51,4 @@ public class IncidentsDTO {
 
   @JsonProperty("mime_type")
   private String mimeType;
-
 }

@@ -1,12 +1,11 @@
 package br.com.thehero.service.file.impl;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import br.com.thehero.domain.model.Files;
+import br.com.thehero.domain.model.Incidents;
+import br.com.thehero.domain.repository.FilesRepository;
+import br.com.thehero.domain.repository.IncidentsRepository;
+import br.com.thehero.providers.IncidentsEntityProviderTest;
+import br.com.thehero.service.IncidentNotFoundException;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,12 +14,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.mockito.BDDMockito;
 import org.springframework.web.multipart.MultipartFile;
-import br.com.thehero.domain.model.Files;
-import br.com.thehero.domain.model.Incidents;
-import br.com.thehero.domain.repository.FilesRepository;
-import br.com.thehero.domain.repository.IncidentsRepository;
-import br.com.thehero.providers.IncidentsEntityProviderTest;
-import br.com.thehero.service.IncidentNotFoundException;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class FilesServiceImplTest {
 
@@ -70,9 +71,12 @@ class FilesServiceImplTest {
     BDDMockito.given(this.incidentsRepository.findById(uuid)).willReturn(Optional.empty());
     BDDMockito.given(this.multipartFile.getOriginalFilename()).willReturn(FILENAME);
 
-    Exception exception = assertThrows(IncidentNotFoundException.class, () -> {
-      this.service.save(this.multipartFile, uuid.toString());
-    });
+    Exception exception =
+        assertThrows(
+            IncidentNotFoundException.class,
+            () -> {
+              this.service.save(this.multipartFile, uuid.toString());
+            });
 
     assertEquals("Incident not found with UUID informed [" + uuid + "]", exception.getMessage());
     assertTrue(exception instanceof IncidentNotFoundException);

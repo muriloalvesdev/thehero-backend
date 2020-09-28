@@ -19,5 +19,4 @@ public class IncidentsDTOList {
   public void setIncidents(List<IncidentsDTO> incidents) {
     this.incidents = incidents;
   }
-
 }

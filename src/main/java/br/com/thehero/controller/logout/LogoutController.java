@@ -1,5 +1,8 @@
 package br.com.thehero.controller.logout;
 
+import br.com.thehero.logout.request.Token;
+import br.com.thehero.logout.service.InvalidationTokenService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,16 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.thehero.logout.request.Token;
-import br.com.thehero.logout.service.InvalidationTokenService;
-import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/api/user")
 public class LogoutController {
 
-  @Autowired
-  private InvalidationTokenService service;
+  @Autowired private InvalidationTokenService service;
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping(path = "/information/{token}")

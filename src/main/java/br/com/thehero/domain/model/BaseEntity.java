@@ -1,12 +1,12 @@
 package br.com.thehero.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @MappedSuperclass
 public class BaseEntity implements Serializable {
@@ -38,5 +38,4 @@ public class BaseEntity implements Serializable {
   public LocalDateTime getUpdatedAt() {
     return this.updatedAt == null ? getCreatedAt() : this.updatedAt;
   }
-
 }

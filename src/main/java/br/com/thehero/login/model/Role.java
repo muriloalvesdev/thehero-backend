@@ -19,10 +19,6 @@ public class Role {
   @Enumerated(EnumType.STRING)
   private RoleName name;
 
-  public enum RoleName {
-    ROLE_ADMIN;
-  }
-
   public Role() {}
 
   public Role(RoleName name) {
@@ -50,4 +46,7 @@ public class Role {
     return "Role [id=" + id + ", name=" + name + "]";
   }
 
+  public enum RoleName {
+    ROLE_ADMIN;
+  }
 }

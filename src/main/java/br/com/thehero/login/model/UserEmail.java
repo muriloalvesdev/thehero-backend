@@ -23,5 +23,4 @@ public class UserEmail {
   public String toString() {
     return "UserEmail [email=" + email + "]";
   }
-
 }
