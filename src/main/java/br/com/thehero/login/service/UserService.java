@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.login.config.jwt.JwtProvider;
+import br.com.thehero.login.exception.EmailNotFoundException;
 import br.com.thehero.login.exception.ExistingEmailException;
 import br.com.thehero.login.exception.IllegalRoleException;
 import br.com.thehero.login.model.AccessToken;
@@ -26,6 +27,11 @@ import br.com.thehero.login.request.RegisterDTO;
 
 @Service
 public class UserService {
+
+  private static final String EMAIL_IS_ALREADY = "Fail -> Email is already in use!";
+  private static final String ROLE_NOT_FOUND = "Fail! -> Cause: %s Role not find.";
+  private static final String ROLE_INVALID = "Fail! -> Cause: Role invalid.";
+  private static final String EMAIL_NOT_FOUND = "Informed email does not exist in the database!";
 
   private UserRepository userRepository;
   private RoleRepository roleRepository;
@@ -48,7 +54,7 @@ public class UserService {
   public User registerUser(RegisterDTO registerData) {
 
     if (userRepository.existsByEmail(registerData.getEmail())) {
-      throw new ExistingEmailException("Fail -> Email is already in use!");
+      throw new ExistingEmailException(EMAIL_IS_ALREADY);
     }
 
     User user = new User(UUID.randomUUID(), registerData.getName(), registerData.getLastName(),
@@ -58,14 +64,14 @@ public class UserService {
     Set<Role> roles = new HashSet<>();
 
     strRoles.forEach(role -> {
-      switch (role) {
+      switch (role.toLowerCase()) {
         case "admin":
           Role admin = roleRepository.findByName(RoleName.ROLE_ADMIN)
-              .orElseThrow(() -> new IllegalRoleException("Fail! -> Cause: Admin Role not find."));
+              .orElseThrow(() -> new IllegalRoleException(String.format(ROLE_NOT_FOUND, "Admin")));
           roles.add(admin);
           break;
         default:
-          throw new IllegalRoleException("Fail! -> Cause: Role invalid.");
+          throw new IllegalRoleException(ROLE_INVALID);
       }
     });
 
@@ -85,7 +91,7 @@ public class UserService {
         organizationRepository.findByEmail(loginDto.getEmail());
 
     if (!optionalOrganization.isPresent()) {
-      throw new RuntimeException("Informed email does not exist in the database!");
+      throw new EmailNotFoundException(EMAIL_NOT_FOUND);
     }
     Organization organization = optionalOrganization.get();
     return new AccessToken(jwtProvider.generateJwtToken(authentication), organization.getCnpj(),

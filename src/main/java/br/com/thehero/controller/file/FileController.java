@@ -21,21 +21,21 @@ import br.com.thehero.service.file.FilesService;
 @RestController
 public class FileController {
 
-	FilesService service;
+  FilesService service;
 
-	public FileController(FilesService service) {
-		this.service = service;
-	}
+  public FileController(FilesService service) {
+    this.service = service;
+  }
 
-	@PostMapping("/uploadFile/{incidentId}")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
-			@PathVariable(name = "incidentId", required = true) String incidentId) throws IOException {
+  @PostMapping("/uploadFile/{incidentId}")
+  @PreAuthorize("hasRole('ADMIN')")
+  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
+      @PathVariable(name = "incidentId", required = true) String incidentId) throws IOException {
 
-		Files files = service.save(file, incidentId);
-		return ResponseEntity.ok(ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/")
-				.path(files.getUuid().toString()).toUriString());
+    Files files = service.save(file, incidentId);
+    return ResponseEntity.ok(ServletUriComponentsBuilder.fromCurrentContextPath()
+        .path("/downloadFile/").path(files.getUuid().toString()).toUriString());
 
-	}
+  }
 
 }
