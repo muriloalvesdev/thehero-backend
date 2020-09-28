@@ -8,5 +8,4 @@ public class Token {
 
   @JsonProperty("token")
   private String token;
-
 }

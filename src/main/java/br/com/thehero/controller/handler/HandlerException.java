@@ -1,10 +1,5 @@
 package br.com.thehero.controller.handler;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import br.com.thehero.domain.model.ApiException;
 import br.com.thehero.login.exception.EmailNotFoundException;
 import br.com.thehero.login.exception.ExistingEmailException;
@@ -12,6 +7,11 @@ import br.com.thehero.login.exception.IllegalRoleException;
 import br.com.thehero.login.exception.TokenNotFoundException;
 import br.com.thehero.service.IncidentNotFoundException;
 import javassist.NotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 public class HandlerException extends ResponseEntityExceptionHandler {
@@ -62,5 +62,4 @@ public class HandlerException extends ResponseEntityExceptionHandler {
   private ApiException createResponse(String message, int httpValue) {
     return new ApiException(message, httpValue);
   }
-
 }

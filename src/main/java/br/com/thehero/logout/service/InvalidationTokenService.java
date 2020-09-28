@@ -1,11 +1,11 @@
 package br.com.thehero.logout.service;
 
-import org.springframework.stereotype.Service;
 import br.com.thehero.login.config.jwt.JwtBlacklist;
 import br.com.thehero.login.config.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service

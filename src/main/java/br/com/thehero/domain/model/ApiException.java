@@ -10,5 +10,4 @@ import lombok.Setter;
 public class ApiException {
   private String message;
   private int status;
-
 }

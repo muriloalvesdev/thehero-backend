@@ -10,5 +10,4 @@ public class ArgumentInvalidException extends RuntimeException {
   public ArgumentInvalidException(String msg) {
     super(msg);
   }
-
 }

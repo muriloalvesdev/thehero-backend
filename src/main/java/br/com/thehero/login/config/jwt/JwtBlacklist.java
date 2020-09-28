@@ -1,5 +1,7 @@
 package br.com.thehero.login.config.jwt;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Map;
@@ -8,15 +10,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
 
 @Component
 @Scope("singleton")
 public class JwtBlacklist {
-  private static Map<String, String> blacklist = new ConcurrentHashMap<>();
   private static final Logger LOG = Logger.getLogger(JwtBlacklist.class);
-
+  private static Map<String, String> blacklist = new ConcurrentHashMap<>();
   private String jwtSecret;
 
   public synchronized void add(String token) {
@@ -47,7 +46,13 @@ public class JwtBlacklist {
   }
 
   private LocalDateTime getDateExpirationToken(String token) {
-    return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getExpiration()
-        .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    return Jwts.parser()
+        .setSigningKey(jwtSecret)
+        .parseClaimsJws(token)
+        .getBody()
+        .getExpiration()
+        .toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDateTime();
   }
 }

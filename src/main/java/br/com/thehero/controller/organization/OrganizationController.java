@@ -1,7 +1,10 @@
 package br.com.thehero.controller.organization;
 
+import br.com.thehero.domain.model.Organization;
+import br.com.thehero.dto.OrganizationDTO;
+import br.com.thehero.service.organization.OrganizationService;
 import java.util.List;
-
+import javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -14,11 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import br.com.thehero.domain.model.Organization;
-import br.com.thehero.dto.OrganizationDTO;
-import br.com.thehero.service.organization.OrganizationService;
-import javassist.NotFoundException;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -42,8 +40,12 @@ public class OrganizationController {
       @Validated @RequestBody OrganizationDTO organizationDTO) {
     Organization organization = service.create(organizationDTO);
 
-    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/ongs/{cnpj}").buildAndExpand(organization.getCnpj()).toUri()).build();
+    return ResponseEntity.created(
+            ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/ongs/{cnpj}")
+                .buildAndExpand(organization.getCnpj())
+                .toUri())
+        .build();
   }
 
   @GetMapping("/ongs/{cnpj}")

@@ -1,11 +1,11 @@
 package br.com.thehero.logout.scheduled;
 
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import br.com.thehero.login.config.jwt.JwtBlacklist;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Component
@@ -20,5 +20,4 @@ public class CleanBlacklistScheduled {
   public void cleanBlacklist() {
     jwtBlacklist.cleanBlacklist();
   }
-
 }

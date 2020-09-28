@@ -1,5 +1,7 @@
 package br.com.thehero.login.config;
 
+import br.com.thehero.login.config.jwt.JwtAuthTokenFilter;
+import br.com.thehero.login.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,16 +14,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.firewall.DefaultHttpFirewall;
 import org.springframework.security.web.firewall.HttpFirewall;
-import br.com.thehero.login.config.jwt.JwtAuthTokenFilter;
-import br.com.thehero.login.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  UserDetailsServiceImpl userDetailsService;
+  @Autowired UserDetailsServiceImpl userDetailsService;
 
   @Bean
   public JwtAuthTokenFilter authenticationJwtTokenFilter() {
@@ -31,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
       throws Exception {
-    authenticationManagerBuilder.userDetailsService(userDetailsService)
+    authenticationManagerBuilder
+        .userDetailsService(userDetailsService)
         .passwordEncoder(passwordEncoder());
   }
 
@@ -56,5 +56,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public HttpFirewall defaultHttpFirewall() {
     return new DefaultHttpFirewall();
   }
-
 }

@@ -1,5 +1,9 @@
 package br.com.thehero.controller.incidents;
 
+import br.com.thehero.domain.model.Incidents;
+import br.com.thehero.dto.IncidentsDTO;
+import br.com.thehero.service.incidents.IncidentsService;
+import javassist.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -14,11 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import br.com.thehero.domain.model.Incidents;
-import br.com.thehero.dto.IncidentsDTO;
-import br.com.thehero.service.incidents.IncidentsService;
-import javassist.NotFoundException;
 
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
@@ -49,7 +48,8 @@ public class IncidentsController {
 
   @PostMapping("incidents/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO dto,
+  public ResponseEntity<Object> create(
+      @Validated @RequestBody IncidentsDTO dto,
       @PathVariable(name = "cnpj", required = true) String cnpjOrganization) {
     Incidents incidents = service.create(dto, cnpjOrganization);
     return new ResponseEntity<>(incidents.getUuid().toString(), HttpStatus.CREATED);
@@ -60,5 +60,4 @@ public class IncidentsController {
   public ResponseEntity<Page<IncidentsDTO>> findAll(Pageable pageable) {
     return ResponseEntity.ok(service.findAll(pageable));
   }
-
 }

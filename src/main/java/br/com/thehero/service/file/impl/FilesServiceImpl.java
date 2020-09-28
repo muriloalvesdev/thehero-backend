@@ -1,18 +1,18 @@
 package br.com.thehero.service.file.impl;
 
-import java.io.IOException;
-import java.util.UUID;
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import br.com.thehero.domain.model.Files;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.repository.FilesRepository;
 import br.com.thehero.domain.repository.IncidentsRepository;
 import br.com.thehero.service.IncidentNotFoundException;
 import br.com.thehero.service.file.FilesService;
+import java.io.IOException;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
@@ -40,12 +40,22 @@ class FilesServiceImpl implements FilesService {
     String filename = file.getOriginalFilename();
     validateFilename(filename);
 
-    Incidents incidents = this.incidentsRepository.findById(UUID.fromString(uuidIncidents))
-        .orElseThrow(() -> new IncidentNotFoundException(
-            "Incident not found with UUID informed [" + uuidIncidents + "]"));
+    Incidents incidents =
+        this.incidentsRepository
+            .findById(UUID.fromString(uuidIncidents))
+            .orElseThrow(
+                () ->
+                    new IncidentNotFoundException(
+                        "Incident not found with UUID informed [" + uuidIncidents + "]"));
 
-    Files files = this.filesRepository.saveAndFlush(
-        Files.newBuilder().filename(filename).type(type).incidents(incidents).data(data).build());
+    Files files =
+        this.filesRepository.saveAndFlush(
+            Files.newBuilder()
+                .filename(filename)
+                .type(type)
+                .incidents(incidents)
+                .data(data)
+                .build());
     incidents.setFiles(files);
     this.incidentsRepository.saveAndFlush(incidents);
     return files;

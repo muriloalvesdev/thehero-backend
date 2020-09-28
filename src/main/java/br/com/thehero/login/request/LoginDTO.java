@@ -32,5 +32,4 @@ public class LoginDTO {
   public String toString() {
     return "LoginData [email=" + email + ", password=" + password + "]";
   }
-
 }

@@ -1,15 +1,16 @@
 package br.com.thehero.service.convert;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 import br.com.thehero.IncidentsConstantsTest;
 import br.com.thehero.OrganizationConstantsTest;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.IncidentsDTO;
 import br.com.thehero.providers.OrganizationEntityProviderTest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+
+import static org.junit.Assert.assertEquals;
 
 class IncidentsConvertTest {
 
@@ -17,11 +18,18 @@ class IncidentsConvertTest {
 
   @BeforeEach
   void setUp() {
-    this.dto = IncidentsDTO.newBuilder().city(OrganizationConstantsTest.CITY)
-        .description(IncidentsConstantsTest.DESCRIPTION).email(OrganizationConstantsTest.EMAIL_ONG)
-        .mimeType(IncidentsConstantsTest.MIME_TYPE).nameOrganization(OrganizationConstantsTest.NAME)
-        .title(IncidentsConstantsTest.TITLE).value(IncidentsConstantsTest.VALUE)
-        .uf(OrganizationConstantsTest.UF).whatsapp(OrganizationConstantsTest.WHATSAPP).build();
+    this.dto =
+        IncidentsDTO.newBuilder()
+            .city(OrganizationConstantsTest.CITY)
+            .description(IncidentsConstantsTest.DESCRIPTION)
+            .email(OrganizationConstantsTest.EMAIL_ONG)
+            .mimeType(IncidentsConstantsTest.MIME_TYPE)
+            .nameOrganization(OrganizationConstantsTest.NAME)
+            .title(IncidentsConstantsTest.TITLE)
+            .value(IncidentsConstantsTest.VALUE)
+            .uf(OrganizationConstantsTest.UF)
+            .whatsapp(OrganizationConstantsTest.WHATSAPP)
+            .build();
   }
 
   @ParameterizedTest
@@ -38,5 +46,4 @@ class IncidentsConvertTest {
     assertEquals(this.dto.getValue(), incidents.getValue());
     assertEquals(this.dto.getWhatsapp(), organization.getWhatsapp());
   }
-
 }

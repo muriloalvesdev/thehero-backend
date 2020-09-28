@@ -1,10 +1,5 @@
 package br.com.thehero.service.incidents.impl;
 
-import java.util.Optional;
-import java.util.UUID;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.model.Incidents.Status;
 import br.com.thehero.domain.model.Organization;
@@ -14,9 +9,14 @@ import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.IncidentsDTO;
 import br.com.thehero.service.convert.IncidentsConvert;
 import br.com.thehero.service.incidents.IncidentsService;
+import java.util.Optional;
+import java.util.UUID;
 import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
@@ -41,19 +41,23 @@ public class IncidentsServiceImpl implements IncidentsService {
   }
 
   public Page<IncidentsDTO> findAll(Pageable pageable) {
-    return incidentsRepository.findByStatus(Status.AVAILABLE, pageable)
+    return incidentsRepository
+        .findByStatus(Status.AVAILABLE, pageable)
         .map(IncidentsConvert::convertEntityToDataTransferObject);
   }
 
   public void delete(String incidentId, String cnpjOrganization) {
-    incidentsRepository.findById(UUID.fromString(incidentId)).ifPresent(incident -> {
-      if (incident.getOrganization().getCnpj().equals(cnpjOrganization)) {
-        incident.setStatus(Status.NOT_AVAILABLE);
-        incidentsRepository.save(incident);
-      } else {
-        throw new IllegalAccessError("Não autorizado!");
-      }
-    });
+    incidentsRepository
+        .findById(UUID.fromString(incidentId))
+        .ifPresent(
+            incident -> {
+              if (incident.getOrganization().getCnpj().equals(cnpjOrganization)) {
+                incident.setStatus(Status.NOT_AVAILABLE);
+                incidentsRepository.save(incident);
+              } else {
+                throw new IllegalAccessError("Não autorizado!");
+              }
+            });
   }
 
   public IncidentsDTO findById(String incidentId) throws NotFoundException {
@@ -67,5 +71,4 @@ public class IncidentsServiceImpl implements IncidentsService {
       throw new NotFoundException("Não existe um incidente com o ID informado");
     }
   }
-
 }

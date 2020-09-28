@@ -1,11 +1,5 @@
 package br.com.thehero.login.config.jwt;
 
-import java.util.Date;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 import br.com.thehero.dto.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -14,6 +8,12 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 @Component
 public class JwtProvider {
@@ -30,10 +30,13 @@ public class JwtProvider {
 
     UserDTO userPrincipal = (UserDTO) authentication.getPrincipal();
 
-    return Jwts.builder().setSubject((userPrincipal.getEmail())).setIssuedAt(new Date())
+    return Jwts.builder()
+        .setSubject((userPrincipal.getEmail()))
+        .setIssuedAt(new Date())
         .claim("username", userPrincipal.getName())
         .setExpiration(new Date((new Date()).getTime() + jwtExpiration))
-        .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+        .signWith(SignatureAlgorithm.HS512, jwtSecret)
+        .compact();
   }
 
   public String getUserNameFromJwtToken(String token) {
@@ -62,5 +65,4 @@ public class JwtProvider {
 
     return false;
   }
-
 }
