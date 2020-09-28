@@ -10,18 +10,15 @@ import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.IncidentsDTO;
 import br.com.thehero.dto.IncidentsDTOList;
 import br.com.thehero.service.convert.IncidentsConvert;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
 public class ProfileService {
 
   OrganizationRepository organizationRepository;
   IncidentsRepository incidentsRepository;
-
-  public ProfileService(OrganizationRepository organizationRepository,
-      IncidentsRepository incidentsRepository) {
-    this.organizationRepository = organizationRepository;
-    this.incidentsRepository = incidentsRepository;
-  }
 
   public IncidentsDTOList findIncidentsByOrganization(String cnpj) {
     Optional<Organization> organizationOptional = organizationRepository.findByCnpj(cnpj);
