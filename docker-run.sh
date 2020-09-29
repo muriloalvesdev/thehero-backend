@@ -1,0 +1,1 @@
+mvn package -DskipTests -Pprod && docker build -t muriloalvesdev/the_hero . && docker-compose up
