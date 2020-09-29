@@ -13,11 +13,11 @@ import br.com.thehero.providers.OrganizationEntityProviderTest;
 
 class IncidentsConvertTest {
 
-  private IncidentsDTO dto;
+  private IncidentsDTO incidentsDTO;
 
   @BeforeEach
   void setUp() {
-    this.dto = IncidentsDTO.newBuilder().city(OrganizationConstantsTest.CITY)
+    this.incidentsDTO = IncidentsDTO.newBuilder().city(OrganizationConstantsTest.CITY)
         .description(IncidentsConstantsTest.DESCRIPTION).email(OrganizationConstantsTest.EMAIL_ONG)
         .mimeType(IncidentsConstantsTest.MIME_TYPE).nameOrganization(OrganizationConstantsTest.NAME)
         .title(IncidentsConstantsTest.TITLE).value(IncidentsConstantsTest.VALUE)
@@ -27,16 +27,16 @@ class IncidentsConvertTest {
   @ParameterizedTest
   @ArgumentsSource(OrganizationEntityProviderTest.class)
   void convertDataTransferObjetToEntityTest(Organization organization) {
-    Incidents incidents = IncidentsConvert.convertDataTransferObjetToEntity(this.dto, organization);
+    Incidents incidents = IncidentsConvert.convertDataTransferObjetToEntity(this.incidentsDTO, organization);
 
-    assertEquals(this.dto.getCity(), organization.getCity());
-    assertEquals(this.dto.getDescription(), incidents.getDescription());
-    assertEquals(this.dto.getEmail(), organization.getEmail());
-    assertEquals(this.dto.getNameOrganization(), organization.getName());
-    assertEquals(this.dto.getTitle(), incidents.getTitle());
-    assertEquals(this.dto.getUf(), organization.getUf());
-    assertEquals(this.dto.getValue(), incidents.getValue());
-    assertEquals(this.dto.getWhatsapp(), organization.getWhatsapp());
+    assertEquals(this.incidentsDTO.getCity(), organization.getCity());
+    assertEquals(this.incidentsDTO.getDescription(), incidents.getDescription());
+    assertEquals(this.incidentsDTO.getEmail(), organization.getEmail());
+    assertEquals(this.incidentsDTO.getNameOrganization(), organization.getName());
+    assertEquals(this.incidentsDTO.getTitle(), incidents.getTitle());
+    assertEquals(this.incidentsDTO.getUf(), organization.getUf());
+    assertEquals(this.incidentsDTO.getValue(), incidents.getValue());
+    assertEquals(this.incidentsDTO.getWhatsapp(), organization.getWhatsapp());
   }
 
 }
