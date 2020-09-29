@@ -11,8 +11,8 @@
 	</parent>
 	<groupId>br.com.thehero</groupId>
 	<artifactId>bethehero-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>bethehero-backend</name>
+	<version>1.0.0</version>
+	<name>bethehero</name>
 	<description>Backend da aplicação de doações</description>
 
 	<properties>
@@ -116,9 +116,9 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			<id>dev</id>
+			<id>staging</id>
 			<properties>
-				<activatedProperties>dev</activatedProperties>
+				<activatedProperties>staging</activatedProperties>
 			</properties>
 		</profile>
 		<profile>
