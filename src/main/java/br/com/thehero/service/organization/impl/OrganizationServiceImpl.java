@@ -19,18 +19,18 @@ public class OrganizationServiceImpl implements OrganizationService {
 
   private OrganizationRepository repository;
 
-  public Organization create(OrganizationDTO dto) {
-    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+  public Organization create(OrganizationDTO organizationDTO) {
+    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(organizationDTO);
     return repository.saveAndFlush(organization);
   }
 
-  public void update(OrganizationDTO dto) {
-    repository.findByCnpj(dto.getCnpj()).ifPresent(organization -> {
-      organization.setCity(dto.getCity());
-      organization.setEmail(dto.getEmail());
-      organization.setName(dto.getName());
-      organization.setUf(dto.getUf());
-      organization.setWhatsapp(String.valueOf(dto.getWhatsapp()));
+  public void update(OrganizationDTO organizationDTO) {
+    repository.findByCnpj(organizationDTO.getCnpj()).ifPresent(organization -> {
+      organization.setCity(organizationDTO.getCity());
+      organization.setEmail(organizationDTO.getEmail());
+      organization.setName(organizationDTO.getName());
+      organization.setUf(organizationDTO.getUf());
+      organization.setWhatsapp(String.valueOf(organizationDTO.getWhatsapp()));
 
       repository.saveAndFlush(organization);
     });
@@ -39,8 +39,8 @@ public class OrganizationServiceImpl implements OrganizationService {
   public List<OrganizationDTO> findAll() {
     List<OrganizationDTO> organizationDTOs = new ArrayList<>();
 
-    repository.findAll().stream().forEach(org -> {
-      OrganizationDTO organizationDTO = OrganizationConvert.convertEntityToDataTransferObject(org);
+    repository.findAll().stream().forEach(organization -> {
+      OrganizationDTO organizationDTO = OrganizationConvert.convertEntityToDataTransferObject(organization);
       organizationDTOs.add(organizationDTO);
     });
     return organizationDTOs;
@@ -58,7 +58,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
   public OrganizationDTO findByCnpj(String cnpj) throws NotFoundException {
     Optional<Organization> organizationOptional =
-        repository.findAll().stream().filter(org -> org.getCnpj().equals(cnpj)).findFirst();
+        repository.findAll().stream().filter(organization -> organization.getCnpj().equals(cnpj)).findFirst();
     if (organizationOptional.isPresent()) {
       OrganizationDTO organizationDTO =
           OrganizationConvert.convertEntityToDataTransferObject(organizationOptional.get());

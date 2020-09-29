@@ -18,18 +18,18 @@ import lombok.AllArgsConstructor;
 @Service
 class FilesServiceImpl implements FilesService {
 
-  private static final Logger LOG = Logger.getLogger(FilesServiceImpl.class);
+  private static final Logger LOGGER = Logger.getLogger(FilesServiceImpl.class);
   private FilesRepository filesRepository;
   private IncidentsRepository incidentsRepository;
 
   public Files save(MultipartFile file, String uuidIncidents) {
     try {
-      LOG.info("[BEGIN] save() - with filename [" + file.getName() + "]");
+      LOGGER.info("[BEGIN] save() - with filename [" + file.getName() + "]");
       return uploadFile(file, uuidIncidents);
-    } catch (IOException e) {
-      LOG.error("Persist file error: " + e.getMessage(), e);
+    } catch (IOException ioException) {
+      LOGGER.error("Persist file error: " + ioException.getMessage(), ioException);
     } finally {
-      LOG.info("[END] save()");
+      LOGGER.info("[END] save()");
     }
     return null;
   }

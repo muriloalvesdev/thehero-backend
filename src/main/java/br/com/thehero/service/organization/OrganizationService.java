@@ -6,9 +6,9 @@ import br.com.thehero.dto.OrganizationDTO;
 import javassist.NotFoundException;
 
 public interface OrganizationService {
-  Organization create(OrganizationDTO dto);
+  Organization create(OrganizationDTO organizationDTO);
 
-  void update(OrganizationDTO dto);
+  void update(OrganizationDTO organizationDTO);
 
   List<OrganizationDTO> findAll();
 

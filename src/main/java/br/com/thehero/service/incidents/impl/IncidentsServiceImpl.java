@@ -26,12 +26,12 @@ public class IncidentsServiceImpl implements IncidentsService {
   OrganizationRepository organizationRepository;
   FilesRepository filesRepository;
 
-  public Incidents create(IncidentsDTO dto, String cnpjOrganization) {
+  public Incidents create(IncidentsDTO incidentsDTO, String cnpjOrganization) {
     Optional<Organization> optionalOrganization =
         organizationRepository.findByCnpj(cnpjOrganization);
     if (optionalOrganization.isPresent()) {
       Organization organization = optionalOrganization.get();
-      Incidents incidents = IncidentsConvert.convertDataTransferObjetToEntity(dto, organization);
+      Incidents incidents = IncidentsConvert.convertDataTransferObjetToEntity(incidentsDTO, organization);
 
       return incidentsRepository.saveAndFlush(incidents);
 

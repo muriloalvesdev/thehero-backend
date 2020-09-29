@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class OrganizationConvert {
 
-  public static final Organization convertDataTransferObjectToEntity(OrganizationDTO dto) {
-    return Organization.newBuilder().name(dto.getName()).city(dto.getCity()).cnpj(dto.getCnpj())
-        .email(dto.getEmail()).uf(dto.getUf()).whatsapp(dto.getWhatsapp()).build();
+  public static final Organization convertDataTransferObjectToEntity(OrganizationDTO organizationDTO) {
+    return Organization.newBuilder().name(organizationDTO.getName()).city(organizationDTO.getCity()).cnpj(organizationDTO.getCnpj())
+        .email(organizationDTO.getEmail()).uf(organizationDTO.getUf()).whatsapp(organizationDTO.getWhatsapp()).build();
   }
 
-  public static final OrganizationDTO convertEntityToDataTransferObject(Organization org) {
-    return OrganizationDTO.newBuilder().name(org.getName()).email(org.getEmail())
-        .whatsapp(org.getWhatsapp()).city(org.getCity()).uf(org.getUf()).cnpj(org.getCnpj())
+  public static final OrganizationDTO convertEntityToDataTransferObject(Organization organization) {
+    return OrganizationDTO.newBuilder().name(organization.getName()).email(organization.getEmail())
+        .whatsapp(organization.getWhatsapp()).city(organization.getCity()).uf(organization.getUf()).cnpj(organization.getCnpj())
         .build();
   }
 }
