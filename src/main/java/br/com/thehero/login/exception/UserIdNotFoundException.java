@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UserIdNotFoundException extends RuntimeException {
   private static final long serialVersionUID = 1L;
 
-  public UserIdNotFoundException(String msg) {
-    super(msg);
+  public UserIdNotFoundException(String message) {
+    super(message);
   }
 
 }
