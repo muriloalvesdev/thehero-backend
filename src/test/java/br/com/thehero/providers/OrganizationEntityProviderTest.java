@@ -12,8 +12,15 @@ public class OrganizationEntityProviderTest
 
   @Override
   public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-    return Stream.of(Organization.newBuilder().name(NAME).city(CITY).cnpj(CNPJ).email(EMAIL_ONG)
-        .uf(UF).whatsapp(WHATSAPP).build()).map(Arguments::of);
+    return Stream.of(
+            Organization.newBuilder()
+                .name(NAME)
+                .city(CITY)
+                .cnpj(CNPJ)
+                .email(EMAIL_ONG)
+                .uf(UF)
+                .whatsapp(WHATSAPP)
+                .build())
+        .map(Arguments::of);
   }
-
 }

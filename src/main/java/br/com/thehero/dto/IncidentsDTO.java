@@ -51,5 +51,4 @@ public class IncidentsDTO {
 
   @JsonProperty("mime_type")
   private String mimeType;
-
 }

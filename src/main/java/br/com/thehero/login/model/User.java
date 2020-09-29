@@ -22,7 +22,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import br.com.thehero.login.util.Utils;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+@Table(
+    name = "users",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
 
   public static final String ERROR_INVALID_PASS = "Password can not be null or empty";
@@ -32,8 +34,7 @@ public class User {
   public static final String ERROR_INVALID_ROLES = "Roles can not be null or empty";
   public static final String ERROR_INVALID_UUID = "UUID can not be null or empty";
 
-  @Id
-  private UUID id;
+  @Id private UUID id;
 
   @Column(name = "name")
   private String name;
@@ -74,8 +75,8 @@ public class User {
     setPassword(password);
   }
 
-  public User(UUID id, String name, String lastName, String email, String password,
-      Set<Role> roles) {
+  public User(
+      UUID id, String name, String lastName, String email, String password, Set<Role> roles) {
     setId(id);
     setName(name);
     setLastName(lastName);
@@ -158,9 +159,24 @@ public class User {
 
   @Override
   public String toString() {
-    return "User [id=" + id + ", name=" + name + ", lastName=" + lastName + ", email=" + email
-        + ", password=" + password + ", roles=" + roles + ", createdAt=" + createdAt
-        + ", updatedAt=" + updatedAt + ", token=" + token + "]";
+    return "User [id="
+        + id
+        + ", name="
+        + name
+        + ", lastName="
+        + lastName
+        + ", email="
+        + email
+        + ", password="
+        + password
+        + ", roles="
+        + roles
+        + ", createdAt="
+        + createdAt
+        + ", updatedAt="
+        + updatedAt
+        + ", token="
+        + token
+        + "]";
   }
-
 }

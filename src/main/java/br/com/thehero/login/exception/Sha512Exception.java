@@ -6,5 +6,4 @@ public class Sha512Exception extends RuntimeException {
   public Sha512Exception(String msg) {
     super(msg);
   }
-
 }

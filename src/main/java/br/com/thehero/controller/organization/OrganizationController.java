@@ -42,8 +42,12 @@ public class OrganizationController {
       @Validated @RequestBody OrganizationDTO organizationDTO) {
     Organization organization = service.create(organizationDTO);
 
-    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentContextPath()
-        .path("/ongs/{cnpj}").buildAndExpand(organization.getCnpj()).toUri()).build();
+    return ResponseEntity.created(
+            ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/ongs/{cnpj}")
+                .buildAndExpand(organization.getCnpj())
+                .toUri())
+        .build();
   }
 
   @GetMapping("/ongs/{cnpj}")

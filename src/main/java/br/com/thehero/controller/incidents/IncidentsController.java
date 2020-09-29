@@ -49,7 +49,8 @@ public class IncidentsController {
 
   @PostMapping("incidents/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO dto,
+  public ResponseEntity<Object> create(
+      @Validated @RequestBody IncidentsDTO dto,
       @PathVariable(name = "cnpj", required = true) String cnpjOrganization) {
     Incidents incidents = service.create(dto, cnpjOrganization);
     return new ResponseEntity<>(incidents.getUuid().toString(), HttpStatus.CREATED);
@@ -60,5 +61,4 @@ public class IncidentsController {
   public ResponseEntity<Page<IncidentsDTO>> findAll(Pageable pageable) {
     return ResponseEntity.ok(service.findAll(pageable));
   }
-
 }

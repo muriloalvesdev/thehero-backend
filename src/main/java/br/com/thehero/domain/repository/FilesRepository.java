@@ -6,6 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.thehero.domain.model.Files;
 
-public interface FilesRepository extends JpaRepository<Files, UUID> {
-
-}
+public interface FilesRepository extends JpaRepository<Files, UUID> {}

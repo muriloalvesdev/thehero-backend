@@ -25,24 +25,30 @@ public class OrganizationServiceImpl implements OrganizationService {
   }
 
   public void update(OrganizationDTO dto) {
-    repository.findByCnpj(dto.getCnpj()).ifPresent(organization -> {
-      organization.setCity(dto.getCity());
-      organization.setEmail(dto.getEmail());
-      organization.setName(dto.getName());
-      organization.setUf(dto.getUf());
-      organization.setWhatsapp(String.valueOf(dto.getWhatsapp()));
+    repository
+        .findByCnpj(dto.getCnpj())
+        .ifPresent(
+            organization -> {
+              organization.setCity(dto.getCity());
+              organization.setEmail(dto.getEmail());
+              organization.setName(dto.getName());
+              organization.setUf(dto.getUf());
+              organization.setWhatsapp(String.valueOf(dto.getWhatsapp()));
 
-      repository.saveAndFlush(organization);
-    });
+              repository.saveAndFlush(organization);
+            });
   }
 
   public List<OrganizationDTO> findAll() {
     List<OrganizationDTO> organizationDTOs = new ArrayList<>();
 
-    repository.findAll().stream().forEach(org -> {
-      OrganizationDTO organizationDTO = OrganizationConvert.convertEntityToDataTransferObject(org);
-      organizationDTOs.add(organizationDTO);
-    });
+    repository.findAll().stream()
+        .forEach(
+            org -> {
+              OrganizationDTO organizationDTO =
+                  OrganizationConvert.convertEntityToDataTransferObject(org);
+              organizationDTOs.add(organizationDTO);
+            });
     return organizationDTOs;
   }
 
@@ -68,5 +74,4 @@ public class OrganizationServiceImpl implements OrganizationService {
           "Não existe uma organização com o CNPJ [" + cnpj + "] informado.");
     }
   }
-
 }

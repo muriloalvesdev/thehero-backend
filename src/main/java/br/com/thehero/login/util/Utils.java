@@ -7,13 +7,11 @@ import br.com.thehero.login.exception.Sha512Exception;
 public class Utils {
 
   public static void argumentNotEmpty(String field, String errMessage) {
-    if (field == null || field.isEmpty())
-      throw new IllegalArgumentException(errMessage);
+    if (field == null || field.isEmpty()) throw new IllegalArgumentException(errMessage);
   }
 
   public static void argumentNotNull(Object obj, String errMessage) {
-    if (obj == null)
-      throw new IllegalArgumentException(errMessage);
+    if (obj == null) throw new IllegalArgumentException(errMessage);
   }
 
   public static String getSHA512(String input) {
@@ -30,5 +28,4 @@ public class Utils {
 
     return toReturn;
   }
-
 }

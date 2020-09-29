@@ -20,5 +20,4 @@ public class CleanBlacklistScheduled {
   public void cleanBlacklist() {
     jwtBlacklist.cleanBlacklist();
   }
-
 }

@@ -16,12 +16,24 @@ public class IncidentsEntityProviderTest
 
   @Override
   public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-    return Stream
-        .of(Incidents.newBuilder().description(DESCRIPTION)
-            .organization(Organization.newBuilder().uuid(UUID.randomUUID()).name(NAME).city(CITY)
-                .cnpj(CNPJ).email(EMAIL_ONG).uf(UF).whatsapp(WHATSAPP).build())
-            .status(Status.AVAILABLE).title(TITLE).uuid(UUID.randomUUID()).value("150.00").build())
+    return Stream.of(
+            Incidents.newBuilder()
+                .description(DESCRIPTION)
+                .organization(
+                    Organization.newBuilder()
+                        .uuid(UUID.randomUUID())
+                        .name(NAME)
+                        .city(CITY)
+                        .cnpj(CNPJ)
+                        .email(EMAIL_ONG)
+                        .uf(UF)
+                        .whatsapp(WHATSAPP)
+                        .build())
+                .status(Status.AVAILABLE)
+                .title(TITLE)
+                .uuid(UUID.randomUUID())
+                .value("150.00")
+                .build())
         .map(Arguments::of);
   }
-
 }

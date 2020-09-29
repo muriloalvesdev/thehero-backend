@@ -27,13 +27,15 @@ public class ProfileService {
 
     if (organizationOptional.isPresent()) {
       Organization organization = organizationOptional.get();
-      incidentsRepository.findByOrganization(organization).stream().forEach(incident -> {
-        IncidentsDTO incidentsDTO = IncidentsConvert.convertEntityToDataTransferObject(incident);
-        incidents.add(incidentsDTO);
-      });
+      incidentsRepository.findByOrganization(organization).stream()
+          .forEach(
+              incident -> {
+                IncidentsDTO incidentsDTO =
+                    IncidentsConvert.convertEntityToDataTransferObject(incident);
+                incidents.add(incidentsDTO);
+              });
     }
     incidentsDTOList.setIncidents(incidents);
     return incidentsDTOList;
   }
-
 }

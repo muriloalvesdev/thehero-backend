@@ -16,6 +16,7 @@ public class TokenEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private String token;
   private UUID idUser;
   private LocalDateTime expiracaoToken;
@@ -59,8 +60,12 @@ public class TokenEntity {
 
   @Override
   public String toString() {
-    return "TokenEntity [id=" + id + ", token=" + token + ", expiracaoToken=" + expiracaoToken
+    return "TokenEntity [id="
+        + id
+        + ", token="
+        + token
+        + ", expiracaoToken="
+        + expiracaoToken
         + "]";
   }
-
 }
