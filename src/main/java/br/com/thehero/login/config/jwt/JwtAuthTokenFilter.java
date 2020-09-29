@@ -14,21 +14,18 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 import br.com.thehero.login.service.UserDetailsServiceImpl;
 
-
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
-  @Autowired
-  private JwtProvider tokenProvider;
+  @Autowired private JwtProvider tokenProvider;
 
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+  @Autowired private UserDetailsServiceImpl userDetailsService;
 
-  @Autowired
-  private JwtBlacklist blacklist;
+  @Autowired private JwtBlacklist blacklist;
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-      FilterChain filterChain) throws ServletException, IOException {
+  protected void doFilterInternal(
+      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      throws ServletException, IOException {
 
     String jwt = getJwt(request);
     if (!blacklist.check(jwt)) {
@@ -37,12 +34,11 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         UsernamePasswordAuthenticationToken authentication =
-            new UsernamePasswordAuthenticationToken(userDetails, null,
-                userDetails.getAuthorities());
+            new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
       }
       filterChain.doFilter(request, response);
     } else {
@@ -50,7 +46,6 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
       response.sendError(403, "Acesso não autorizado");
       return;
     }
-
   }
 
   private String getJwt(HttpServletRequest request) {
@@ -61,5 +56,4 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
     }
     return null;
   }
-
 }

@@ -21,8 +21,8 @@ public class ApplicationConfig {
   @Bean
   public void configVelocity() {
     Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-    Velocity.setProperty("classpath.resource.loader.class",
-        ClasspathResourceLoader.class.getName());
+    Velocity.setProperty(
+        "classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
   }
 
   @Bean
@@ -36,5 +36,4 @@ public class ApplicationConfig {
       }
     }
   }
-
 }

@@ -50,5 +50,4 @@ public class AccessToken {
   public String toString() {
     return "AccessToken [accessToken=" + accessToken + ", id=" + id + ", name=" + name + "]";
   }
-
 }

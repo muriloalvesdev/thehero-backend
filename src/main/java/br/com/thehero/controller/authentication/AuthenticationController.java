@@ -22,8 +22,7 @@ import br.com.thehero.login.service.UserService;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 
-  @Autowired
-  private UserService userService;
+  @Autowired private UserService userService;
 
   @PostMapping("/login")
   public ResponseEntity<AccessToken> authenticateUser(@Validated @RequestBody LoginDTO loginData) {
@@ -36,9 +35,11 @@ public class AuthenticationController {
 
     User user = userService.registerUser(registerData);
 
-    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-        .buildAndExpand(user.getId()).toUri()).build();
-
+    return ResponseEntity.created(
+            ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getId())
+                .toUri())
+        .build();
   }
-
 }

@@ -8,5 +8,4 @@ import br.com.thehero.login.model.Role.RoleName;
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
   Optional<Role> findByName(RoleName roleName);
-
 }

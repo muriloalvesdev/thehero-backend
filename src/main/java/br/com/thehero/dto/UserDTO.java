@@ -17,12 +17,16 @@ public class UserDTO implements UserDetails {
   private String name;
   private String lastName;
   private String email;
-  @JsonIgnore
-  private String password;
+  @JsonIgnore private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDTO(UUID id, String name, String lastName, String email, String password,
+  public UserDTO(
+      UUID id,
+      String name,
+      String lastName,
+      String email,
+      String password,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.name = name;
@@ -34,11 +38,17 @@ public class UserDTO implements UserDetails {
 
   public static UserDTO build(User user) {
     List<GrantedAuthority> authorities =
-        user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName().name()))
+        user.getRoles().stream()
+            .map(role -> new SimpleGrantedAuthority(role.getName().name()))
             .collect(Collectors.toList());
 
-    return new UserDTO(UUID.randomUUID(), user.getName(), user.getLastName(), user.getEmail(),
-        user.getPassword(), authorities);
+    return new UserDTO(
+        UUID.randomUUID(),
+        user.getName(),
+        user.getLastName(),
+        user.getEmail(),
+        user.getPassword(),
+        authorities);
   }
 
   public UUID getId() {
@@ -103,44 +113,28 @@ public class UserDTO implements UserDetails {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
     UserDTO other = (UserDTO) obj;
     if (authorities == null) {
-      if (other.authorities != null)
-        return false;
-    } else if (!authorities.equals(other.authorities))
-      return false;
+      if (other.authorities != null) return false;
+    } else if (!authorities.equals(other.authorities)) return false;
     if (email == null) {
-      if (other.email != null)
-        return false;
-    } else if (!email.equals(other.email))
-      return false;
+      if (other.email != null) return false;
+    } else if (!email.equals(other.email)) return false;
     if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
-      return false;
+      if (other.id != null) return false;
+    } else if (!id.equals(other.id)) return false;
     if (lastName == null) {
-      if (other.lastName != null)
-        return false;
-    } else if (!lastName.equals(other.lastName))
-      return false;
+      if (other.lastName != null) return false;
+    } else if (!lastName.equals(other.lastName)) return false;
     if (name == null) {
-      if (other.name != null)
-        return false;
-    } else if (!name.equals(other.name))
-      return false;
+      if (other.name != null) return false;
+    } else if (!name.equals(other.name)) return false;
     if (password == null) {
-      if (other.password != null)
-        return false;
-    } else if (!password.equals(other.password))
-      return false;
+      if (other.password != null) return false;
+    } else if (!password.equals(other.password)) return false;
     return true;
   }
-
 }

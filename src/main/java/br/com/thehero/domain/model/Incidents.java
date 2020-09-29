@@ -37,22 +37,23 @@ public class Incidents extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID uuid;
 
-  @Column
-  private String title;
+  @Column private String title;
 
-  @Column
-  private String description;
+  @Column private String description;
 
-  @Column
-  private String value;
+  @Column private String value;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "organization_uuid", referencedColumnName = "uuid",
+  @JoinColumn(
+      name = "organization_uuid",
+      referencedColumnName = "uuid",
       foreignKey = @ForeignKey(name = "uuid"))
   private Organization organization;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-  @JoinColumn(name = "files_uuid", referencedColumnName = "uuid",
+  @JoinColumn(
+      name = "files_uuid",
+      referencedColumnName = "uuid",
       foreignKey = @ForeignKey(name = "uuid"))
   private Files files;
 
@@ -60,7 +61,8 @@ public class Incidents extends BaseEntity {
   private Status status;
 
   public enum Status {
-    AVAILABLE, NOT_AVAILABLE;
+    AVAILABLE,
+    NOT_AVAILABLE;
   }
 
   public boolean isAvailable() {
