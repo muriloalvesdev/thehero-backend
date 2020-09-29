@@ -49,9 +49,9 @@ public class IncidentsController {
 
   @PostMapping("incidents/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO dto,
+  public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO incidentsDTO,
       @PathVariable(name = "cnpj", required = true) String cnpjOrganization) {
-    Incidents incidents = service.create(dto, cnpjOrganization);
+    Incidents incidents = service.create(incidentsDTO, cnpjOrganization);
     return new ResponseEntity<>(incidents.getUuid().toString(), HttpStatus.CREATED);
   }
 

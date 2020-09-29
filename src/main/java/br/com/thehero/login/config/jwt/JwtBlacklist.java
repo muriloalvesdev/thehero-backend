@@ -15,7 +15,7 @@ import io.jsonwebtoken.Jwts;
 @Scope("singleton")
 public class JwtBlacklist {
   private static Map<String, String> blacklist = new ConcurrentHashMap<>();
-  private static final Logger LOG = Logger.getLogger(JwtBlacklist.class);
+  private static final Logger LOGGER = Logger.getLogger(JwtBlacklist.class);
 
   private String jwtSecret;
 
@@ -23,7 +23,7 @@ public class JwtBlacklist {
     if (!blacklist.containsKey(token)) {
       blacklist.putIfAbsent(token, String.valueOf(System.currentTimeMillis()));
     } else {
-      LOG.info("TOKEN JA FOI INVALIDADO, TOKEN: " + token);
+      LOGGER.info("TOKEN JA FOI INVALIDADO, TOKEN: " + token);
     }
   }
 
