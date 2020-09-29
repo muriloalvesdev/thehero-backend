@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.com/muriloalvesdev/thehero-backend.svg?branch=master)](https://travis-ci.com/muriloalvesdev/thehero-backend)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/muriloalvesdev/thehero-backend/issues)
+[![Java Code Style](https://img.shields.io/badge/code%20style-eclipse-brightgreen.svg?style=flat)](https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml "Eclipse/STS Code Style")
+[![Java Code Style](https://img.shields.io/badge/code%20style-intellij-brightgreen.svg?style=flat)](https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml "Intellij Code Style")
 
 ## License
 [Apache License 2.0](https://github.com/muriloalvesdev/thehero-backend/blob/master/LICENSE)
