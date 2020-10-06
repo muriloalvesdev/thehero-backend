@@ -22,10 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Transactional
   public UserDetails loadUserByUsername(String email) {
 
-    User user = userRepository.findByEmail(email)
-        .orElseThrow(() -> new EmailNotFoundException("User Not Found with -> email : " + email));
+    User user =
+        userRepository
+            .findByEmail(email)
+            .orElseThrow(
+                () -> new EmailNotFoundException("User Not Found with -> email : " + email));
 
     return UserDTO.build(user);
   }
-
 }

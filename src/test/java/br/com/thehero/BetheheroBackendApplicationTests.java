@@ -8,5 +8,4 @@ class BetheheroBackendApplicationTests {
 
   @Test
   void contextLoads() {}
-
 }

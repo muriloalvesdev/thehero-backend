@@ -40,12 +40,22 @@ class FilesServiceImpl implements FilesService {
     String filename = file.getOriginalFilename();
     validateFilename(filename);
 
-    Incidents incidents = this.incidentsRepository.findById(UUID.fromString(uuidIncidents))
-        .orElseThrow(() -> new IncidentNotFoundException(
-            "Incident not found with UUID informed [" + uuidIncidents + "]"));
+    Incidents incidents =
+        this.incidentsRepository
+            .findById(UUID.fromString(uuidIncidents))
+            .orElseThrow(
+                () ->
+                    new IncidentNotFoundException(
+                        "Incident not found with UUID informed [" + uuidIncidents + "]"));
 
-    Files files = this.filesRepository.saveAndFlush(
-        Files.newBuilder().filename(filename).type(type).incidents(incidents).data(data).build());
+    Files files =
+        this.filesRepository.saveAndFlush(
+            Files.newBuilder()
+                .filename(filename)
+                .type(type)
+                .incidents(incidents)
+                .data(data)
+                .build());
     incidents.setFiles(files);
     this.incidentsRepository.saveAndFlush(incidents);
     return files;

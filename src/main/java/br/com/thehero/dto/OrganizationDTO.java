@@ -43,5 +43,4 @@ public class OrganizationDTO {
   @CNPJ(message = "cnpj is not valid!")
   @NotNull(message = "cnpj is not valid!")
   private String cnpj;
-
 }

@@ -20,8 +20,7 @@ import br.com.thehero.login.service.UserDetailsServiceImpl;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  UserDetailsServiceImpl userDetailsService;
+  @Autowired UserDetailsServiceImpl userDetailsService;
 
   @Bean
   public JwtAuthTokenFilter authenticationJwtTokenFilter() {
@@ -31,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
       throws Exception {
-    authenticationManagerBuilder.userDetailsService(userDetailsService)
+    authenticationManagerBuilder
+        .userDetailsService(userDetailsService)
         .passwordEncoder(passwordEncoder());
   }
 
@@ -56,5 +56,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public HttpFirewall defaultHttpFirewall() {
     return new DefaultHttpFirewall();
   }
-
 }

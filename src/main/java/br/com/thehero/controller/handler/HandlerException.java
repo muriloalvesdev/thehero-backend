@@ -62,5 +62,4 @@ public class HandlerException extends ResponseEntityExceptionHandler {
   private ApiException createResponse(String message, int httpValue) {
     return new ApiException(message, httpValue);
   }
-
 }

@@ -9,13 +9,24 @@ import lombok.NoArgsConstructor;
 public final class OrganizationConvert {
 
   public static final Organization convertDataTransferObjectToEntity(OrganizationDTO dto) {
-    return Organization.newBuilder().name(dto.getName()).city(dto.getCity()).cnpj(dto.getCnpj())
-        .email(dto.getEmail()).uf(dto.getUf()).whatsapp(dto.getWhatsapp()).build();
+    return Organization.newBuilder()
+        .name(dto.getName())
+        .city(dto.getCity())
+        .cnpj(dto.getCnpj())
+        .email(dto.getEmail())
+        .uf(dto.getUf())
+        .whatsapp(dto.getWhatsapp())
+        .build();
   }
 
   public static final OrganizationDTO convertEntityToDataTransferObject(Organization org) {
-    return OrganizationDTO.newBuilder().name(org.getName()).email(org.getEmail())
-        .whatsapp(org.getWhatsapp()).city(org.getCity()).uf(org.getUf()).cnpj(org.getCnpj())
+    return OrganizationDTO.newBuilder()
+        .name(org.getName())
+        .email(org.getEmail())
+        .whatsapp(org.getWhatsapp())
+        .city(org.getCity())
+        .uf(org.getUf())
+        .cnpj(org.getCnpj())
         .build();
   }
 }

@@ -41,19 +41,23 @@ public class IncidentsServiceImpl implements IncidentsService {
   }
 
   public Page<IncidentsDTO> findAll(Pageable pageable) {
-    return incidentsRepository.findByStatus(Status.AVAILABLE, pageable)
+    return incidentsRepository
+        .findByStatus(Status.AVAILABLE, pageable)
         .map(IncidentsConvert::convertEntityToDataTransferObject);
   }
 
   public void delete(String incidentId, String cnpjOrganization) {
-    incidentsRepository.findById(UUID.fromString(incidentId)).ifPresent(incident -> {
-      if (incident.getOrganization().getCnpj().equals(cnpjOrganization)) {
-        incident.setStatus(Status.NOT_AVAILABLE);
-        incidentsRepository.save(incident);
-      } else {
-        throw new IllegalAccessError("Não autorizado!");
-      }
-    });
+    incidentsRepository
+        .findById(UUID.fromString(incidentId))
+        .ifPresent(
+            incident -> {
+              if (incident.getOrganization().getCnpj().equals(cnpjOrganization)) {
+                incident.setStatus(Status.NOT_AVAILABLE);
+                incidentsRepository.save(incident);
+              } else {
+                throw new IllegalAccessError("Não autorizado!");
+              }
+            });
   }
 
   public IncidentsDTO findById(String incidentId) throws NotFoundException {
@@ -67,5 +71,4 @@ public class IncidentsServiceImpl implements IncidentsService {
       throw new NotFoundException("Não existe um incidente com o ID informado");
     }
   }
-
 }
