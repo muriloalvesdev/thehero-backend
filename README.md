@@ -39,8 +39,6 @@ Como eu disse no tópico **Porque crio diversos repositórios** em meu [readme.m
 
 [Backend em Java com Spring Boot](https://github.com/muriloalvesdev/thehero-backend).
 
-[Backend em NodeJS](https://github.com/muriloalvesdev/semanaomnistack11-backend).
-
 [Front-End em ReactJS](https://github.com/muriloalvesdev/thehero-portal).
 
 [Mobile em React-Native](https://play.google.com/store/apps/details?id=app.netlify.thehero).
