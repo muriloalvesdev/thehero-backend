@@ -1,6 +1,8 @@
 package br.com.thehero.login.service;
 
 import javax.transaction.Transactional;
+
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -10,13 +12,10 @@ import br.com.thehero.login.model.User;
 import br.com.thehero.login.repository.UserRepository;
 
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
   private UserRepository userRepository;
-
-  public UserDetailsServiceImpl(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
 
   @Override
   @Transactional
