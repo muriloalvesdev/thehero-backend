@@ -17,11 +17,18 @@ public final class IncidentsConvert {
 
   public static final IncidentsDTO convertEntityToDataTransferObject(Incidents incidents) {
     Organization organization = incidents.getOrganization();
-    return IncidentsDTO.newBuilder().title(incidents.getTitle())
-        .description(incidents.getDescription()).value(incidents.getValue())
-        .id(incidents.getUuid().toString()).nameOrganization(organization.getName())
-        .city(organization.getCity()).uf(organization.getUf()).whatsapp(organization.getWhatsapp())
-        .email(organization.getEmail()).fileData(incidents.getFiles().getData())
-        .mimeType(incidents.getFiles().getType()).build();
+    return IncidentsDTO.newBuilder()
+        .title(incidents.getTitle())
+        .description(incidents.getDescription())
+        .value(incidents.getValue())
+        .id(incidents.getUuid().toString())
+        .nameOrganization(organization.getName())
+        .city(organization.getCity())
+        .uf(organization.getUf())
+        .whatsapp(organization.getWhatsapp())
+        .email(organization.getEmail())
+        .fileData(incidents.getFiles().getData())
+        .mimeType(incidents.getFiles().getType())
+        .build();
   }
 }

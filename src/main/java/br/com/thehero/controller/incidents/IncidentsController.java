@@ -60,5 +60,4 @@ public class IncidentsController {
   public ResponseEntity<Page<IncidentsDTO>> findAll(Pageable pageable) {
     return ResponseEntity.ok(service.findAll(pageable));
   }
-
 }

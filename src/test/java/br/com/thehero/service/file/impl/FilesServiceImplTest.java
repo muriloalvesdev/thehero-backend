@@ -70,9 +70,12 @@ class FilesServiceImplTest {
     BDDMockito.given(this.incidentsRepository.findById(uuid)).willReturn(Optional.empty());
     BDDMockito.given(this.multipartFile.getOriginalFilename()).willReturn(FILENAME);
 
-    Exception exception = assertThrows(IncidentNotFoundException.class, () -> {
-      this.service.save(this.multipartFile, uuid.toString());
-    });
+    Exception exception =
+        assertThrows(
+            IncidentNotFoundException.class,
+            () -> {
+              this.service.save(this.multipartFile, uuid.toString());
+            });
 
     assertEquals("Incident not found with UUID informed [" + uuid + "]", exception.getMessage());
     assertTrue(exception instanceof IncidentNotFoundException);

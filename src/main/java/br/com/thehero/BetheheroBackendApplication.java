@@ -9,5 +9,4 @@ public class BetheheroBackendApplication {
   public static void main(String[] args) {
     SpringApplication.run(BetheheroBackendApplication.class, args);
   }
-
 }

@@ -18,11 +18,13 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
   private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthEntryPoint.class);
 
   @Override
-  public void commence(HttpServletRequest request, HttpServletResponse response,
-      AuthenticationException authException) throws IOException, ServletException {
+  public void commence(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      AuthenticationException authException)
+      throws IOException, ServletException {
 
     LOGGER.error("Unauthorized error. Message - {}", authException.getMessage());
     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error -> Unauthorized");
   }
-
 }

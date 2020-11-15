@@ -24,7 +24,8 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(builderMethodName = "newBuilder")
 @Entity
-@Table(name = "organization",
+@Table(
+    name = "organization",
     uniqueConstraints = {@UniqueConstraint(columnNames = {"email", "cnpj"})})
 public class Organization extends BaseEntity {
 
@@ -34,25 +35,18 @@ public class Organization extends BaseEntity {
   @Id
   private UUID uuid;
 
-  @Column
-  private String name;
+  @Column private String name;
 
-  @Column
-  private String email;
+  @Column private String email;
 
-  @Column
-  private String whatsapp;
+  @Column private String whatsapp;
 
-  @Column
-  private String city;
+  @Column private String city;
 
-  @Column
-  private String uf;
+  @Column private String uf;
 
-  @Column
-  private String cnpj;
+  @Column private String cnpj;
 
   @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY, orphanRemoval = true)
   private List<Incidents> incidents;
-
 }

@@ -38,5 +38,4 @@ public class BaseEntity implements Serializable {
   public LocalDateTime getUpdatedAt() {
     return this.updatedAt == null ? getCreatedAt() : this.updatedAt;
   }
-
 }

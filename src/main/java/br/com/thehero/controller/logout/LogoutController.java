@@ -16,8 +16,7 @@ import io.jsonwebtoken.Claims;
 @RequestMapping("/api/user")
 public class LogoutController {
 
-  @Autowired
-  private InvalidationTokenService service;
+  @Autowired private InvalidationTokenService service;
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping(path = "/information/{token}")

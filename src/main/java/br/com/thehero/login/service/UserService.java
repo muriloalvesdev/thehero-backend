@@ -40,8 +40,12 @@ public class UserService {
   private AuthenticationManager authenticationManager;
   private OrganizationRepository organizationRepository;
 
-  public UserService(UserRepository userRepository, RoleRepository roleRepository,
-      PasswordEncoder encoder, JwtProvider jwtProvider, AuthenticationManager authenticationManager,
+  public UserService(
+      UserRepository userRepository,
+      RoleRepository roleRepository,
+      PasswordEncoder encoder,
+      JwtProvider jwtProvider,
+      AuthenticationManager authenticationManager,
       OrganizationRepository organizationRepository) {
     this.userRepository = userRepository;
     this.roleRepository = roleRepository;
@@ -57,33 +61,42 @@ public class UserService {
       throw new ExistingEmailException(EMAIL_IS_ALREADY);
     }
 
-    User user = new User(UUID.randomUUID(), registerData.getName(), registerData.getLastName(),
-        registerData.getEmail(), encoder.encode(registerData.getPassword()));
+    User user =
+        new User(
+            UUID.randomUUID(),
+            registerData.getName(),
+            registerData.getLastName(),
+            registerData.getEmail(),
+            encoder.encode(registerData.getPassword()));
 
     Set<String> strRoles = registerData.getRole();
     Set<Role> roles = new HashSet<>();
 
-    strRoles.forEach(role -> {
-      switch (role.toLowerCase()) {
-        case "admin":
-          Role admin = roleRepository.findByName(RoleName.ROLE_ADMIN)
-              .orElseThrow(() -> new IllegalRoleException(String.format(ROLE_NOT_FOUND, "Admin")));
-          roles.add(admin);
-          break;
-        default:
-          throw new IllegalRoleException(ROLE_INVALID);
-      }
-    });
+    strRoles.forEach(
+        role -> {
+          switch (role.toLowerCase()) {
+            case "admin":
+              Role admin =
+                  roleRepository
+                      .findByName(RoleName.ROLE_ADMIN)
+                      .orElseThrow(
+                          () -> new IllegalRoleException(String.format(ROLE_NOT_FOUND, "Admin")));
+              roles.add(admin);
+              break;
+            default:
+              throw new IllegalRoleException(ROLE_INVALID);
+          }
+        });
 
     user.setRoles(roles);
     return userRepository.saveAndFlush(user);
-
   }
 
   public AccessToken authenticateUser(LoginDTO loginDto) {
 
-    Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+    Authentication authentication =
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -94,7 +107,9 @@ public class UserService {
       throw new EmailNotFoundException(EMAIL_NOT_FOUND);
     }
     Organization organization = optionalOrganization.get();
-    return new AccessToken(jwtProvider.generateJwtToken(authentication), organization.getCnpj(),
+    return new AccessToken(
+        jwtProvider.generateJwtToken(authentication),
+        organization.getCnpj(),
         organization.getName());
   }
 }

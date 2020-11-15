@@ -38,5 +38,4 @@ class IncidentsConvertTest {
     assertEquals(this.incidentsDTO.getValue(), incidents.getValue());
     assertEquals(this.incidentsDTO.getWhatsapp(), organization.getWhatsapp());
   }
-
 }

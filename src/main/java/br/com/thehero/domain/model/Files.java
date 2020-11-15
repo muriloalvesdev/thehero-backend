@@ -49,8 +49,9 @@ public class Files {
   private String type;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-  @JoinColumn(name = "incidents_uuid", referencedColumnName = "uuid",
+  @JoinColumn(
+      name = "incidents_uuid",
+      referencedColumnName = "uuid",
       foreignKey = @ForeignKey(name = "uuid"))
   private Incidents incidents;
-
 }

@@ -16,8 +16,7 @@ import br.com.thehero.service.profile.ProfileService;
 @RequestMapping("/api")
 public class Profile {
 
-  @Autowired
-  private ProfileService service;
+  @Autowired private ProfileService service;
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("profile/{cnpj}")

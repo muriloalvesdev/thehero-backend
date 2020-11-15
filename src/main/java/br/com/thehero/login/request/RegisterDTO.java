@@ -13,13 +13,12 @@ public class RegisterDTO {
   @JsonProperty("lastname")
   private String lastName;
 
-  @Email
-  private String email;
+  @Email private String email;
   private Set<String> role;
   private String password;
 
-  public RegisterDTO(String name, String lastName, @Email String email, Set<String> role,
-      String password) {
+  public RegisterDTO(
+      String name, String lastName, @Email String email, Set<String> role, String password) {
     this.name = name;
     this.lastName = lastName;
     this.email = email;
@@ -71,8 +70,16 @@ public class RegisterDTO {
 
   @Override
   public String toString() {
-    return "RegisterData [name=" + name + ", lastName=" + lastName + ", email=" + email + ", role="
-        + role + ", password=" + password + "]";
+    return "RegisterData [name="
+        + name
+        + ", lastName="
+        + lastName
+        + ", email="
+        + email
+        + ", role="
+        + role
+        + ", password="
+        + password
+        + "]";
   }
-
 }

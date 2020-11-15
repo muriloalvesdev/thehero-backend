@@ -23,5 +23,4 @@ public class Password {
   public String toString() {
     return "Password [password=" + password + "]";
   }
-
 }
