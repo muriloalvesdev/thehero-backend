@@ -16,34 +16,26 @@ import lombok.Setter;
 @Builder(builderMethodName = "newBuilder")
 public class IncidentsDTO {
 
-  @JsonProperty("id")
   private String id;
 
-  @JsonProperty("title")
   @NotNull
   private String title;
 
-  @JsonProperty("description")
   @NotNull
   private String description;
 
-  @JsonProperty("value")
   @NotNull
   private String value;
 
   @JsonProperty("name")
   private String nameOrganization;
 
-  @JsonProperty("city")
   private String city;
 
-  @JsonProperty("uf")
   private String uf;
 
-  @JsonProperty("whatsapp")
   private String whatsapp;
 
-  @JsonProperty("email")
   private String email;
 
   @JsonProperty("file_data")
