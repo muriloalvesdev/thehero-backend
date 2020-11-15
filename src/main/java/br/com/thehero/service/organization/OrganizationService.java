@@ -1,18 +1,20 @@
 package br.com.thehero.service.organization;
 
 import java.util.List;
+
 import br.com.thehero.domain.model.Organization;
-import br.com.thehero.dto.OrganizationDTO;
 import javassist.NotFoundException;
 
-public interface OrganizationService {
-  Organization create(OrganizationDTO organizationDTO);
+public interface OrganizationService<D, S, T> {
+  D create(D dto);
 
-  void update(OrganizationDTO organizationDTO);
+  void update(D dto);
 
-  List<OrganizationDTO> findAll();
+  List<D> findAll();
 
-  OrganizationDTO findByCnpj(String cnpj) throws NotFoundException;
+  D findByCnpj(S cnpj) throws NotFoundException;
 
-  void delete(String cnpj) throws NotFoundException;
+  void delete(S cnpj) throws NotFoundException;
+
+  T findByEmail(S email) throws NotFoundException;
 }
