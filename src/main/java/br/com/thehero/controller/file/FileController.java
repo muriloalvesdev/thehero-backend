@@ -2,6 +2,7 @@ package br.com.thehero.controller.file;
 
 import java.io.IOException;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,13 +20,10 @@ import br.com.thehero.service.file.FilesService;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
 @RestController
+@AllArgsConstructor
 public class FileController {
 
-  FilesService service;
-
-  public FileController(FilesService service) {
-    this.service = service;
-  }
+  FilesService<Files, MultipartFile, String> service;
 
   @PostMapping("/uploadFile/{incidentId}")
   @PreAuthorize("hasRole('ADMIN')")

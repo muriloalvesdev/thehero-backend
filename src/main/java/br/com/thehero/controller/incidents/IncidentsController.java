@@ -1,5 +1,6 @@
 package br.com.thehero.controller.incidents;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,13 +24,10 @@ import javassist.NotFoundException;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
 @RestController
+@AllArgsConstructor
 public class IncidentsController {
 
-  private IncidentsService service;
-
-  public IncidentsController(IncidentsService service) {
-    this.service = service;
-  }
+  private IncidentsService<Incidents, IncidentsDTO,String, Page, Pageable> service;
 
   @DeleteMapping("incidents/{id}/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")

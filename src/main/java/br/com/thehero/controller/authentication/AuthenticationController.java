@@ -1,6 +1,8 @@
 package br.com.thehero.controller.authentication;
 
 import javax.validation.Valid;
+
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,9 +22,10 @@ import br.com.thehero.login.service.UserService;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthenticationController {
 
-  @Autowired private UserService userService;
+  private UserService userService;
 
   @PostMapping("/login")
   public ResponseEntity<AccessToken> authenticateUser(@Validated @RequestBody LoginDTO loginData) {

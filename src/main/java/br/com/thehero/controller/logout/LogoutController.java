@@ -1,5 +1,6 @@
 package br.com.thehero.controller.logout;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,10 @@ import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/api/user")
+@AllArgsConstructor
 public class LogoutController {
 
-  @Autowired private InvalidationTokenService service;
+  InvalidationTokenService service;
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping(path = "/information/{token}")
