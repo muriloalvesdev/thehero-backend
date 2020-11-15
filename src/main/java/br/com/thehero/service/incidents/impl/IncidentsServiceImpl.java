@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-public class IncidentsServiceImpl implements IncidentsService {
+public class IncidentsServiceImpl implements IncidentsService<Incidents, IncidentsDTO,String, Page, Pageable> {
 
   IncidentsRepository incidentsRepository;
   OrganizationRepository organizationRepository;
@@ -38,7 +38,7 @@ public class IncidentsServiceImpl implements IncidentsService {
   }
 
   public Page<IncidentsDTO> findAll(Pageable pageable) {
-    return incidentsRepository
+    return this.incidentsRepository
         .findByStatus(Status.AVAILABLE, pageable)
         .map(IncidentsConvert::convertEntityToDataTransferObject);
   }

@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-class FilesServiceImpl implements FilesService {
+class FilesServiceImpl implements FilesService<Files,MultipartFile,String> {
 
   private static final Logger LOGGER = Logger.getLogger(FilesServiceImpl.class);
   private FilesRepository filesRepository;
