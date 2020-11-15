@@ -1,5 +1,7 @@
 package br.com.thehero.login.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Set;
 
 import javax.validation.constraints.Email;
@@ -7,6 +9,8 @@ import javax.validation.constraints.Email;
 public class RegisterDTO {
 
   private String name;
+
+  @JsonProperty("lastname")
   private String lastName;
 
   @Email
