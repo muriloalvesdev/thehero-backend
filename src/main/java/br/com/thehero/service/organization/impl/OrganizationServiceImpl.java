@@ -16,18 +16,15 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-public class OrganizationServiceImpl
-    implements OrganizationService<OrganizationDTO, String, Organization> {
+public class OrganizationServiceImpl implements OrganizationService {
 
   private OrganizationRepository repository;
 
   @Override
-  public OrganizationDTO create(OrganizationDTO organizationDTO) {
+  public Organization create(OrganizationDTO organizationDTO) {
     Organization organization =
         OrganizationConvert.convertDataTransferObjectToEntity(organizationDTO);
-
-    repository.save(organization);
-    return organizationDTO;
+    return repository.save(organization);
   }
 
   @Override
@@ -67,12 +64,13 @@ public class OrganizationServiceImpl
   @Override
   public void delete(String cnpj) throws NotFoundException {
     Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
-    if (organizationOptional.isPresent()) {
-      repository.delete(organizationOptional.get());
-    } else {
-      throw new NotFoundException(
-          "Não existe uma organização com o CNPJ [" + cnpj + "] informado.");
-    }
+
+    Organization organization =
+        organizationOptional.orElseThrow(
+            () ->
+                new NotFoundException(
+                    "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
+    repository.delete(organization);
   }
 
   @Override
