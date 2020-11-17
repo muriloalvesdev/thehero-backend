@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-public class IncidentsServiceImpl implements IncidentsService<Incidents, IncidentsDTO,String, Page, Pageable> {
+public class IncidentsServiceImpl implements IncidentsService {
 
   IncidentsRepository incidentsRepository;
   OrganizationRepository organizationRepository;
