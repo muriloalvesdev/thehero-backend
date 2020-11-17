@@ -1,4 +1,4 @@
-package br.com.thehero.login.exception;
+package br.com.thehero.exception;
 
 public class TokenInvalidException extends RuntimeException {
   private static final long serialVersionUID = 1L;

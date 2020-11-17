@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import br.com.thehero.dto.UserDTO;
-import br.com.thehero.login.exception.EmailNotFoundException;
+import br.com.thehero.exception.EmailNotFoundException;
 import br.com.thehero.login.model.User;
 import br.com.thehero.login.repository.UserRepository;
 
