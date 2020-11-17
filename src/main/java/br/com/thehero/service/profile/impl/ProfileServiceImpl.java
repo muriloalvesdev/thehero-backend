@@ -7,6 +7,7 @@ import br.com.thehero.dto.IncidentsDTO;
 import br.com.thehero.dto.IncidentsDTOList;
 import br.com.thehero.service.convert.IncidentsConvert;
 import br.com.thehero.service.profile.ProfileService;
+import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,26 +18,29 @@ import java.util.Optional;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-public class ProfileServiceImpl implements ProfileService<IncidentsDTOList,String> {
+public class ProfileServiceImpl implements ProfileService {
 
   OrganizationRepository organizationRepository;
   IncidentsRepository incidentsRepository;
 
-  public IncidentsDTOList findIncidentsByOrganization(String cnpj) {
+  public IncidentsDTOList findIncidentsByOrganization(String cnpj) throws NotFoundException {
     Optional<Organization> organizationOptional = organizationRepository.findByCnpj(cnpj);
     List<IncidentsDTO> incidents = new ArrayList<>();
     IncidentsDTOList incidentsDTOList = new IncidentsDTOList();
 
-    if (organizationOptional.isPresent()) {
-      Organization organization = organizationOptional.get();
-      incidentsRepository.findByOrganization(organization).stream()
-          .forEach(
-              incident -> {
-                IncidentsDTO incidentsDTO =
-                    IncidentsConvert.convertEntityToDataTransferObject(incident);
-                incidents.add(incidentsDTO);
-              });
-    }
+    Organization organization =
+        organizationOptional.orElseThrow(
+            () ->
+                new NotFoundException(
+                    "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
+    incidentsRepository.findByOrganization(organization).stream()
+        .forEach(
+            incident -> {
+              IncidentsDTO incidentsDTO =
+                  IncidentsConvert.convertEntityToDataTransferObject(incident);
+              incidents.add(incidentsDTO);
+            });
+
     incidentsDTOList.setIncidents(incidents);
     return incidentsDTOList;
   }

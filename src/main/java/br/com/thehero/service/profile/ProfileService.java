@@ -1,6 +1,9 @@
 package br.com.thehero.service.profile;
 
-public interface ProfileService<I, S> {
+import br.com.thehero.dto.IncidentsDTOList;
+import javassist.NotFoundException;
 
-    I findIncidentsByOrganization(S cnpj);
+public interface ProfileService {
+
+  IncidentsDTOList findIncidentsByOrganization(String cnpj) throws NotFoundException;
 }
