@@ -22,7 +22,7 @@ public class JwtBlacklist {
     if (!blacklist.containsKey(token)) {
       blacklist.putIfAbsent(token, String.valueOf(System.currentTimeMillis()));
     } else {
-      log.info("TOKEN JA FOI INVALIDADO, TOKEN: " + token);
+      log.info("TOKEN JA FOI INVALIDADO, TOKEN [{}] ", token);
     }
   }
 
