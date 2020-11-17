@@ -27,7 +27,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class OrganizationController {
 
-  private OrganizationService<OrganizationDTO, String, Organization> service;
+  private OrganizationService service;
 
   @GetMapping("/ongs")
   @PreAuthorize("hasRole('ADMIN')")
@@ -37,11 +37,9 @@ public class OrganizationController {
 
   @PostMapping("/ongs")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<OrganizationDTO> create(@RequestBody OrganizationDTO organizationDTO)
-      throws NotFoundException {
-    service.create(organizationDTO);
-
-    Organization organization = service.findByEmail(organizationDTO.getEmail());
+  public ResponseEntity<OrganizationDTO> create(
+      @Validated @RequestBody OrganizationDTO organizationDTO) {
+    Organization organization = service.create(organizationDTO);
 
     return ResponseEntity.created(
             ServletUriComponentsBuilder.fromCurrentContextPath()
