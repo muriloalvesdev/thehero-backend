@@ -22,13 +22,13 @@ public class LogoutController {
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping(path = "/information/{token}")
-  public ResponseEntity<Claims> getInformationUser(@RequestBody(required = true) Token token) {
+  public ResponseEntity<Claims> getInformationUser(@RequestBody Token token) {
     return ResponseEntity.ok(service.getInformations(token.getToken()));
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping(path = "/token-expiration/")
-  public HttpStatus setExpirationToken(@RequestBody(required = true) Token token) {
+  public HttpStatus setExpirationToken(@RequestBody Token token) {
     service.invalidate(token.getToken());
     return HttpStatus.NO_CONTENT;
   }
