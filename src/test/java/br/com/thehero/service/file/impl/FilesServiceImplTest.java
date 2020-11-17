@@ -19,8 +19,8 @@ import br.com.thehero.domain.model.Files;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.repository.FilesRepository;
 import br.com.thehero.domain.repository.IncidentsRepository;
+import br.com.thehero.exception.IncidentNotFoundException;
 import br.com.thehero.providers.IncidentsEntityProviderTest;
-import br.com.thehero.service.IncidentNotFoundException;
 
 class FilesServiceImplTest {
 

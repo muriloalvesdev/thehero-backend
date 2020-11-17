@@ -1,4 +1,4 @@
-package br.com.thehero.service;
+package br.com.thehero.exception;
 
 public class IncidentNotFoundException extends RuntimeException {
 

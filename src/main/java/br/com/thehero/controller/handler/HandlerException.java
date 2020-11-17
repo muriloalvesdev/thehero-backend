@@ -9,8 +9,8 @@ import br.com.thehero.domain.model.ApiException;
 import br.com.thehero.exception.EmailNotFoundException;
 import br.com.thehero.exception.ExistingEmailException;
 import br.com.thehero.exception.IllegalRoleException;
+import br.com.thehero.exception.IncidentNotFoundException;
 import br.com.thehero.exception.TokenNotFoundException;
-import br.com.thehero.service.IncidentNotFoundException;
 import javassist.NotFoundException;
 
 @ControllerAdvice
