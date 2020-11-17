@@ -1,5 +1,8 @@
 package br.com.thehero.controller.profile;
 
+import br.com.thehero.service.profile.ProfileService;
+import javassist.NotFoundException;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +18,15 @@ import br.com.thehero.service.profile.impl.ProfileServiceImpl;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class Profile {
 
-  private ProfileServiceImpl service;
+  private ProfileService service;
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("profile/{cnpj}")
   public ResponseEntity<IncidentsDTOList> findIncidentsByOrganization(
-      @PathVariable(name = "cnpj", required = true) String cnpj) {
-    return ResponseEntity.ok(service.findIncidentsByOrganization(cnpj));
+      @PathVariable(name = "cnpj") String cnpj) throws NotFoundException {
+    return ResponseEntity.ok(this.service.findIncidentsByOrganization(cnpj));
   }
 }
