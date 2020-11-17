@@ -1,5 +1,6 @@
 package br.com.thehero.controller.incidents;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,31 +25,32 @@ import javassist.NotFoundException;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
 @RestController
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class IncidentsController {
 
-  private IncidentsService<Incidents, IncidentsDTO,String, Page, Pageable> service;
+  private IncidentsService service;
 
   @DeleteMapping("incidents/{id}/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Object> delete(
-      @PathVariable(name = "id", required = true) String incidentsId,
-      @PathVariable(value = "cnpj", required = true) String cnpjOrganization) {
+      @PathVariable(name = "id") String incidentsId,
+      @PathVariable(value = "cnpj") String cnpjOrganization) {
     service.delete(incidentsId, cnpjOrganization);
     return ResponseEntity.noContent().build();
   }
 
   @GetMapping("incidents/{id}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<IncidentsDTO> findById(
-      @PathVariable(name = "id", required = true) String incidentsId) throws NotFoundException {
+  public ResponseEntity<IncidentsDTO> findById(@PathVariable(name = "id") String incidentsId)
+      throws NotFoundException {
     return ResponseEntity.ok(service.findById(incidentsId));
   }
 
   @PostMapping("incidents/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO incidentsDTO,
-      @PathVariable(name = "cnpj", required = true) String cnpjOrganization) {
+  public ResponseEntity<Object> create(
+      @Validated @RequestBody IncidentsDTO incidentsDTO,
+      @PathVariable(name = "cnpj") String cnpjOrganization) {
     Incidents incidents = service.create(incidentsDTO, cnpjOrganization);
     return new ResponseEntity<>(incidents.getUuid().toString(), HttpStatus.CREATED);
   }
