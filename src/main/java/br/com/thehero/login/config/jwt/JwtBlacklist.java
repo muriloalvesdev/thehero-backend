@@ -27,11 +27,7 @@ public class JwtBlacklist {
   }
 
   public boolean check(String token) {
-    if (StringUtils.isNotBlank(token)) {
-      return blacklist.containsKey(token);
-    } else {
-      return false;
-    }
+    return StringUtils.isNotBlank(token) ? blacklist.containsKey(token) : false;
   }
 
   public synchronized void cleanBlacklist() {
