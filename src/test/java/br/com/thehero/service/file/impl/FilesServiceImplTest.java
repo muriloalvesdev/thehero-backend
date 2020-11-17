@@ -7,6 +7,8 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +48,7 @@ class FilesServiceImplTest {
 
   @ParameterizedTest
   @ArgumentsSource(IncidentsEntityProviderTest.class)
-  void shouldSaveFile(Incidents incident) {
+  void shouldSaveFile(Incidents incident) throws IOException {
     BDDMockito.given(this.incidentsRepository.findById(incident.getUuid()))
         .willReturn(Optional.of(incident));
 

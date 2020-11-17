@@ -1,9 +1,10 @@
 package br.com.thehero.service.file;
 
+import br.com.thehero.domain.model.Files;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.thehero.domain.model.Files;
+import java.io.IOException;
 
-public interface FilesService<F, M, S> {
-  F save(M files, S cnpjOrganization);
+public interface FilesService {
+  Files save(MultipartFile files, String cnpjOrganization) throws IOException;
 }
