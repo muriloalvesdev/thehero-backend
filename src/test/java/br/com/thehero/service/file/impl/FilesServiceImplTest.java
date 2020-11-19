@@ -54,16 +54,16 @@ class FilesServiceImplTest {
 
     BDDMockito.given(this.filesRepository.saveAndFlush(this.file)).willReturn(this.file);
 
-    BDDMockito.given(this.incidentsRepository.saveAndFlush(incident)).willReturn(incident);
+    BDDMockito.given(this.incidentsRepository.save(incident)).willReturn(incident);
 
     BDDMockito.given(this.multipartFile.getOriginalFilename()).willReturn(FILENAME);
 
     this.service.save(this.multipartFile, incident.getUuid().toString());
 
     verify(this.incidentsRepository, times(1)).findById(any());
-    verify(this.incidentsRepository, times(1)).saveAndFlush(any(Incidents.class));
+    verify(this.incidentsRepository, times(1)).save(any(Incidents.class));
     verify(this.filesRepository, times(1)).saveAndFlush(any(Files.class));
-    verify(this.multipartFile, times(1)).getOriginalFilename();
+    verify(this.multipartFile, times(2)).getOriginalFilename();
   }
 
   @Test
