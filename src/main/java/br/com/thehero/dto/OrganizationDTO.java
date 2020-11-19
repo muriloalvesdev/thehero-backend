@@ -3,7 +3,6 @@ package br.com.thehero.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CNPJ;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
