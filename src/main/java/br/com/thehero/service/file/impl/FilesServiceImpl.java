@@ -24,7 +24,7 @@ class FilesServiceImpl implements FilesService {
   private IncidentsRepository incidentsRepository;
 
   public Files save(MultipartFile file, String uuidIncidents) {
-    log.info("[BEGIN] save() - with filename [" + file.getName() + "]");
+    log.info("[BEGIN] save() - with filename [" + file.getOriginalFilename() + "]");
     return uploadFile(file, uuidIncidents);
   }
 
