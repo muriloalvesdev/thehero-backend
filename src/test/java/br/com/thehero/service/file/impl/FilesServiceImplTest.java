@@ -7,6 +7,8 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,22 +48,22 @@ class FilesServiceImplTest {
 
   @ParameterizedTest
   @ArgumentsSource(IncidentsEntityProviderTest.class)
-  void shouldSaveFile(Incidents incident) {
+  void shouldSaveFile(Incidents incident) throws IOException {
     BDDMockito.given(this.incidentsRepository.findById(incident.getUuid()))
         .willReturn(Optional.of(incident));
 
     BDDMockito.given(this.filesRepository.saveAndFlush(this.file)).willReturn(this.file);
 
-    BDDMockito.given(this.incidentsRepository.saveAndFlush(incident)).willReturn(incident);
+    BDDMockito.given(this.incidentsRepository.save(incident)).willReturn(incident);
 
     BDDMockito.given(this.multipartFile.getOriginalFilename()).willReturn(FILENAME);
 
     this.service.save(this.multipartFile, incident.getUuid().toString());
 
     verify(this.incidentsRepository, times(1)).findById(any());
-    verify(this.incidentsRepository, times(1)).saveAndFlush(any(Incidents.class));
+    verify(this.incidentsRepository, times(1)).save(any(Incidents.class));
     verify(this.filesRepository, times(1)).saveAndFlush(any(Files.class));
-    verify(this.multipartFile, times(1)).getOriginalFilename();
+    verify(this.multipartFile, times(2)).getOriginalFilename();
   }
 
   @Test

@@ -9,14 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class IncidentsConvert {
 
-  public static final Incidents convertDataTransferObjetToEntity(
-      IncidentsDTO dto, Organization organization) {
-    return Incidents.newBuilder()
-        .title(dto.getTitle())
-        .description(dto.getDescription())
-        .value(dto.getValue())
-        .organization(organization)
-        .build();
+  public static final Incidents convertDataTransferObjetToEntity(IncidentsDTO incidentsDTO,
+      Organization organization) {
+    return Incidents.newBuilder().title(incidentsDTO.getTitle()).description(incidentsDTO.getDescription())
+        .value(incidentsDTO.getValue()).organization(organization).build();
   }
 
   public static final IncidentsDTO convertEntityToDataTransferObject(Incidents incidents) {

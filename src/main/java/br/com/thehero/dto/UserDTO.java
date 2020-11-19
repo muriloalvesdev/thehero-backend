@@ -1,15 +1,23 @@
 package br.com.thehero.dto;
 
+import br.com.thehero.login.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import br.com.thehero.login.model.User;
 
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@Getter
+@Setter
 public class UserDTO implements UserDetails {
   private static final long serialVersionUID = -5745731685321252631L;
 
@@ -20,21 +28,6 @@ public class UserDTO implements UserDetails {
   @JsonIgnore private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
-
-  public UserDTO(
-      UUID id,
-      String name,
-      String lastName,
-      String email,
-      String password,
-      Collection<? extends GrantedAuthority> authorities) {
-    this.id = id;
-    this.name = name;
-    this.lastName = lastName;
-    this.email = email;
-    this.password = password;
-    this.authorities = authorities;
-  }
 
   public static UserDTO build(User user) {
     List<GrantedAuthority> authorities =
@@ -49,18 +42,6 @@ public class UserDTO implements UserDetails {
         user.getEmail(),
         user.getPassword(),
         authorities);
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getEmail() {
-    return email;
   }
 
   @Override

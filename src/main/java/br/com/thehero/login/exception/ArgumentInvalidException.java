@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ArgumentInvalidException extends RuntimeException {
   private static final long serialVersionUID = 1L;
 
-  public ArgumentInvalidException(String msg) {
-    super(msg);
+  public ArgumentInvalidException(String message) {
+    super(message);
   }
 }

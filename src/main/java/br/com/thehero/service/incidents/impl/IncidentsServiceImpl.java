@@ -1,10 +1,5 @@
 package br.com.thehero.service.incidents.impl;
 
-import java.util.Optional;
-import java.util.UUID;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.model.Incidents.Status;
 import br.com.thehero.domain.model.Organization;
@@ -17,6 +12,11 @@ import br.com.thehero.service.incidents.IncidentsService;
 import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
@@ -26,22 +26,19 @@ public class IncidentsServiceImpl implements IncidentsService {
   OrganizationRepository organizationRepository;
   FilesRepository filesRepository;
 
-  public Incidents create(IncidentsDTO dto, String cnpjOrganization) {
-    Optional<Organization> optionalOrganization =
-        organizationRepository.findByCnpj(cnpjOrganization);
-    if (optionalOrganization.isPresent()) {
-      Organization organization = optionalOrganization.get();
-      Incidents incidents = IncidentsConvert.convertDataTransferObjetToEntity(dto, organization);
-
-      return incidentsRepository.saveAndFlush(incidents);
-
-    } else {
-      throw new RuntimeException("Não existe uma organização com o CNPJ informado.");
-    }
+  public Incidents create(IncidentsDTO incidentsDTO, String cnpjOrganization) {
+    Organization organization =
+        this.organizationRepository
+            .findByCnpj(cnpjOrganization)
+            .orElseThrow(
+                () -> new RuntimeException("Não existe uma organização com o CNPJ informado."));
+    Incidents incidents =
+        IncidentsConvert.convertDataTransferObjetToEntity(incidentsDTO, organization);
+    return this.incidentsRepository.saveAndFlush(incidents);
   }
 
   public Page<IncidentsDTO> findAll(Pageable pageable) {
-    return incidentsRepository
+    return this.incidentsRepository
         .findByStatus(Status.AVAILABLE, pageable)
         .map(IncidentsConvert::convertEntityToDataTransferObject);
   }
@@ -61,14 +58,10 @@ public class IncidentsServiceImpl implements IncidentsService {
   }
 
   public IncidentsDTO findById(String incidentId) throws NotFoundException {
-    Optional<Incidents> incidentOptional =
-        incidentsRepository.findById(UUID.fromString(incidentId));
-
-    if (incidentOptional.isPresent() && incidentOptional.get().isAvailable()) {
-      Incidents incidents = incidentOptional.get();
-      return IncidentsConvert.convertEntityToDataTransferObject(incidents);
-    } else {
-      throw new NotFoundException("Não existe um incidente com o ID informado");
-    }
+    return this.incidentsRepository
+        .findById(UUID.fromString(incidentId))
+        .filter(Incidents::isAvailable)
+        .map(IncidentsConvert::convertEntityToDataTransferObject)
+        .orElseThrow(() -> new NotFoundException("Não existe um incidente com o ID informado"));
   }
 }
