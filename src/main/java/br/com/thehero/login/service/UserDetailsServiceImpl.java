@@ -1,7 +1,7 @@
 package br.com.thehero.login.service;
 
 import br.com.thehero.dto.UserDTO;
-import br.com.thehero.login.exception.EmailNotFoundException;
+import br.com.thehero.exception.EmailNotFoundException;
 import br.com.thehero.login.model.User;
 import br.com.thehero.login.repository.UserRepository;
 import lombok.AllArgsConstructor;

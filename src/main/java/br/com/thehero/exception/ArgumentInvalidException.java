@@ -1,4 +1,4 @@
-package br.com.thehero.login.exception;
+package br.com.thehero.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import br.com.thehero.domain.model.ApiException;
-import br.com.thehero.login.exception.EmailNotFoundException;
-import br.com.thehero.login.exception.ExistingEmailException;
-import br.com.thehero.login.exception.IllegalRoleException;
-import br.com.thehero.login.exception.TokenNotFoundException;
-import br.com.thehero.service.IncidentNotFoundException;
+import br.com.thehero.exception.EmailNotFoundException;
+import br.com.thehero.exception.ExistingEmailException;
+import br.com.thehero.exception.IllegalRoleException;
+import br.com.thehero.exception.IncidentNotFoundException;
+import br.com.thehero.exception.TokenNotFoundException;
 import javassist.NotFoundException;
 
 @ControllerAdvice

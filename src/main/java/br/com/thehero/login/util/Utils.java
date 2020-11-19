@@ -2,7 +2,7 @@ package br.com.thehero.login.util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import br.com.thehero.login.exception.Sha512Exception;
+import br.com.thehero.exception.Sha512Exception;
 
 public class Utils {
 
