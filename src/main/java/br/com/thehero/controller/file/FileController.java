@@ -1,7 +1,9 @@
 package br.com.thehero.controller.file;
 
-import java.io.IOException;
-
+import br.com.thehero.domain.model.Files;
+import br.com.thehero.service.file.FilesService;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,26 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.thehero.domain.model.Files;
-import br.com.thehero.service.file.FilesService;
-
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
 @RestController
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class FileController {
 
   FilesService service;
-
-  public FileController(FilesService service) {
-    this.service = service;
-  }
 
   @PostMapping("/uploadFile/{incidentId}")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<String> uploadFile(
       @RequestParam("file") MultipartFile file,
-      @PathVariable(name = "incidentId", required = true) String incidentId)
-      throws IOException {
+      @PathVariable(name = "incidentId") String incidentId){
 
     Files files = service.save(file, incidentId);
     return ResponseEntity.ok(

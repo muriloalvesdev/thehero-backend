@@ -1,7 +1,10 @@
 package br.com.thehero.controller.organization;
 
-import java.util.List;
-
+import br.com.thehero.domain.model.Organization;
+import br.com.thehero.dto.OrganizationDTO;
+import br.com.thehero.service.organization.OrganizationService;
+import javassist.NotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -12,23 +15,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.thehero.domain.model.Organization;
-import br.com.thehero.dto.OrganizationDTO;
-import br.com.thehero.service.organization.OrganizationService;
-import javassist.NotFoundException;
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
+@AllArgsConstructor
+@RequestMapping("/api")
 public class OrganizationController {
 
   private OrganizationService service;
-
-  public OrganizationController(OrganizationService service) {
-    this.service = service;
-  }
 
   @GetMapping("/ongs")
   @PreAuthorize("hasRole('ADMIN')")

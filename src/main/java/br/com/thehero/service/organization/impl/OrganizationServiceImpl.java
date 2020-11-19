@@ -1,9 +1,5 @@
 package br.com.thehero.service.organization.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.OrganizationDTO;
@@ -12,6 +8,11 @@ import br.com.thehero.service.organization.OrganizationService;
 import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
@@ -19,59 +20,66 @@ public class OrganizationServiceImpl implements OrganizationService {
 
   private OrganizationRepository repository;
 
-  public Organization create(OrganizationDTO dto) {
-    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
-    return repository.saveAndFlush(organization);
+  @Override
+  public Organization create(OrganizationDTO organizationDTO) {
+    Organization organization =
+        OrganizationConvert.convertDataTransferObjectToEntity(organizationDTO);
+    return repository.save(organization);
   }
 
-  public void update(OrganizationDTO dto) {
+  @Override
+  public void update(OrganizationDTO organizationDTO) {
     repository
-        .findByCnpj(dto.getCnpj())
+        .findByCnpj(organizationDTO.getCnpj())
         .ifPresent(
             organization -> {
-              organization.setCity(dto.getCity());
-              organization.setEmail(dto.getEmail());
-              organization.setName(dto.getName());
-              organization.setUf(dto.getUf());
-              organization.setWhatsapp(String.valueOf(dto.getWhatsapp()));
+              organization.setCity(organizationDTO.getCity());
+              organization.setEmail(organizationDTO.getEmail());
+              organization.setName(organizationDTO.getName());
+              organization.setUf(organizationDTO.getUf());
+              organization.setWhatsapp(String.valueOf(organizationDTO.getWhatsapp()));
 
               repository.saveAndFlush(organization);
             });
   }
 
+  @Override
   public List<OrganizationDTO> findAll() {
-    List<OrganizationDTO> organizationDTOs = new ArrayList<>();
-
-    repository.findAll().stream()
-        .forEach(
-            org -> {
-              OrganizationDTO organizationDTO =
-                  OrganizationConvert.convertEntityToDataTransferObject(org);
-              organizationDTOs.add(organizationDTO);
-            });
-    return organizationDTOs;
+    return this.repository.findAll().stream()
+        .map(OrganizationConvert::convertEntityToDataTransferObject)
+        .collect(Collectors.toList());
   }
 
+  @Override
+  public OrganizationDTO findByCnpj(String cnpj) throws NotFoundException {
+    return this.repository
+        .findByCnpj(cnpj)
+        .map(OrganizationConvert::convertEntityToDataTransferObject)
+        .orElseThrow(
+            () ->
+                new NotFoundException(
+                    "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
+  }
+
+  @Override
   public void delete(String cnpj) throws NotFoundException {
     Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
-    if (organizationOptional.isPresent()) {
-      repository.delete(organizationOptional.get());
-    } else {
-      throw new NotFoundException(
-          "Não existe uma organização com o CNPJ [" + cnpj + "] informado.");
-    }
+
+    Organization organization =
+        organizationOptional.orElseThrow(
+            () ->
+                new NotFoundException(
+                    "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
+    repository.delete(organization);
   }
 
-  public OrganizationDTO findByCnpj(String cnpj) throws NotFoundException {
-    Optional<Organization> organizationOptional =
-        repository.findAll().stream().filter(org -> org.getCnpj().equals(cnpj)).findFirst();
-    if (organizationOptional.isPresent()) {
-      OrganizationDTO organizationDTO =
-          OrganizationConvert.convertEntityToDataTransferObject(organizationOptional.get());
-      return organizationDTO;
-    } else {
-      throw new NotFoundException(
-          "Não existe uma organização com o CNPJ [" + cnpj + "] informado.");
-    }
+  @Override
+  public Organization findByEmail(String email) throws NotFoundException {
+    return this.repository
+        .findByEmail(email)
+        .orElseThrow(
+            () ->
+                new NotFoundException(
+                    "Não existe uma organização com o EMAIL [" + email + "] informado."));
   }
 }

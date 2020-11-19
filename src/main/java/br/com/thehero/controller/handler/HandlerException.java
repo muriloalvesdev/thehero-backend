@@ -17,46 +17,46 @@ import javassist.NotFoundException;
 public class HandlerException extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(NotFoundException.class)
-  public ResponseEntity<ApiException> handleNotFoundException(NotFoundException ex) {
+  public ResponseEntity<ApiException> handleNotFoundException(NotFoundException notFoundException) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND)
-        .body(createResponse(ex.getMessage(), HttpStatus.NOT_FOUND.value()));
+        .body(createResponse(notFoundException.getMessage(), HttpStatus.NOT_FOUND.value()));
   }
 
   @ExceptionHandler(IncidentNotFoundException.class)
   public ResponseEntity<ApiException> handleIncidentNotFoundException(
-      IncidentNotFoundException ex) {
+      IncidentNotFoundException incidentNotFoundException) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body(createResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        .body(createResponse(incidentNotFoundException.getMessage(), HttpStatus.BAD_REQUEST.value()));
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<ApiException> handleInternalServerError(IllegalArgumentException ex) {
+  public ResponseEntity<ApiException> handleInternalServerError(IllegalArgumentException illegalArgumentException) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body(createResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        .body(createResponse(illegalArgumentException.getMessage(), HttpStatus.BAD_REQUEST.value()));
   }
 
   @ExceptionHandler(TokenNotFoundException.class)
-  public ResponseEntity<ApiException> handlerTokenNotFoundException(TokenNotFoundException ex) {
+  public ResponseEntity<ApiException> handlerTokenNotFoundException(TokenNotFoundException tokenNotFoundException) {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-        .body(createResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED.value()));
+        .body(createResponse(tokenNotFoundException.getMessage(), HttpStatus.UNAUTHORIZED.value()));
   }
 
   @ExceptionHandler(ExistingEmailException.class)
-  public ResponseEntity<ApiException> handlerExistingEmailException(ExistingEmailException ex) {
+  public ResponseEntity<ApiException> handlerExistingEmailException(ExistingEmailException existingEmailException) {
     return ResponseEntity.status(HttpStatus.CONFLICT)
-        .body(createResponse(ex.getMessage(), HttpStatus.CONFLICT.value()));
+        .body(createResponse(existingEmailException.getMessage(), HttpStatus.CONFLICT.value()));
   }
 
   @ExceptionHandler(IllegalRoleException.class)
-  public ResponseEntity<ApiException> handlerIllegalRoleException(IllegalRoleException ex) {
+  public ResponseEntity<ApiException> handlerIllegalRoleException(IllegalRoleException illegalRoleException) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body(createResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        .body(createResponse(illegalRoleException.getMessage(), HttpStatus.BAD_REQUEST.value()));
   }
 
   @ExceptionHandler(EmailNotFoundException.class)
-  public ResponseEntity<ApiException> handlerEmailNotFoundException(EmailNotFoundException ex) {
+  public ResponseEntity<ApiException> handlerEmailNotFoundException(EmailNotFoundException emailNotFoundException) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        .body(createResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        .body(createResponse(emailNotFoundException.getMessage(), HttpStatus.BAD_REQUEST.value()));
   }
 
   private ApiException createResponse(String message, int httpValue) {
