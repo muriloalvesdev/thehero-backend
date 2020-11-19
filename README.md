@@ -3,7 +3,7 @@
 [![Java Code Style](https://img.shields.io/badge/code%20style-eclipse-brightgreen.svg?style=flat)](https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml "Eclipse/STS Code Style")
 [![Java Code Style](https://img.shields.io/badge/code%20style-intellij-brightgreen.svg?style=flat)](https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml "Intellij Code Style")
 [![codecov](https://codecov.io/gh/muriloalvesdev/thehero-backend/branch/master/graph/badge.svg)](https://codecov.io/gh/muriloalvesdev/thehero-backend/)
-
+[![vulnerabilities](https://snyk.io/test/github/muriloalvesdev/thehero-backend/badge.svg)](https://snyk.io/test/github/muriloalvesdev/thehero-backend)
 
 ## License
 [Apache License 2.0](https://github.com/muriloalvesdev/thehero-backend/blob/master/LICENSE)
