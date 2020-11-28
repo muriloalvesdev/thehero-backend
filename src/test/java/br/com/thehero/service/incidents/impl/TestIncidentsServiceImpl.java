@@ -45,9 +45,12 @@ class TestIncidentsServiceImpl {
     BDDMockito.given(this.organizationRepository.findByCnpj(CNPJ_FAKE))
         .willReturn(Optional.empty());
 
-    Exception exception = assertThrows(Exception.class, () -> {
-      this.service.create(incidentsDTO, CNPJ_FAKE);
-    });
+    Exception exception =
+        assertThrows(
+            Exception.class,
+            () -> {
+              this.service.create(incidentsDTO, CNPJ_FAKE);
+            });
 
     assertTrue(exception instanceof OrganizationNotFoundException);
     assertEquals(IncidentsServiceImpl.ORGANIZATION_NOT_FOUND, exception.getMessage());
@@ -61,9 +64,12 @@ class TestIncidentsServiceImpl {
 
     BDDMockito.given(this.incidentsRepository.save(incidents)).willReturn(incidents);
 
-    Throwable exception = assertThrows(Throwable.class, () -> {
-      this.service.delete(String.valueOf(UUID_FAKE), CNPJ_FAKE);
-    });
+    Throwable exception =
+        assertThrows(
+            Throwable.class,
+            () -> {
+              this.service.delete(String.valueOf(UUID_FAKE), CNPJ_FAKE);
+            });
 
     assertTrue(exception instanceof Throwable);
     assertEquals(IncidentsServiceImpl.UNAUTHORIZED, exception.getMessage());
@@ -77,14 +83,16 @@ class TestIncidentsServiceImpl {
   void testFindByIdWithError() {
     BDDMockito.given(this.incidentsRepository.findById(UUID_FAKE)).willReturn(Optional.empty());
 
-    Exception exception = assertThrows(Exception.class, () -> {
-      this.service.findById(String.valueOf(UUID_FAKE));
-    });
+    Exception exception =
+        assertThrows(
+            Exception.class,
+            () -> {
+              this.service.findById(String.valueOf(UUID_FAKE));
+            });
 
     assertTrue(exception instanceof NotFoundException);
     assertEquals(IncidentsServiceImpl.INCIDENT_NOT_FOUND, exception.getMessage());
 
     BDDMockito.verify(this.incidentsRepository, times(1)).findById(UUID_FAKE);
   }
-
 }

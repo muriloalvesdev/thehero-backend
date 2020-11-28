@@ -27,7 +27,7 @@ public class FileController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<String> uploadFile(
       @RequestParam("file") MultipartFile file,
-      @PathVariable(name = "incidentId") String incidentId){
+      @PathVariable(name = "incidentId") String incidentId) {
 
     Files files = this.service.save(file, incidentId);
     return ResponseEntity.ok(

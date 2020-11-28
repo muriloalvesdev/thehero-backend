@@ -12,11 +12,18 @@ public class IncidentsDTOProviderTest
     implements ArgumentsProvider, OrganizationConstantsTest, IncidentsConstantsTest {
   @Override
   public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-    return Stream.of(IncidentsDTO.newBuilder().city(OrganizationConstantsTest.CITY)
-        .description(IncidentsConstantsTest.DESCRIPTION).email(OrganizationConstantsTest.EMAIL_ONG)
-        .mimeType(IncidentsConstantsTest.MIME_TYPE).nameOrganization(OrganizationConstantsTest.NAME)
-        .title(IncidentsConstantsTest.TITLE).value(IncidentsConstantsTest.VALUE)
-        .uf(OrganizationConstantsTest.UF).whatsapp(OrganizationConstantsTest.WHATSAPP).build())
+    return Stream.of(
+            IncidentsDTO.newBuilder()
+                .city(OrganizationConstantsTest.CITY)
+                .description(IncidentsConstantsTest.DESCRIPTION)
+                .email(OrganizationConstantsTest.EMAIL_ONG)
+                .mimeType(IncidentsConstantsTest.MIME_TYPE)
+                .nameOrganization(OrganizationConstantsTest.NAME)
+                .title(IncidentsConstantsTest.TITLE)
+                .value(IncidentsConstantsTest.VALUE)
+                .uf(OrganizationConstantsTest.UF)
+                .whatsapp(OrganizationConstantsTest.WHATSAPP)
+                .build())
         .map(Arguments::of);
   }
 }

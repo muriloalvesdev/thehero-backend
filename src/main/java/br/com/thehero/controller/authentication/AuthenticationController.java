@@ -36,7 +36,11 @@ public class AuthenticationController {
 
     User user = this.userService.registerUser(registerData);
 
-    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-        .buildAndExpand(user.getId()).toUri()).build();
+    return ResponseEntity.created(
+            ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getId())
+                .toUri())
+        .build();
   }
 }

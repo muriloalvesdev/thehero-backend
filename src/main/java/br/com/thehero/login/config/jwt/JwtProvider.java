@@ -28,10 +28,13 @@ public class JwtProvider {
 
     UserDTO userPrincipal = (UserDTO) authentication.getPrincipal();
 
-    return Jwts.builder().setSubject((userPrincipal.getEmail())).setIssuedAt(new Date())
+    return Jwts.builder()
+        .setSubject((userPrincipal.getEmail()))
+        .setIssuedAt(new Date())
         .claim("username", userPrincipal.getName())
         .setExpiration(new Date((new Date()).getTime() + jwtExpiration))
-        .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+        .signWith(SignatureAlgorithm.HS512, jwtSecret)
+        .compact();
   }
 
   public String getUserNameFromJwtToken(String token) {

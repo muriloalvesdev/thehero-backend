@@ -17,17 +17,25 @@ class IncidentsConvertTest {
 
   @BeforeEach
   void setUp() {
-    this.incidentsDTO = IncidentsDTO.newBuilder().city(OrganizationConstantsTest.CITY)
-        .description(IncidentsConstantsTest.DESCRIPTION).email(OrganizationConstantsTest.EMAIL_ONG)
-        .mimeType(IncidentsConstantsTest.MIME_TYPE).nameOrganization(OrganizationConstantsTest.NAME)
-        .title(IncidentsConstantsTest.TITLE).value(IncidentsConstantsTest.VALUE)
-        .uf(OrganizationConstantsTest.UF).whatsapp(OrganizationConstantsTest.WHATSAPP).build();
+    this.incidentsDTO =
+        IncidentsDTO.newBuilder()
+            .city(OrganizationConstantsTest.CITY)
+            .description(IncidentsConstantsTest.DESCRIPTION)
+            .email(OrganizationConstantsTest.EMAIL_ONG)
+            .mimeType(IncidentsConstantsTest.MIME_TYPE)
+            .nameOrganization(OrganizationConstantsTest.NAME)
+            .title(IncidentsConstantsTest.TITLE)
+            .value(IncidentsConstantsTest.VALUE)
+            .uf(OrganizationConstantsTest.UF)
+            .whatsapp(OrganizationConstantsTest.WHATSAPP)
+            .build();
   }
 
   @ParameterizedTest
   @ArgumentsSource(OrganizationEntityProviderTest.class)
   void convertDataTransferObjetToEntityTest(Organization organization) {
-    Incidents incidents = IncidentsConvert.convertDataTransferObjetToEntity(this.incidentsDTO, organization);
+    Incidents incidents =
+        IncidentsConvert.convertDataTransferObjetToEntity(this.incidentsDTO, organization);
 
     assertEquals(this.incidentsDTO.getCity(), organization.getCity());
     assertEquals(this.incidentsDTO.getDescription(), incidents.getDescription());

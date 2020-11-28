@@ -49,8 +49,12 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 
   @Bean
   public Docket api() {
-    return new Docket(DocumentationType.SWAGGER_2).select().apis(apis()).paths(PathSelectors.any())
-        .build().apiInfo(apiInfo());
+    return new Docket(DocumentationType.SWAGGER_2)
+        .select()
+        .apis(apis())
+        .paths(PathSelectors.any())
+        .build()
+        .apiInfo(apiInfo());
   }
 
   private Predicate<RequestHandler> apis() {
@@ -58,26 +62,34 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
   }
 
   private ApiInfo apiInfo() {
-    return new ApiInfoBuilder().contact(new Contact(this.name, this.linkedin, this.email))
-        .description(this.description).license(this.license).licenseUrl(this.licenseUrl)
-        .version(this.version).title(this.title).build();
+    return new ApiInfoBuilder()
+        .contact(new Contact(this.name, this.linkedin, this.email))
+        .description(this.description)
+        .license(this.license)
+        .licenseUrl(this.licenseUrl)
+        .version(this.version)
+        .title(this.title)
+        .build();
   }
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addRedirectViewController("/api/v2/api-docs", "/v2/api-docs");
-    registry.addRedirectViewController("/api/swagger-resources/configuration/ui",
-        "/swagger-resources/configuration/ui");
-    registry.addRedirectViewController("/api/swagger-resources/configuration/security",
+    registry.addRedirectViewController(
+        "/api/swagger-resources/configuration/ui", "/swagger-resources/configuration/ui");
+    registry.addRedirectViewController(
+        "/api/swagger-resources/configuration/security",
         "/swagger-resources/configuration/security");
     registry.addRedirectViewController("/api/swagger-resources", "/swagger-resources");
   }
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/swagger-ui.html**")
+    registry
+        .addResourceHandler("/swagger-ui.html**")
         .addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
-    registry.addResourceHandler("/webjars/**")
+    registry
+        .addResourceHandler("/webjars/**")
         .addResourceLocations("classpath:/META-INF/resources/webjars/");
   }
 }
