@@ -11,7 +11,7 @@ import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.IncidentsDTO;
 import br.com.thehero.providers.OrganizationEntityProviderTest;
 
-class TestIncidentsConvert {
+class IncidentsConvertTest {
 
   private IncidentsDTO incidentsDTO;
 
