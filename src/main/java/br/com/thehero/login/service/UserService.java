@@ -24,7 +24,10 @@ import br.com.thehero.login.repository.RoleRepository;
 import br.com.thehero.login.repository.UserRepository;
 import br.com.thehero.login.request.LoginDTO;
 import br.com.thehero.login.request.RegisterDTO;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Service
 public class UserService {
 
@@ -39,21 +42,6 @@ public class UserService {
   private JwtProvider jwtProvider;
   private AuthenticationManager authenticationManager;
   private OrganizationRepository organizationRepository;
-
-  public UserService(
-      UserRepository userRepository,
-      RoleRepository roleRepository,
-      PasswordEncoder encoder,
-      JwtProvider jwtProvider,
-      AuthenticationManager authenticationManager,
-      OrganizationRepository organizationRepository) {
-    this.userRepository = userRepository;
-    this.roleRepository = roleRepository;
-    this.encoder = encoder;
-    this.jwtProvider = jwtProvider;
-    this.authenticationManager = authenticationManager;
-    this.organizationRepository = organizationRepository;
-  }
 
   public User registerUser(RegisterDTO registerData) {
 
@@ -95,7 +83,7 @@ public class UserService {
   public AccessToken authenticateUser(LoginDTO loginDto) {
 
     Authentication authentication =
-        authenticationManager.authenticate(
+        this.authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);

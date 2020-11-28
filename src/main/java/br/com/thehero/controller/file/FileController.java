@@ -21,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class FileController {
 
-  FilesService service;
+  private FilesService service;
 
   @PostMapping("/uploadFile/{incidentId}")
   @PreAuthorize("hasRole('ADMIN')")
@@ -29,7 +29,7 @@ public class FileController {
       @RequestParam("file") MultipartFile file,
       @PathVariable(name = "incidentId") String incidentId){
 
-    Files files = service.save(file, incidentId);
+    Files files = this.service.save(file, incidentId);
     return ResponseEntity.ok(
         ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("/downloadFile/")

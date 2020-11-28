@@ -1,9 +1,12 @@
 package br.com.thehero.service.incidents.impl;
 
+import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.model.Incidents.Status;
 import br.com.thehero.domain.model.Organization;
-import br.com.thehero.domain.repository.FilesRepository;
 import br.com.thehero.domain.repository.IncidentsRepository;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.IncidentsDTO;
@@ -12,19 +15,13 @@ import br.com.thehero.service.incidents.IncidentsService;
 import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
 public class IncidentsServiceImpl implements IncidentsService {
 
-  IncidentsRepository incidentsRepository;
-  OrganizationRepository organizationRepository;
-  FilesRepository filesRepository;
+  private IncidentsRepository incidentsRepository;
+  private OrganizationRepository organizationRepository;
 
   public Incidents create(IncidentsDTO incidentsDTO, String cnpjOrganization) {
     Organization organization =
@@ -44,13 +41,13 @@ public class IncidentsServiceImpl implements IncidentsService {
   }
 
   public void delete(String incidentId, String cnpjOrganization) {
-    incidentsRepository
+    this.incidentsRepository
         .findById(UUID.fromString(incidentId))
         .ifPresent(
             incident -> {
               if (incident.getOrganization().getCnpj().equals(cnpjOrganization)) {
                 incident.setStatus(Status.NOT_AVAILABLE);
-                incidentsRepository.save(incident);
+                this.incidentsRepository.save(incident);
               } else {
                 throw new IllegalAccessError("Não autorizado!");
               }

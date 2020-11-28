@@ -1,6 +1,7 @@
 package br.com.thehero.domain.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,4 +15,6 @@ public interface IncidentsRepository extends JpaRepository<Incidents, UUID> {
   List<Incidents> findByOrganization(Organization organization);
 
   Page<Incidents> findByStatus(Status status, Pageable pageable);
+
+  Optional<Incidents> findByIdAndOrganization(UUID uuid, Organization organization);
 }

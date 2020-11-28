@@ -4,6 +4,7 @@ import br.com.thehero.domain.model.Organization;
 import br.com.thehero.dto.OrganizationDTO;
 import br.com.thehero.service.organization.OrganizationService;
 import javassist.NotFoundException;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @RequestMapping("/api")
 public class OrganizationController {
 
@@ -32,14 +33,14 @@ public class OrganizationController {
   @GetMapping("/ongs")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<List<OrganizationDTO>> findAll() {
-    return ResponseEntity.ok(service.findAll());
+    return ResponseEntity.ok(this.service.findAll());
   }
 
   @PostMapping("/ongs")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<OrganizationDTO> create(
       @Validated @RequestBody OrganizationDTO organizationDTO) {
-    Organization organization = service.create(organizationDTO);
+    Organization organization = this.service.create(organizationDTO);
 
     return ResponseEntity.created(
             ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -53,13 +54,13 @@ public class OrganizationController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<OrganizationDTO> findByCnpj(
       @PathVariable(required = true, name = "cnpj") String cnpj) throws NotFoundException {
-    return ResponseEntity.ok(service.findByCnpj(cnpj));
+    return ResponseEntity.ok(this.service.findByCnpj(cnpj));
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/ongs")
   public ResponseEntity<Object> update(@Validated @RequestBody OrganizationDTO organizationDTO) {
-    service.update(organizationDTO);
+    this.service.update(organizationDTO);
     return ResponseEntity.ok().build();
   }
 
@@ -67,7 +68,7 @@ public class OrganizationController {
   @DeleteMapping("/ongs/{cnpj}")
   public ResponseEntity<Void> delete(@PathVariable(name = "cnpj") String cnpj)
       throws NotFoundException {
-    service.delete(cnpj);
+    this.service.delete(cnpj);
     return ResponseEntity.noContent().build();
   }
 }

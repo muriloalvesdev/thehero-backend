@@ -32,10 +32,9 @@ public class IncidentsController {
 
   @DeleteMapping("incidents/{id}/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Object> delete(
-      @PathVariable(name = "id") String incidentsId,
+  public ResponseEntity<Object> delete(@PathVariable(name = "id") String incidentsId,
       @PathVariable(value = "cnpj") String cnpjOrganization) {
-    service.delete(incidentsId, cnpjOrganization);
+    this.service.delete(incidentsId, cnpjOrganization);
     return ResponseEntity.noContent().build();
   }
 
@@ -48,16 +47,15 @@ public class IncidentsController {
 
   @PostMapping("incidents/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Object> create(
-      @Validated @RequestBody IncidentsDTO incidentsDTO,
+  public ResponseEntity<Object> create(@Validated @RequestBody IncidentsDTO incidentsDTO,
       @PathVariable(name = "cnpj") String cnpjOrganization) {
-    Incidents incidents = service.create(incidentsDTO, cnpjOrganization);
+    Incidents incidents = this.service.create(incidentsDTO, cnpjOrganization);
     return new ResponseEntity<>(incidents.getUuid().toString(), HttpStatus.CREATED);
   }
 
   @GetMapping("incidents")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Page<IncidentsDTO>> findAll(Pageable pageable) {
-    return ResponseEntity.ok(service.findAll(pageable));
+    return ResponseEntity.ok(this.service.findAll(pageable));
   }
 }

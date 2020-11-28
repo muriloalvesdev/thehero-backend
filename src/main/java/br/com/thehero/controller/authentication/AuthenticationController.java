@@ -1,9 +1,6 @@
 package br.com.thehero.controller.authentication;
 
 import javax.validation.Valid;
-
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +15,7 @@ import br.com.thehero.login.model.User;
 import br.com.thehero.login.request.LoginDTO;
 import br.com.thehero.login.request.RegisterDTO;
 import br.com.thehero.login.service.UserService;
+import lombok.AllArgsConstructor;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,20 +27,16 @@ public class AuthenticationController {
 
   @PostMapping("/login")
   public ResponseEntity<AccessToken> authenticateUser(@Validated @RequestBody LoginDTO loginData) {
-    return ResponseEntity.ok().body(userService.authenticateUser(loginData));
+    return ResponseEntity.ok().body(this.userService.authenticateUser(loginData));
   }
 
   @PostMapping("/register")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<User> registerUser(@Valid @RequestBody RegisterDTO registerData) {
 
-    User user = userService.registerUser(registerData);
+    User user = this.userService.registerUser(registerData);
 
-    return ResponseEntity.created(
-            ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(user.getId())
-                .toUri())
-        .build();
+    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+        .buildAndExpand(user.getId()).toUri()).build();
   }
 }
