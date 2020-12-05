@@ -20,11 +20,17 @@ public class ProfileServiceImpl implements ProfileService {
   OrganizationRepository organizationRepository;
   IncidentsRepository incidentsRepository;
 
-    public IncidentsDTOList findIncidentsByOrganization(String cnpj) throws NotFoundException {
-        Organization organization =
-                this.organizationRepository.findByCnpj(cnpj).orElseThrow(() -> new NotFoundException(
+  public IncidentsDTOList findIncidentsByOrganization(String cnpj) throws NotFoundException {
+    Organization organization =
+        this.organizationRepository
+            .findByCnpj(cnpj)
+            .orElseThrow(
+                () ->
+                    new NotFoundException(
                         "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
-        return new IncidentsDTOList(this.incidentsRepository.findByOrganization(organization).stream()
-                .map(IncidentsConvert::convertEntityToDataTransferObject).collect(Collectors.toList()));
-    }
+    return new IncidentsDTOList(
+        this.incidentsRepository.findByOrganization(organization).stream()
+            .map(IncidentsConvert::convertEntityToDataTransferObject)
+            .collect(Collectors.toList()));
+  }
 }

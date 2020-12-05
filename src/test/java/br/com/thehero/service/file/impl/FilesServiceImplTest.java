@@ -24,7 +24,7 @@ import br.com.thehero.domain.repository.IncidentsRepository;
 import br.com.thehero.exception.IncidentNotFoundException;
 import br.com.thehero.providers.IncidentsEntityProviderTest;
 
-class FilesServiceImplTest {
+class TestFilesServiceImpl {
 
   private static final String FILENAME = "cachorrinha perola";
   private static final String TYPE_FILE = ".png";

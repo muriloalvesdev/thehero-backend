@@ -10,7 +10,6 @@ import br.com.thehero.domain.model.Incidents.Status;
 import br.com.thehero.domain.model.Organization;
 
 public interface IncidentsRepository extends JpaRepository<Incidents, UUID> {
-
   List<Incidents> findByOrganization(Organization organization);
 
   Page<Incidents> findByStatus(Status status, Pageable pageable);

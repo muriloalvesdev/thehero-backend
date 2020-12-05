@@ -24,7 +24,8 @@ public class SimpleCORSFilter implements Filter {
   }
 
   @Override
-  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+  public void doFilter(
+      ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
       throws IOException, ServletException {
 
     HttpServletRequest request = (HttpServletRequest) servletRequest;
