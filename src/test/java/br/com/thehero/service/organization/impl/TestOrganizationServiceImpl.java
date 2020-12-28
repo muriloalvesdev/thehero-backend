@@ -177,4 +177,19 @@ class TestOrganizationServiceImpl {
 
     verify(this.repository, times(1)).findByEmail(Mockito.anyString());
   }
+
+  @Test
+  void shouldFindByEmailWithError() {
+    // when
+    BDDMockito.when(this.repository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
+
+    // then
+    Exception exception = assertThrows(Exception.class, () -> {
+      this.service.findByEmail("anything");
+    });
+
+    assertTrue(exception instanceof NotFoundException);
+    assertEquals(String.format(OrganizationServiceImpl.MESSAGE_NOT_FOUND, "EMAIL", "anything"),
+        exception.getMessage());
+  }
 }
