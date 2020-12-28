@@ -1,8 +1,11 @@
 package br.com.thehero.service.organization.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -55,5 +58,24 @@ class TestOrganizationServiceImpl {
 
     verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
     verify(this.repository, times(1)).saveAndFlush(Mockito.any());
+  }
+
+  @ParameterizedTest
+  @ArgumentsSource(OrganizationDTOProviderTest.class)
+  void shouldFindAllWithSuccessAndReturnOneElementInList(OrganizationDTO dto) {
+    // given
+    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+    List<Organization> organizations = new ArrayList<>();
+    organizations.add(organization);
+
+    // when
+    BDDMockito.when(this.repository.findAll()).thenReturn(organizations);
+
+    // then
+    List<OrganizationDTO> result = this.service.findAll();
+
+    assertEquals(1, result.size());
+
+    verify(this.repository, times(1)).findAll();
   }
 }
