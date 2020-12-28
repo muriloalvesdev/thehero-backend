@@ -1,5 +1,8 @@
 package br.com.thehero.service.organization.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.OrganizationDTO;
@@ -8,11 +11,6 @@ import br.com.thehero.service.organization.OrganizationService;
 import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
@@ -64,10 +62,7 @@ class OrganizationServiceImpl implements OrganizationService {
 
   @Override
   public void delete(String cnpj) throws NotFoundException {
-    Optional<Organization> organizationOptional = this.repository.findByCnpj(cnpj);
-
-    Organization organization =
-        organizationOptional.orElseThrow(
+    Organization organization = this.repository.findByCnpj(cnpj).orElseThrow(
             () ->
                 new NotFoundException(
                     String.format(MESSAGE_NOT_FOUND, "CNPJ", cnpj)));
