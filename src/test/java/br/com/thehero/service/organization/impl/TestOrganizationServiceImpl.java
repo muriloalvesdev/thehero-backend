@@ -117,7 +117,8 @@ class TestOrganizationServiceImpl {
     });
 
     assertTrue(exception instanceof NotFoundException);
-    assertEquals(OrganizationServiceImpl.MESSAGE_NOT_FOUND, exception.getMessage());
+    assertEquals(String.format(OrganizationServiceImpl.MESSAGE_NOT_FOUND, "CNPJ", "anything"),
+        exception.getMessage());
   }
 
   @ParameterizedTest
@@ -137,6 +138,21 @@ class TestOrganizationServiceImpl {
 
     verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
     verify(this.repository, times(1)).delete(Mockito.any());
+  }
+
+  @Test
+  void shouldDeleteWithError() {
+    // when
+    BDDMockito.when(this.repository.findByCnpj(Mockito.anyString())).thenReturn(Optional.empty());
+
+    // then
+    Exception exception = assertThrows(Exception.class, () -> {
+      this.service.delete("anything");
+    });
+
+    assertTrue(exception instanceof NotFoundException);
+    assertEquals(String.format(OrganizationServiceImpl.MESSAGE_NOT_FOUND, "CNPJ", "anything"),
+        exception.getMessage());
   }
 
 }
