@@ -18,6 +18,7 @@ import br.com.thehero.dto.OrganizationDTO;
 import br.com.thehero.providers.OrganizationDTOProviderTest;
 import br.com.thehero.service.convert.OrganizationConvert;
 import br.com.thehero.service.organization.OrganizationService;
+import javassist.NotFoundException;
 
 class TestOrganizationServiceImpl {
 
@@ -78,4 +79,28 @@ class TestOrganizationServiceImpl {
 
     verify(this.repository, times(1)).findAll();
   }
+
+  @ParameterizedTest
+  @ArgumentsSource(OrganizationDTOProviderTest.class)
+  void shouldFindByCnpjWithSuccess(OrganizationDTO dto) throws Exception {
+    // given
+    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+
+    // when
+    BDDMockito.when(this.repository.findByCnpj(dto.getCnpj()))
+        .thenReturn(Optional.of(organization));
+
+    // then
+    OrganizationDTO dtoActual = this.service.findByCnpj(dto.getCnpj());
+
+    assertEquals(dto.getCity(), dtoActual.getCity());
+    assertEquals(dto.getCnpj(), dtoActual.getCnpj());
+    assertEquals(dto.getEmail(), dtoActual.getEmail());
+    assertEquals(dto.getName(), dtoActual.getName());
+    assertEquals(dto.getUf(), dtoActual.getUf());
+    assertEquals(dto.getWhatsapp(), dtoActual.getWhatsapp());
+
+    verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
+  }
+
 }
