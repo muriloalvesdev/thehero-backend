@@ -107,7 +107,7 @@ class TestOrganizationServiceImpl {
   }
 
   @Test
-  void shouldFindByCnpjWithError() throws Exception {
+  void shouldFindByCnpjWithError() {
     // when
     BDDMockito.when(this.repository.findByCnpj(Mockito.anyString())).thenReturn(Optional.empty());
 
@@ -117,8 +117,7 @@ class TestOrganizationServiceImpl {
     });
 
     assertTrue(exception instanceof NotFoundException);
-    assertEquals("Não existe uma organização com o CNPJ [" + "anything" + "] informado.",
-        exception.getMessage());
+    assertEquals(OrganizationServiceImpl.MESSAGE_NOT_FOUND, exception.getMessage());
   }
 
 }

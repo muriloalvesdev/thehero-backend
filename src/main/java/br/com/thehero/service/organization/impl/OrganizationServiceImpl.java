@@ -16,8 +16,9 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-public class OrganizationServiceImpl implements OrganizationService {
-
+class OrganizationServiceImpl implements OrganizationService {
+  static final String MESSAGE_NOT_FOUND = "Não existe uma organização com o %s [%s] informado.";
+  
   private OrganizationRepository repository;
 
   @Override
@@ -58,19 +59,19 @@ public class OrganizationServiceImpl implements OrganizationService {
         .orElseThrow(
             () ->
                 new NotFoundException(
-                    "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
+                    String.format(MESSAGE_NOT_FOUND, "CNPJ", cnpj)));
   }
 
   @Override
   public void delete(String cnpj) throws NotFoundException {
-    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
+    Optional<Organization> organizationOptional = this.repository.findByCnpj(cnpj);
 
     Organization organization =
         organizationOptional.orElseThrow(
             () ->
                 new NotFoundException(
-                    "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
-    repository.delete(organization);
+                    String.format(MESSAGE_NOT_FOUND, "CNPJ", cnpj)));
+    this.repository.delete(organization);
   }
 
   @Override
@@ -80,6 +81,6 @@ public class OrganizationServiceImpl implements OrganizationService {
         .orElseThrow(
             () ->
                 new NotFoundException(
-                    "Não existe uma organização com o EMAIL [" + email + "] informado."));
+                    String.format(MESSAGE_NOT_FOUND, "EMAIL", email)));
   }
 }
