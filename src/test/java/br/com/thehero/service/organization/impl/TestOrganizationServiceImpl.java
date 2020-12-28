@@ -1,6 +1,8 @@
 package br.com.thehero.service.organization.impl;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.mockito.BDDMockito;
@@ -101,6 +104,21 @@ class TestOrganizationServiceImpl {
     assertEquals(dto.getWhatsapp(), dtoActual.getWhatsapp());
 
     verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
+  }
+
+  @Test
+  void shouldFindByCnpjWithError() throws Exception {
+    // when
+    BDDMockito.when(this.repository.findByCnpj(Mockito.anyString())).thenReturn(Optional.empty());
+
+    // then
+    Exception exception = assertThrows(Exception.class, () -> {
+      this.service.findByCnpj("anything");
+    });
+
+    assertTrue(exception instanceof NotFoundException);
+    assertEquals("Não existe uma organização com o CNPJ [" + "anything" + "] informado.",
+        exception.getMessage());
   }
 
 }
