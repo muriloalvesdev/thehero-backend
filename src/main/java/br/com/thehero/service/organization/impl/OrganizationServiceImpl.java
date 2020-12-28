@@ -29,7 +29,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
   @Override
   public void update(OrganizationDTO organizationDTO) {
-    repository
+    this.repository
         .findByCnpj(organizationDTO.getCnpj())
         .ifPresent(
             organization -> {
@@ -39,7 +39,7 @@ public class OrganizationServiceImpl implements OrganizationService {
               organization.setUf(organizationDTO.getUf());
               organization.setWhatsapp(String.valueOf(organizationDTO.getWhatsapp()));
 
-              repository.saveAndFlush(organization);
+              this.repository.saveAndFlush(organization);
             });
   }
 
