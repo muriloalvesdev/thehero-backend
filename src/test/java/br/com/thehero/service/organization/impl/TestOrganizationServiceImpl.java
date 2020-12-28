@@ -120,4 +120,23 @@ class TestOrganizationServiceImpl {
     assertEquals(OrganizationServiceImpl.MESSAGE_NOT_FOUND, exception.getMessage());
   }
 
+  @ParameterizedTest
+  @ArgumentsSource(OrganizationDTOProviderTest.class)
+  void shouldDeleteWithSuccess(OrganizationDTO dto) throws Exception {
+    // given
+    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+
+    // when
+    BDDMockito.when(this.repository.findByCnpj(dto.getCnpj()))
+        .thenReturn(Optional.of(organization));
+
+    BDDMockito.doNothing().when(this.repository).delete(organization);
+
+    // then
+    this.service.delete(dto.getCnpj());
+
+    verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
+    verify(this.repository, times(1)).delete(Mockito.any());
+  }
+
 }
