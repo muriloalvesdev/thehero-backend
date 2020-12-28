@@ -155,4 +155,26 @@ class TestOrganizationServiceImpl {
         exception.getMessage());
   }
 
+  @ParameterizedTest
+  @ArgumentsSource(OrganizationDTOProviderTest.class)
+  void shouldFindByEmailWithSuccess(OrganizationDTO dto) throws Exception {
+    // given
+    Organization organizationExpected = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+
+    // when
+    BDDMockito.when(this.repository.findByEmail(dto.getEmail()))
+        .thenReturn(Optional.of(organizationExpected));
+
+    // then
+    Organization organizationActual = this.service.findByEmail(dto.getEmail());
+
+    assertEquals(organizationExpected.getCity(), organizationActual.getCity());
+    assertEquals(organizationExpected.getCnpj(), organizationActual.getCnpj());
+    assertEquals(organizationExpected.getEmail(), organizationActual.getEmail());
+    assertEquals(organizationExpected.getName(), organizationActual.getName());
+    assertEquals(organizationExpected.getUf(), organizationActual.getUf());
+    assertEquals(organizationExpected.getWhatsapp(), organizationActual.getWhatsapp());
+
+    verify(this.repository, times(1)).findByEmail(Mockito.anyString());
+  }
 }
