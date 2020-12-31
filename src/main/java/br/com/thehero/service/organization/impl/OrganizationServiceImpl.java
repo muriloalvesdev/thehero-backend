@@ -1,5 +1,8 @@
 package br.com.thehero.service.organization.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 import br.com.thehero.domain.model.Organization;
 import br.com.thehero.domain.repository.OrganizationRepository;
 import br.com.thehero.dto.OrganizationDTO;
@@ -8,16 +11,12 @@ import br.com.thehero.service.organization.OrganizationService;
 import javassist.NotFoundException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-public class OrganizationServiceImpl implements OrganizationService {
-
+class OrganizationServiceImpl implements OrganizationService {
+  static final String MESSAGE_NOT_FOUND = "Não existe uma organização com o %s [%s] informado.";
+  
   private OrganizationRepository repository;
 
   @Override
@@ -29,7 +28,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
   @Override
   public void update(OrganizationDTO organizationDTO) {
-    repository
+    this.repository
         .findByCnpj(organizationDTO.getCnpj())
         .ifPresent(
             organization -> {
@@ -39,7 +38,7 @@ public class OrganizationServiceImpl implements OrganizationService {
               organization.setUf(organizationDTO.getUf());
               organization.setWhatsapp(String.valueOf(organizationDTO.getWhatsapp()));
 
-              repository.saveAndFlush(organization);
+              this.repository.saveAndFlush(organization);
             });
   }
 
@@ -58,19 +57,16 @@ public class OrganizationServiceImpl implements OrganizationService {
         .orElseThrow(
             () ->
                 new NotFoundException(
-                    "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
+                    String.format(MESSAGE_NOT_FOUND, "CNPJ", cnpj)));
   }
 
   @Override
   public void delete(String cnpj) throws NotFoundException {
-    Optional<Organization> organizationOptional = repository.findByCnpj(cnpj);
-
-    Organization organization =
-        organizationOptional.orElseThrow(
+    Organization organization = this.repository.findByCnpj(cnpj).orElseThrow(
             () ->
                 new NotFoundException(
-                    "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
-    repository.delete(organization);
+                    String.format(MESSAGE_NOT_FOUND, "CNPJ", cnpj)));
+    this.repository.delete(organization);
   }
 
   @Override
@@ -80,6 +76,6 @@ public class OrganizationServiceImpl implements OrganizationService {
         .orElseThrow(
             () ->
                 new NotFoundException(
-                    "Não existe uma organização com o EMAIL [" + email + "] informado."));
+                    String.format(MESSAGE_NOT_FOUND, "EMAIL", email)));
   }
 }
