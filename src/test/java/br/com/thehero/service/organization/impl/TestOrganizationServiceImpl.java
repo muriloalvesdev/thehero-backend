@@ -36,29 +36,30 @@ class TestOrganizationServiceImpl {
 
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
-  void shouldCreateWithSuccess(OrganizationDTO dto) {
+  void shouldCreateWithSuccess(OrganizationDTO organizationDataTransferObject) {
     // when
     BDDMockito.when(this.repository.save(Mockito.any(Organization.class)))
         .thenReturn(Mockito.any(Organization.class));
 
     // then
-    this.service.create(dto);
+    this.service.create(organizationDataTransferObject);
 
     verify(this.repository, times(1)).save(Mockito.any());
   }
 
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
-  void shouldUpdateWithSuccess(OrganizationDTO dto) {
+  void shouldUpdateWithSuccess(OrganizationDTO organizationDataTransferObject) {
     // given
-    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+    Organization organization =
+        OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
 
-    BDDMockito.when(this.repository.findByCnpj(dto.getCnpj()))
+    BDDMockito.when(this.repository.findByCnpj(organizationDataTransferObject.getCnpj()))
         .thenReturn(Optional.of(organization));
     BDDMockito.when(this.repository.saveAndFlush(organization)).thenReturn(organization);
 
     // then
-    this.service.update(dto);
+    this.service.update(organizationDataTransferObject);
 
     verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
     verify(this.repository, times(1)).saveAndFlush(Mockito.any());
@@ -66,9 +67,11 @@ class TestOrganizationServiceImpl {
 
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
-  void shouldFindAllWithSuccessAndReturnOneElementInList(OrganizationDTO dto) {
+  void shouldFindAllWithSuccessAndReturnOneElementInList(
+      OrganizationDTO organizationDataTransferObject) {
     // given
-    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+    Organization organization =
+        OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
     List<Organization> organizations = new ArrayList<>();
     organizations.add(organization);
 
@@ -85,23 +88,25 @@ class TestOrganizationServiceImpl {
 
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
-  void shouldFindByCnpjWithSuccess(OrganizationDTO dto) throws Exception {
+  void shouldFindByCnpjWithSuccess(OrganizationDTO organizationDataTransferObject)
+      throws Exception {
     // given
-    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+    Organization organization =
+        OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
 
     // when
-    BDDMockito.when(this.repository.findByCnpj(dto.getCnpj()))
+    BDDMockito.when(this.repository.findByCnpj(organizationDataTransferObject.getCnpj()))
         .thenReturn(Optional.of(organization));
 
     // then
-    OrganizationDTO dtoActual = this.service.findByCnpj(dto.getCnpj());
+    OrganizationDTO dtoActual = this.service.findByCnpj(organizationDataTransferObject.getCnpj());
 
-    assertEquals(dto.getCity(), dtoActual.getCity());
-    assertEquals(dto.getCnpj(), dtoActual.getCnpj());
-    assertEquals(dto.getEmail(), dtoActual.getEmail());
-    assertEquals(dto.getName(), dtoActual.getName());
-    assertEquals(dto.getUf(), dtoActual.getUf());
-    assertEquals(dto.getWhatsapp(), dtoActual.getWhatsapp());
+    assertEquals(organizationDataTransferObject.getCity(), dtoActual.getCity());
+    assertEquals(organizationDataTransferObject.getCnpj(), dtoActual.getCnpj());
+    assertEquals(organizationDataTransferObject.getEmail(), dtoActual.getEmail());
+    assertEquals(organizationDataTransferObject.getName(), dtoActual.getName());
+    assertEquals(organizationDataTransferObject.getUf(), dtoActual.getUf());
+    assertEquals(organizationDataTransferObject.getWhatsapp(), dtoActual.getWhatsapp());
 
     verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
   }
@@ -123,18 +128,19 @@ class TestOrganizationServiceImpl {
 
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
-  void shouldDeleteWithSuccess(OrganizationDTO dto) throws Exception {
+  void shouldDeleteWithSuccess(OrganizationDTO organizationDataTransferObject) throws Exception {
     // given
-    Organization organization = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+    Organization organization =
+        OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
 
     // when
-    BDDMockito.when(this.repository.findByCnpj(dto.getCnpj()))
+    BDDMockito.when(this.repository.findByCnpj(organizationDataTransferObject.getCnpj()))
         .thenReturn(Optional.of(organization));
 
     BDDMockito.doNothing().when(this.repository).delete(organization);
 
     // then
-    this.service.delete(dto.getCnpj());
+    this.service.delete(organizationDataTransferObject.getCnpj());
 
     verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
     verify(this.repository, times(1)).delete(Mockito.any());
@@ -157,16 +163,19 @@ class TestOrganizationServiceImpl {
 
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
-  void shouldFindByEmailWithSuccess(OrganizationDTO dto) throws Exception {
+  void shouldFindByEmailWithSuccess(OrganizationDTO organizationDataTransferObject)
+      throws Exception {
     // given
-    Organization organizationExpected = OrganizationConvert.convertDataTransferObjectToEntity(dto);
+    Organization organizationExpected =
+        OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
 
     // when
-    BDDMockito.when(this.repository.findByEmail(dto.getEmail()))
+    BDDMockito.when(this.repository.findByEmail(organizationDataTransferObject.getEmail()))
         .thenReturn(Optional.of(organizationExpected));
 
     // then
-    Organization organizationActual = this.service.findByEmail(dto.getEmail());
+    Organization organizationActual =
+        this.service.findByEmail(organizationDataTransferObject.getEmail());
 
     assertEquals(organizationExpected.getCity(), organizationActual.getCity());
     assertEquals(organizationExpected.getCnpj(), organizationActual.getCnpj());
