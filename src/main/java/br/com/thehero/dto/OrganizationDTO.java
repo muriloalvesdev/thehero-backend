@@ -3,6 +3,7 @@ package br.com.thehero.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CNPJ;
+import br.com.thehero.annotations.PhoneBrazil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class OrganizationDTO {
   @NotNull(message = "email is not valid!")
   private String email;
 
+  @PhoneBrazil
   @NotNull(message = "whatsapp is not valid!")
   private String whatsapp;
 
