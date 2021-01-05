@@ -15,22 +15,17 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
-public class ProfileServiceImpl implements ProfileService {
+class ProfileServiceImpl implements ProfileService {
+  static final String MESSAGE_ERROR = "Não existe uma organização com o CNPJ [%s] informado.";
 
-  OrganizationRepository organizationRepository;
-  IncidentsRepository incidentsRepository;
+  private OrganizationRepository organizationRepository;
+  private IncidentsRepository incidentsRepository;
 
   public IncidentsDTOList findIncidentsByOrganization(String cnpj) throws NotFoundException {
-    Organization organization =
-        this.organizationRepository
-            .findByCnpj(cnpj)
-            .orElseThrow(
-                () ->
-                    new NotFoundException(
-                        "Não existe uma organização com o CNPJ [" + cnpj + "] informado."));
-    return new IncidentsDTOList(
-        this.incidentsRepository.findByOrganization(organization).stream()
-            .map(IncidentsConvert::convertEntityToDataTransferObject)
-            .collect(Collectors.toList()));
+    Organization organization = this.organizationRepository.findByCnpj(cnpj)
+        .orElseThrow(() -> new NotFoundException(String.format(MESSAGE_ERROR, cnpj)));
+    
+    return new IncidentsDTOList(this.incidentsRepository.findByOrganization(organization).stream()
+        .map(IncidentsConvert::convertEntityToDataTransferObject).collect(Collectors.toList()));
   }
 }

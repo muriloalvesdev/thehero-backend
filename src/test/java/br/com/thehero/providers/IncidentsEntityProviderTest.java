@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import br.com.thehero.IncidentsConstantsTest;
 import br.com.thehero.OrganizationConstantsTest;
+import br.com.thehero.domain.model.Files;
 import br.com.thehero.domain.model.Incidents;
 import br.com.thehero.domain.model.Incidents.Status;
 import br.com.thehero.domain.model.Organization;
@@ -16,9 +17,12 @@ public class IncidentsEntityProviderTest
 
   @Override
   public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+    byte[] data = new byte[2];
+    Files files = Files.newBuilder().type("PNG").data(data).build();
     return Stream.of(
             Incidents.newBuilder()
                 .description(DESCRIPTION)
+                .files(files)
                 .organization(
                     Organization.newBuilder()
                         .uuid(UUID.randomUUID())
