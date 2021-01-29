@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
 class OrganizationServiceImpl implements OrganizationService {
-  static final String MESSAGE_NOT_FOUND = "Não existe uma organização com o %s [%s] informado.";
+  static final String MESSAGE_NOT_FOUND = "There is no organization with the %s [%s] informed.";
   
   private OrganizationRepository repository;
 

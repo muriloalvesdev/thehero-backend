@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,7 +37,7 @@ public class SimpleCORSFilter implements Filter {
     response.setHeader("Access-Control-Max-Age", "3600");
     response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
 
-    if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+    if (HttpMethod.OPTIONS.matches(request.getMethod())) {
       response.setStatus(HttpServletResponse.SC_OK);
     } else {
       chain.doFilter(servletRequest, servletResponse);

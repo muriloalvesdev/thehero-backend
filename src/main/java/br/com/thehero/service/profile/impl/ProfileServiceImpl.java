@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Service
 class ProfileServiceImpl implements ProfileService {
-  static final String MESSAGE_ERROR = "Não existe uma organização com o CNPJ [%s] informado.";
+  static final String MESSAGE_ERROR = "There is no organization with the CNPJ [%s] informed.";
 
   private OrganizationRepository organizationRepository;
   private IncidentsRepository incidentsRepository;

@@ -1,6 +1,7 @@
 package br.com.thehero.login.util;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import br.com.thehero.exception.Sha512Exception;
 
@@ -20,10 +21,10 @@ public class Utils {
     try {
       MessageDigest digest = MessageDigest.getInstance("SHA-512");
       digest.reset();
-      digest.update(input.getBytes("utf8"));
+      digest.update(input.getBytes(StandardCharsets.UTF_8));
       toReturn = String.format("%040x", new BigInteger(1, digest.digest()));
     } catch (Exception e) {
-      throw new Sha512Exception("Error ao gerar SHA512." + e.getMessage());
+      throw new Sha512Exception("Error when generating SHA512." + e.getMessage());
     }
 
     return toReturn;

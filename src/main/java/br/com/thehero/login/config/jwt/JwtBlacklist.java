@@ -22,12 +22,12 @@ public class JwtBlacklist {
     if (!blacklist.containsKey(token)) {
       blacklist.putIfAbsent(token, String.valueOf(System.currentTimeMillis()));
     } else {
-      log.info("TOKEN JA FOI INVALIDADO, TOKEN [{}] ", token);
+      log.info("Token has already been invalidated! Token: [{}] ", token);
     }
   }
 
   public boolean check(String token) {
-    return StringUtils.isNotBlank(token) ? blacklist.containsKey(token) : false;
+    return StringUtils.isNotBlank(token) && blacklist.containsKey(token);
   }
 
   public synchronized void cleanBlacklist() {
@@ -36,7 +36,6 @@ public class JwtBlacklist {
         getDateExpirationToken(token);
       } catch (ExpiredJwtException e) {
         blacklist.remove(token);
-        continue;
       }
     }
   }
