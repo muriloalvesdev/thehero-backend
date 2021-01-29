@@ -25,7 +25,7 @@ public class OrganizationDTO {
   @NotNull(message = "email is not valid!")
   private String email;
 
-  @PhoneBrazil
+  @PhoneBrazil(message = "whatsapp is not valid!")
   @NotNull(message = "whatsapp is not valid!")
   private String whatsapp;
 

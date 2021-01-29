@@ -6,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import java.util.ArrayList;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,11 +38,9 @@ class TestOrganizationServiceImpl {
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
   void shouldCreateWithSuccess(OrganizationDTO organizationDataTransferObject) {
-    // when
     BDDMockito.when(this.repository.save(Mockito.any(Organization.class)))
         .thenReturn(Mockito.any(Organization.class));
 
-    // then
     this.service.create(organizationDataTransferObject);
 
     verify(this.repository, times(1)).save(Mockito.any());
@@ -50,7 +49,6 @@ class TestOrganizationServiceImpl {
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
   void shouldUpdateWithSuccess(OrganizationDTO organizationDataTransferObject) {
-    // given
     Organization organization =
         OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
 
@@ -58,7 +56,6 @@ class TestOrganizationServiceImpl {
         .thenReturn(Optional.of(organization));
     BDDMockito.when(this.repository.saveAndFlush(organization)).thenReturn(organization);
 
-    // then
     this.service.update(organizationDataTransferObject);
 
     verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
@@ -69,16 +66,12 @@ class TestOrganizationServiceImpl {
   @ArgumentsSource(OrganizationDTOProviderTest.class)
   void shouldFindAllWithSuccessAndReturnOneElementInList(
       OrganizationDTO organizationDataTransferObject) {
-    // given
     Organization organization =
         OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
-    List<Organization> organizations = new ArrayList<>();
-    organizations.add(organization);
+    List<Organization> organizations = Collections.singletonList(organization);
 
-    // when
     BDDMockito.when(this.repository.findAll()).thenReturn(organizations);
 
-    // then
     List<OrganizationDTO> result = this.service.findAll();
 
     assertEquals(1, result.size());
@@ -90,15 +83,12 @@ class TestOrganizationServiceImpl {
   @ArgumentsSource(OrganizationDTOProviderTest.class)
   void shouldFindByCnpjWithSuccess(OrganizationDTO organizationDataTransferObject)
       throws Exception {
-    // given
     Organization organization =
         OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
 
-    // when
     BDDMockito.when(this.repository.findByCnpj(organizationDataTransferObject.getCnpj()))
         .thenReturn(Optional.of(organization));
 
-    // then
     OrganizationDTO dtoActual = this.service.findByCnpj(organizationDataTransferObject.getCnpj());
 
     assertEquals(organizationDataTransferObject.getCity(), dtoActual.getCity());
@@ -113,13 +103,9 @@ class TestOrganizationServiceImpl {
 
   @Test
   void shouldFindByCnpjWithError() {
-    // when
     BDDMockito.when(this.repository.findByCnpj(Mockito.anyString())).thenReturn(Optional.empty());
 
-    // then
-    Exception exception = assertThrows(Exception.class, () -> {
-      this.service.findByCnpj("anything");
-    });
+    Exception exception = assertThrows(Exception.class, () -> this.service.findByCnpj("anything"));
 
     assertTrue(exception instanceof NotFoundException);
     assertEquals(String.format(OrganizationServiceImpl.MESSAGE_NOT_FOUND, "CNPJ", "anything"),
@@ -129,17 +115,14 @@ class TestOrganizationServiceImpl {
   @ParameterizedTest
   @ArgumentsSource(OrganizationDTOProviderTest.class)
   void shouldDeleteWithSuccess(OrganizationDTO organizationDataTransferObject) throws Exception {
-    // given
     Organization organization =
         OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
 
-    // when
     BDDMockito.when(this.repository.findByCnpj(organizationDataTransferObject.getCnpj()))
         .thenReturn(Optional.of(organization));
 
     BDDMockito.doNothing().when(this.repository).delete(organization);
 
-    // then
     this.service.delete(organizationDataTransferObject.getCnpj());
 
     verify(this.repository, times(1)).findByCnpj(Mockito.anyString());
@@ -148,13 +131,9 @@ class TestOrganizationServiceImpl {
 
   @Test
   void shouldDeleteWithError() {
-    // when
     BDDMockito.when(this.repository.findByCnpj(Mockito.anyString())).thenReturn(Optional.empty());
 
-    // then
-    Exception exception = assertThrows(Exception.class, () -> {
-      this.service.delete("anything");
-    });
+    Exception exception = assertThrows(Exception.class, () -> this.service.delete("anything"));
 
     assertTrue(exception instanceof NotFoundException);
     assertEquals(String.format(OrganizationServiceImpl.MESSAGE_NOT_FOUND, "CNPJ", "anything"),
@@ -165,15 +144,12 @@ class TestOrganizationServiceImpl {
   @ArgumentsSource(OrganizationDTOProviderTest.class)
   void shouldFindByEmailWithSuccess(OrganizationDTO organizationDataTransferObject)
       throws Exception {
-    // given
     Organization organizationExpected =
         OrganizationConvert.convertDataTransferObjectToEntity(organizationDataTransferObject);
 
-    // when
     BDDMockito.when(this.repository.findByEmail(organizationDataTransferObject.getEmail()))
         .thenReturn(Optional.of(organizationExpected));
 
-    // then
     Organization organizationActual =
         this.service.findByEmail(organizationDataTransferObject.getEmail());
 
@@ -189,13 +165,9 @@ class TestOrganizationServiceImpl {
 
   @Test
   void shouldFindByEmailWithError() {
-    // when
     BDDMockito.when(this.repository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
 
-    // then
-    Exception exception = assertThrows(Exception.class, () -> {
-      this.service.findByEmail("anything");
-    });
+    Exception exception = assertThrows(Exception.class, () -> this.service.findByEmail("anything"));
 
     assertTrue(exception instanceof NotFoundException);
     assertEquals(String.format(OrganizationServiceImpl.MESSAGE_NOT_FOUND, "EMAIL", "anything"),
