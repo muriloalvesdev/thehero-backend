@@ -47,14 +47,14 @@ public class Incidents extends BaseEntity {
   @JoinColumn(
       name = "organization_uuid",
       referencedColumnName = "uuid",
-      foreignKey = @ForeignKey(name = "uuid"))
+      foreignKey = @ForeignKey(name = "organization_uuid"))
   private Organization organization;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   @JoinColumn(
       name = "files_uuid",
       referencedColumnName = "uuid",
-      foreignKey = @ForeignKey(name = "uuid"))
+      foreignKey = @ForeignKey(name = "files_uuid"))
   private Files files;
 
   @Enumerated(EnumType.STRING)
