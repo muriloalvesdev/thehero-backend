@@ -43,7 +43,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
       filterChain.doFilter(request, response);
     } else {
       response.reset();
-      response.sendError(403, "Acesso não autorizado");
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access denied");
       return;
     }
   }

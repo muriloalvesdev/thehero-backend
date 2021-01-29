@@ -21,9 +21,9 @@ import lombok.AllArgsConstructor;
 @Service
 public class IncidentsServiceImpl implements IncidentsService {
 
-  static final String ORGANIZATION_NOT_FOUND = "Não existe uma organização com o CNPJ informado.";
-  static final String INCIDENT_NOT_FOUND = "Não existe um incidente com o ID informado";
-  static final String UNAUTHORIZED = "Não autorizado!";
+  static final String ORGANIZATION_NOT_FOUND = "There is no organization with the CNPJ informed.";
+  static final String INCIDENT_NOT_FOUND = "There is no incident with the given ID";
+  static final String UNAUTHORIZED = "Unauthorized!";
 
   private IncidentsRepository incidentsRepository;
   private OrganizationRepository organizationRepository;
