@@ -6,5 +6,5 @@ public interface OrganizationConstantsTest {
   static final String CNPJ = "59533195000188";
   static final String EMAIL_ONG = "contato@anjosdepatas.com.br";
   static final String UF = "SP";
-  static final String WHATSAPP = "11999999999";
+  static final String WHATSAPP = "+5511999999999";
 }
