@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class Profile {
 
-  private ProfileService service;
+  private final ProfileService service;
 
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("profile/{cnpj}")

@@ -21,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class FileController {
 
-  private FilesService service;
+  private final FilesService service;
 
   @PostMapping("/uploadFile/{incidentId}")
   @PreAuthorize("hasRole('ADMIN')")

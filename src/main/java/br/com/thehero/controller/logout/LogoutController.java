@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class LogoutController {
 
-  private InvalidationTokenService service;
+  private final InvalidationTokenService service;
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping(path = "/information/{token}")

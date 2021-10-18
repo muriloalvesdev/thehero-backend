@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class OrganizationController {
 
-  private OrganizationService service;
+  private final OrganizationService service;
 
   @GetMapping("/ongs")
   @PreAuthorize("hasRole('ADMIN')")

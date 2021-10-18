@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AuthenticationController {
 
-  private UserService userService;
+  private final UserService userService;
 
   @PostMapping("/login")
   public ResponseEntity<AccessToken> authenticateUser(@Validated @RequestBody LoginDTO loginData) {

@@ -28,7 +28,7 @@ import javassist.NotFoundException;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class IncidentsController {
 
-  private IncidentsService service;
+  private final IncidentsService service;
 
   @DeleteMapping("incidents/{id}/{cnpj}")
   @PreAuthorize("hasRole('ADMIN')")
