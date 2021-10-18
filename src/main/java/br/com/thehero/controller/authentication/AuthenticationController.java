@@ -33,13 +33,10 @@ public class AuthenticationController {
   @PostMapping("/register")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<User> registerUser(@Valid @RequestBody RegisterDTO registerData) {
-
-    User user = this.userService.registerUser(registerData);
-
     return ResponseEntity.created(
             ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(user.getId())
+                .buildAndExpand(this.userService.registerUser(registerData).getId())
                 .toUri())
         .build();
   }
